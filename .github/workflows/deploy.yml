@@ -30,4 +30,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/mo-made-patisserie
-          cname: mo-made-patisserie.com  # Optional: only if you have a custom domain
