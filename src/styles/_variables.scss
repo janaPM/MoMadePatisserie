@@ -1,0 +1,28 @@
+// ============================================
+// Mo Made Patisserie - Theme Variables
+// ============================================
+// 
+// Usage: Use CSS custom properties in your styles
+// Example: background-color: var(--color-primary);
+//
+// To switch themes, just update these values
+// ============================================
+
+:root {
+  // Primary Colors
+  --color-primary: #2D2926;      // Dark charcoal - text, headers
+  --color-secondary: #C49B8D;    // Rose gold - accents, CTAs
+  --color-accent: #F3DCD4;       // Blush pink - subtle backgrounds
+  
+  // Background Colors
+  --color-bg: #FDFBF9;           // Off-white - main background
+  --color-bg-alt: #FBF7F4;       // Warm cream - alternate sections
+  
+  // Text Colors
+  --color-text: #4A4543;         // Warm gray - body text
+  --color-text-muted: #8B7355;   // Muted brown - secondary text
+  
+  // UI Colors
+  --color-border: #E8DCD6;       // Light border color
+  --color-shadow: rgba(45, 41, 38, 0.1);  // Soft shadow
+}

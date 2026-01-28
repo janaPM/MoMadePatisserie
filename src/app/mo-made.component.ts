@@ -1,6 +1,7 @@
-import { Component, NgModule, signal, computed, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, NgModule, signal, computed, effect, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 
 interface Product {
   id: number;
@@ -58,7 +59,7 @@ interface Category {
                     Where <span class="italic text-[#C49B8D]">Sugar</span><br/>Becomes Art
                   </h1>
                   <p class="text-lg sm:text-xl text-[#5A5552] max-w-lg mx-auto lg:mx-0 font-sans font-light leading-relaxed">
-                    Bespoke floral wedding cakes & artisanal cakesicles handcrafted with love in Bangalore by <span class="font-medium text-[#2D2926]">Monisha Prakash</span>
+                    Bespoke signature cakes & gourmet treats handcrafted with love in Bangalore by <span class="font-medium text-[#2D2926]">Monisha Prakash</span>
                   </p>
                   <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                     <a href="#concierge" class="group inline-flex items-center justify-center gap-3 bg-[#2D2926] text-white px-8 py-4 rounded-full font-sans font-medium hover:bg-[#C49B8D] transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1">
@@ -95,16 +96,17 @@ interface Category {
           <section class="bg-white border-y border-[#F3DCD4]/50 py-8">
             <div class="max-w-6xl mx-auto px-4 sm:px-6">
               <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="space-y-1">
-                  <p class="font-serif text-3xl sm:text-4xl text-[#2D2926] font-bold">4.9<span class="text-[#C49B8D]">/5</span></p>
-                  <p class="text-xs font-sans uppercase tracking-[0.15em] text-[#7A7471]">Google Rating</p>
-                </div>
+                <button (click)="openGoogleReviews()" class="group space-y-1 cursor-pointer hover:scale-105 transition-transform duration-300">
+                  <p class="font-serif text-3xl sm:text-4xl text-[#2D2926] font-bold group-hover:text-[#C49B8D] transition-colors">{{googleRating()}}<span class="text-[#C49B8D]">/5</span></p>
+                  <p class="text-xs font-sans uppercase tracking-[0.15em] text-[#7A7471] group-hover:text-[#C49B8D] transition-colors">Google Rating</p>
+                  <p class="text-xs font-sans text-[#C49B8D] opacity-0 group-hover:opacity-100 transition-opacity">View Reviews →</p>
+                </button>
                 <div class="space-y-1">
                   <p class="font-serif text-3xl sm:text-4xl text-[#2D2926] font-bold">100<span class="text-[#C49B8D]">%</span></p>
                   <p class="text-xs font-sans uppercase tracking-[0.15em] text-[#7A7471]">Eggless Options</p>
                 </div>
                 <div class="space-y-1">
-                  <p class="font-serif text-3xl sm:text-4xl text-[#2D2926] font-bold">7<span class="text-[#C49B8D]">+</span></p>
+                  <p class="font-serif text-3xl sm:text-4xl text-[#2D2926] font-bold">13<span class="text-[#C49B8D]">+</span></p>
                   <p class="text-xs font-sans uppercase tracking-[0.15em] text-[#7A7471]">Years Crafting</p>
                 </div>
                 <div class="space-y-1">
@@ -685,14 +687,14 @@ interface Category {
                     <img [src]="product.image" [alt]="product.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#2D2926]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 border border-[#F3DCD4]/50">
-                      <span class="text-[10px] font-sans font-bold text-[#C49B8D] uppercase tracking-[0.15em]">{{product.flavor}}</span>
+                      <span class="text-[10px] font-sans font-bold text-[#9C6544] uppercase tracking-[0.15em]">{{product.flavor}}</span>
                     </div>
                   </div>
                   <div class="p-6 space-y-4">
                     <h3 class="font-serif text-xl text-[#2D2926] group-hover:text-[#C49B8D] transition-colors leading-tight">{{product.name}}</h3>
-                    <p class="text-[#7A7471] font-sans text-sm leading-relaxed line-clamp-2">{{product.description}}</p>
+                    <p class="text-[#7A7471] font-sans text-sm leading-relaxed line-clamp-3 h-[4.5rem]">{{product.description}}</p>
                     <div class="flex items-center justify-between pt-2 border-t border-[#F3DCD4]/30">
-                      <p class="font-sans text-xl text-[#2D2926] font-bold tracking-tight">₹{{product.price | number}}</p>
+                      <p class="font-sans font-bold text-xl text-[#C49B8D] tracking-tight"><span>From </span> <span class="font-bold">₹{{product.price | number}}</span></p>
                       <button (click)="inquireProduct(product.name)" class="inline-flex items-center gap-2 bg-[#F3DCD4]/50 hover:bg-[#C49B8D] text-[#2D2926] hover:text-white px-4 py-2 rounded-full text-xs font-sans font-bold uppercase tracking-wider transition-all duration-300">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
                         Inquire
@@ -838,9 +840,10 @@ interface Category {
     select option { background: #2D2926; color: white; }
   `]
 })
-export class MoMadeComponent {
+export class MoMadeComponent implements OnInit {
   currentView = signal<'landing' | 'category'>('landing');
   selectedCategoryId = signal<string>('');
+  scrollPositionBeforeCategory = 0;
   step = signal(1);
   selectedVibe = signal('');
   selectedFlavor = signal('');
@@ -848,40 +851,66 @@ export class MoMadeComponent {
   eventDate = '';
   cakeMessage = '';
 
+  constructor(private location: Location) {}
+
+  ngOnInit() {
+    // Handle browser back button and Mac swipe back
+    window.addEventListener('popstate', () => {
+      if (this.currentView() === 'category') {
+        this.goBack();
+      }
+    });
+  }
+
   storyImages = [
     'assets/images/IMG_5087.jpeg',
     'assets/images/IMG_5088.jpeg'
   ];
   currentStoryIndex = signal(0);
 
+  // Hardcoded Google rating (update manually from your Google Business profile)
+  googleRating = signal(4.9);
+  
+  // Google places IDs and URLs
+  readonly GOOGLE_REVIEW_URL = 'https://search.google.com/local/reviews?placeid=ChIJSeo3hiE9rjsRc3uMRT1FxGY';
+  readonly GOOGLE_WRITE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJSeo3hiE9rjsRc3uMRT1FxGY';
+
   toggleStoryImage() {
     this.currentStoryIndex.update(i => (i + 1) % this.storyImages.length);
   }
 
+  openGoogleReviews() {
+    window.open(this.GOOGLE_REVIEW_URL, '_blank');
+  }
+
+  openWriteGoogleReview() {
+    window.open(this.GOOGLE_WRITE_REVIEW_URL, '_blank');
+  }
+
   getSeasonalProducts(): Product[] {
     const month = new Date().getMonth(); // 0-11
-    // Winter: Nov(10), Dec(11), Jan(0), Feb(1)
-    // Summer: Mar(2), Apr(3), May(4)
-    // Monsoon: Jun(5), Jul(6), Aug(7), Sep(8), Oct(9)
+    // Winter: Nov(10), Dec(11), Jan(0), Feb(1) - Strawberry Season
+    // Summer: Mar(2), Apr(3), May(4), Jun(5) - Mango Season
+    // Monsoon: Jul(6), Aug(7), Sep(8), Oct(9) - Berry Season
     
     if (month <= 1 || month >= 10) {
-      // Winter
+      // Winter - Strawberry Season
       return [
-        { id: 101, name: 'Strawberry & Cream', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5089.png', description: 'Fresh seasonal strawberries with light chantilly cream' },
-        { id: 102, name: 'Rich Plum Cake', price: 1200, flavor: 'fruit', image: 'assets/images/IMG_5088.jpeg', description: 'Traditional fruit cake soaked in premium spirits' },
-        { id: 103, name: 'Hot Cocoa Tea Cake', price: 950, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Warm spiced chocolate cake perfect for chilly evenings' }
+        { id: 101, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.png', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
+        { id: 102, name: 'Chocolate Strawberry Dream', price: 1800, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Chocolate sponge with fresh strawberry & Chocolate Ganache' }
       ];
-    } else if (month >= 2 && month <= 4) {
-      // Summer
+    } else if (month >= 2 && month <= 5) {
+      // Summer - Mango Season
       return [
-        { id: 201, name: 'Alphonso Mango Delight', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.png', description: 'Fresh Ratnagiri mangoes with vanilla sponge' },
-        { id: 202, name: 'Lemon Blueberry', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5087.jpeg', description: 'Zesty lemon curd with fresh blueberries' }
+        { id: 201, name: 'Mango Delight', price: 1700, flavor: 'fruit', image: 'assets/images/IMG_5087.jpeg', description: 'Vanilla Sponge with Fresh Mango & Vanilla Swiss Meringue Buttercream' },
+        { id: 202, name: 'Pistachio Mango Fusion', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5089.png', description: 'Pistachio sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' },
+        { id: 203, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.jpeg', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
       ];
     } else {
-      // Monsoon/Autumn
+      // Monsoon - Berry & Tropical Season
       return [
-        { id: 301, name: 'Spiced Carrot Cake', price: 1400, flavor: 'nutty', image: 'assets/images/IMG_5087.jpeg', description: 'Moist carrot cake with walnuts and cream cheese frosting' },
-        { id: 302, name: 'Dark Cherry Forest', price: 1800, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Classic black forest with fresh dark cherries' }
+        { id: 301, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.png', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
+        { id: 302, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.jpeg', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
       ];
     }
   }
@@ -948,7 +977,7 @@ export class MoMadeComponent {
       id: 'wedding',
       title: 'Wedding Cakes',
       description: 'Multi-tier floral masterpieces with handcrafted sugar flowers',
-      price: 'Starting ₹5,500',
+      price: 'From ₹5,500',
       image: 'assets/images/IMG_5089.png',
       products: [
         { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/IMG_5087.jpeg', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
@@ -963,31 +992,37 @@ export class MoMadeComponent {
       id: 'signature',
       title: 'Signature Collection',
       description: 'Our most loved classic flavors and timeless designs',
-      price: 'Starting ₹1,500',
+      price: 'From ₹1,200',
       image: 'assets/images/IMG_5087.jpeg',
       products: [
-        { id: 21, name: 'Classic Vanilla Bean', price: 1500, flavor: 'vanilla', image: 'assets/images/IMG_5087.jpeg', description: 'Moist vanilla sponge with Madagascar bean buttercream' },
-        { id: 22, name: 'Dutch Chocolate', price: 1600, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Rich chocolate ganache layer cake' },
-        { id: 23, name: 'Red Velvet Supreme', price: 1600, flavor: 'vanilla', image: 'assets/images/IMG_5089.png', description: 'Authentic red velvet with cream cheese frosting' }
+        { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
+        { id: 22, name: 'Chocolate Raspberry', price: 1500, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
+        { id: 23, name: 'Chocolate Hazelnut', price: 1600, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' },
+        { id: 24, name: 'Red Velvet', price: 1300, flavor: 'vanilla', image: 'assets/images/IMG_5089.png', description: 'Red Velvet sponge with cream cheese frosting or chocolate ganache' },
+        { id: 25, name: 'Vanilla Berry', price: 1400, flavor: 'fruit', image: 'assets/images/IMG_5087.jpeg', description: 'Vanilla Sponge, Berry Compote, White Chocolate Pistachio feuilletine & Vanilla Swiss Meringue buttercream' },
+        { id: 26, name: 'Lemon Blueberry', price: 1200, flavor: 'fruit', image: 'assets/images/IMG_5087.jpeg', description: 'Vanilla Sponge, Lemon curd, Blueberry compote & Vanilla Swiss Meringue buttercream' }
       ]
     },
     {
       id: 'premium',
       title: 'Premium Collection',
       description: 'Exquisite ingredients, complex pairings, and luxury finishes',
-      price: 'Starting ₹2,200',
+      price: 'From ₹1,800',
       image: 'assets/images/IMG_5088.jpeg',
       products: [
-        { id: 31, name: 'Hazelnut Praline', price: 2500, flavor: 'nutty', image: 'assets/images/IMG_5088.jpeg', description: 'Roasted hazelnut mousse with crunchy praline' },
-        { id: 32, name: 'Saffron Pistachio', price: 2800, flavor: 'nutty', image: 'assets/images/IMG_5087.jpeg', description: 'Kashmiri saffron infused sponge with pistachio paste' },
-        { id: 33, name: 'Belgian Truffle', price: 2400, flavor: 'chocolate', image: 'assets/images/IMG_5088.jpeg', description: 'Imported Belgian chocolate truffle indulgence' }
+        { id: 31, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5088.jpeg', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
+        { id: 32, name: 'Coconut Passionfruit', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.png', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
+        { id: 33, name: 'Carrot Walnut', price: 1800, flavor: 'nutty', image: 'assets/images/IMG_5087.jpeg', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
+        { id: 34, name: 'Banana Dulce', price: 1900, flavor: 'vanilla', image: 'assets/images/IMG_5087.jpeg', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
+        { id: 35, name: 'Pistachio Raspberry', price: 2400, flavor: 'nutty', image: 'assets/images/IMG_5089.png', description: 'Pistachio Sponge, Raspberry compote, White Chocolate feuilletine & Vanilla Swiss Meringue Buttercream' },
+        { id: 36, name: 'Lychee Rose', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.png', description: 'Vanilla Raspberry Sponge, Lychee Filling & Rose Swiss Meringue Buttercream' }
       ]
     },
     {
       id: 'seasonal',
       title: this.getSeasonalTitle(),
       description: 'Fresh, limited-edition treats inspired by the season',
-      price: 'Seasonal Pricing',
+      price: 'From ₹1,600',
       image: 'assets/images/IMG_5089.png',
       products: this.getSeasonalProducts()
     },
@@ -995,7 +1030,7 @@ export class MoMadeComponent {
       id: 'custom',
       title: 'Customization',
       description: 'Build your own dream cake or customize dietary preferences',
-      price: 'Varies',
+      price: 'From ₹0 (Add-ons)',
       image: 'assets/images/IMG_5090.png',
       products: [
         { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5087.jpeg', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
@@ -1026,8 +1061,12 @@ export class MoMadeComponent {
   });
 
   openCategory(categoryId: string) {
+    // Save exact scroll position
+    this.scrollPositionBeforeCategory = window.scrollY;
     this.selectedCategoryId.set(categoryId);
     this.currentView.set('category');
+    // Push history state to enable browser back button
+    window.history.pushState({ view: 'category', categoryId }, '', `#category/${categoryId}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1035,6 +1074,10 @@ export class MoMadeComponent {
     this.currentView.set('landing');
     this.flavorFilterSignal.set('all');
     this.priceSortSignal.set('default');
+    // Restore exact scroll position where you clicked with smooth animation
+    setTimeout(() => {
+      window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
+    }, 50);
   }
 
   scrollToConcierge() {
