@@ -1,5 +1,5 @@
-import { Component, NgModule, signal, computed, effect, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, NgModule, signal, computed, effect, ChangeDetectionStrategy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 
@@ -133,8 +133,10 @@ interface Category {
                   <div class="group cursor-pointer" (click)="openCategory(category.id)">
                     <div class="relative overflow-hidden rounded-3xl mb-6 aspect-[4/5] bg-[#F3DCD4]/30">
                       <img [src]="category.image" [alt]="category.title" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out"/>
-                      <div class="absolute inset-0 bg-gradient-to-t from-[#2D2926]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div class="absolute bottom-6 left-6 right-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                      <!-- Show gradient on mobile by default -->
+                      <div class="absolute inset-0 bg-gradient-to-t from-[#2D2926]/60 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <!-- Show "View Collection" button on mobile by default -->
+                      <div class="absolute bottom-6 left-6 right-6 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500">
                         <span class="inline-flex items-center gap-2 bg-white/90 backdrop-blur text-[#2D2926] px-4 py-2 rounded-full text-sm font-sans font-medium">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                           View Collection
@@ -143,8 +145,10 @@ interface Category {
                     </div>
                     <div class="space-y-2 px-2">
                       <div class="flex items-center justify-between">
-                        <h3 class="font-serif text-2xl text-[#2D2926] group-hover:text-[#C49B8D] transition-colors">{{category.title}}</h3>
-                        <svg class="w-5 h-5 text-[#C49B8D] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        <!-- Title colored on mobile by default -->
+                        <h3 class="font-serif text-2xl text-[#C49B8D] md:text-[#2D2926] md:group-hover:text-[#C49B8D] transition-colors">{{category.title}}</h3>
+                        <!-- Arrow visible on mobile by default -->
+                        <svg class="w-5 h-5 text-[#C49B8D] md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                       </div>
                       <p class="text-[#7A7471] font-sans text-sm leading-relaxed">{{category.description}}</p>
                       <p class="text-[#C49B8D] font-sans font-bold text-lg">{{category.price}}</p>
@@ -629,51 +633,92 @@ interface Category {
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
               <div class="flex items-center justify-between">
                 <button (click)="goBack()" class="inline-flex items-center gap-2 text-[#2D2926] hover:text-[#C49B8D] transition-colors font-sans font-medium group">
-                  <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
-                  Back to Home
+                  <svg class="w-5 h-5 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+                  <span class="hidden sm:inline">Back to Home</span>
                 </button>
-                <div class="flex items-center gap-2">
-                  <span class="font-serif text-xl font-bold text-[#2D2926]">Mo Made</span>
-                  <span class="text-[#C49B8D] font-serif italic text-sm">Patisserie</span>
+                <div class="flex items-center gap-1 sm:gap-2">
+                  <span class="font-serif text-lg sm:text-xl font-bold text-[#2D2926]">Mo Made</span>
+                  <span class="text-[#C49B8D] font-serif italic text-xs sm:text-sm">Patisserie</span>
                 </div>
-                <a href="#" (click)="inquireProduct(activeCategory()?.title || ''); $event.preventDefault()" class="bg-[#2D2926] text-white px-4 py-2 rounded-full text-sm font-sans font-medium hover:bg-[#C49B8D] transition-all inline-flex items-center gap-2">
+                <a href="#" (click)="inquireProduct(activeCategory()?.title || ''); $event.preventDefault()" class="bg-[#2D2926] text-white px-3 sm:px-4 py-2 rounded-full text-sm font-sans font-medium hover:bg-[#C49B8D] transition-all inline-flex items-center gap-2">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
-                  Inquire
+                  <span class="hidden sm:inline">Inquire</span>
                 </a>
               </div>
             </div>
 
             <div class="border-t border-[#F3DCD4]/30 bg-white/50">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div>
-                    <h1 class="font-serif text-2xl sm:text-3xl text-[#2D2926] font-bold">{{activeCategory()?.title}}</h1>
-                    <p class="text-[#7A7471] font-sans text-sm mt-1">Refine Your Selection</p>
-                  </div>
-                  <div class="flex flex-wrap gap-3">
-                    <div class="relative">
-                      <select [(ngModel)]="flavorFilterSignal" (ngModelChange)="onFlavorFilterChange($event)" class="appearance-none bg-white border border-[#F3DCD4] rounded-full pl-4 pr-14 py-2.5 text-sm font-sans text-[#2D2926] focus:outline-none focus:border-[#C49B8D] focus:ring-1 focus:ring-[#C49B8D]/20 cursor-pointer transition-all hover:border-[#C49B8D]/50">
-                        <option value="all">All Flavors</option>
-                        <option value="chocolate">Chocolate</option>
-                        <option value="fruit">Fruit</option>
-                        <option value="nutty">Nutty</option>
-                        <option value="vanilla">Vanilla</option>
-                      </select>
-                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                        <svg class="w-4 h-4 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+                <!-- Mobile: Title + Filter Icon, Desktop: Full layout -->
+                <div class="flex flex-col gap-3">
+                  <!-- Row 1: Title + Filter toggle (mobile) or Title + Filters (desktop) -->
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h1 class="font-serif text-xl sm:text-2xl lg:text-3xl text-[#2D2926] font-bold">{{activeCategory()?.title}}</h1>
+                      <p class="text-[#7A7471] font-sans text-xs sm:text-sm hidden sm:block">{{filteredProducts().length}} products available</p>
+                    </div>
+                    
+                    <!-- Mobile: Filter toggle button -->
+                    <button (click)="toggleMobileFilters()" class="sm:hidden flex items-center gap-2 bg-white border border-[#F3DCD4] rounded-full px-3 py-2 text-xs font-sans text-[#2D2926]">
+                      <svg class="w-4 h-4 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+                      Filter
+                      <svg [class]="'w-3 h-3 text-[#C49B8D] transition-transform duration-300 ' + (mobileFiltersOpen() ? 'rotate-180' : '')" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                    </button>
+                    
+                    <!-- Desktop: Filters always visible -->
+                    <div class="hidden sm:flex gap-2 sm:gap-3">
+                      <div class="relative">
+                        <select [(ngModel)]="flavorFilterSignal" (ngModelChange)="onFlavorFilterChange($event)" class="appearance-none bg-white border border-[#F3DCD4] rounded-full pl-3 sm:pl-4 pr-8 sm:pr-12 py-2 sm:py-2.5 text-xs sm:text-sm font-sans text-[#2D2926] focus:outline-none focus:border-[#C49B8D] cursor-pointer transition-all">
+                          <option value="all">All Flavors</option>
+                          <option value="chocolate">Chocolate</option>
+                          <option value="fruit">Fruit</option>
+                          <option value="nutty">Nutty</option>
+                          <option value="vanilla">Vanilla</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3">
+                          <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                        </div>
+                      </div>
+                      <div class="relative">
+                        <select [(ngModel)]="priceSortSignal" (ngModelChange)="onPriceSortChange($event)" class="appearance-none bg-white border border-[#F3DCD4] rounded-full pl-3 sm:pl-4 pr-8 sm:pr-12 py-2 sm:py-2.5 text-xs sm:text-sm font-sans text-[#2D2926] focus:outline-none focus:border-[#C49B8D] cursor-pointer transition-all">
+                          <option value="default">Sort by Price</option>
+                          <option value="low">Low → High</option>
+                          <option value="high">High → Low</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3">
+                          <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                        </div>
                       </div>
                     </div>
-                    <div class="relative">
-                      <select [(ngModel)]="priceSortSignal" (ngModelChange)="onPriceSortChange($event)" class="appearance-none bg-white border border-[#F3DCD4] rounded-full pl-4 pr-14 py-2.5 text-sm font-sans text-[#2D2926] focus:outline-none focus:border-[#C49B8D] focus:ring-1 focus:ring-[#C49B8D]/20 cursor-pointer transition-all hover:border-[#C49B8D]/50">
-                        <option value="default">Sort by Price</option>
-                        <option value="low">Low to High</option>
-                        <option value="high">High to Low</option>
-                      </select>
-                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                        <svg class="w-4 h-4 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                  </div>
+                  
+                  <!-- Mobile: Collapsible filters -->
+                  @if (mobileFiltersOpen()) {
+                    <div class="sm:hidden flex gap-2 animate-slideUp">
+                      <div class="relative flex-1">
+                        <select [(ngModel)]="flavorFilterSignal" (ngModelChange)="onFlavorFilterChange($event)" class="w-full appearance-none bg-white border border-[#F3DCD4] rounded-full pl-3 pr-8 py-2 text-xs font-sans text-[#2D2926] focus:outline-none focus:border-[#C49B8D] cursor-pointer transition-all">
+                          <option value="all">All Flavors</option>
+                          <option value="chocolate">Chocolate</option>
+                          <option value="fruit">Fruit</option>
+                          <option value="nutty">Nutty</option>
+                          <option value="vanilla">Vanilla</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <svg class="w-3 h-3 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                        </div>
+                      </div>
+                      <div class="relative flex-1">
+                        <select [(ngModel)]="priceSortSignal" (ngModelChange)="onPriceSortChange($event)" class="w-full appearance-none bg-white border border-[#F3DCD4] rounded-full pl-3 pr-8 py-2 text-xs font-sans text-[#2D2926] focus:outline-none focus:border-[#C49B8D] cursor-pointer transition-all">
+                          <option value="default">Sort by Price</option>
+                          <option value="low">Low → High</option>
+                          <option value="high">High → Low</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <svg class="w-3 h-3 text-[#C49B8D]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  }
                 </div>
               </div>
             </div>
@@ -740,15 +785,20 @@ export class MoMadeComponent implements OnInit {
   eventDate = '';
   cakeMessage = '';
 
-  constructor(private location: Location) {}
+  constructor(
+    private location: Location,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    // Handle browser back button and Mac swipe back
-    window.addEventListener('popstate', () => {
-      if (this.currentView() === 'category') {
-        this.goBack();
-      }
-    });
+    // Handle browser back button and Mac swipe back - only in browser
+    if (isPlatformBrowser(this.platformId)) {
+      window.addEventListener('popstate', () => {
+        if (this.currentView() === 'category') {
+          this.goBack();
+        }
+      });
+    }
   }
 
   storyImages = [
@@ -769,11 +819,15 @@ export class MoMadeComponent implements OnInit {
   }
 
   openGoogleReviews() {
-    window.open(this.GOOGLE_REVIEW_URL, '_blank');
+    if (isPlatformBrowser(this.platformId)) {
+      window.open(this.GOOGLE_REVIEW_URL, '_blank');
+    }
   }
 
   openWriteGoogleReview() {
-    window.open(this.GOOGLE_WRITE_REVIEW_URL, '_blank');
+    if (isPlatformBrowser(this.platformId)) {
+      window.open(this.GOOGLE_WRITE_REVIEW_URL, '_blank');
+    }
   }
 
   getSeasonalProducts(): Product[] {
@@ -829,6 +883,11 @@ export class MoMadeComponent implements OnInit {
   
   flavorFilterSignal = signal('all');
   priceSortSignal = signal('default');
+  mobileFiltersOpen = signal(false);
+  
+  toggleMobileFilters() {
+    this.mobileFiltersOpen.update(v => !v);
+  }
   
   get flavorFilter() { return this.flavorFilterSignal(); }
   set flavorFilter(val: string) { this.flavorFilterSignal.set(val); }
@@ -951,12 +1010,16 @@ export class MoMadeComponent implements OnInit {
 
   openCategory(categoryId: string) {
     // Save exact scroll position
-    this.scrollPositionBeforeCategory = window.scrollY;
+    if (isPlatformBrowser(this.platformId)) {
+      this.scrollPositionBeforeCategory = window.scrollY;
+    }
     this.selectedCategoryId.set(categoryId);
     this.currentView.set('category');
     // Push history state to enable browser back button
-    window.history.pushState({ view: 'category', categoryId }, '', `#category/${categoryId}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isPlatformBrowser(this.platformId)) {
+      window.history.pushState({ view: 'category', categoryId }, '', `#category/${categoryId}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   goBack() {
@@ -964,9 +1027,11 @@ export class MoMadeComponent implements OnInit {
     this.flavorFilterSignal.set('all');
     this.priceSortSignal.set('default');
     // Restore exact scroll position where you clicked with smooth animation
-    setTimeout(() => {
-      window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
-    }, 50);
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
+      }, 50);
+    }
   }
 
   scrollToConcierge() {
@@ -983,6 +1048,7 @@ export class MoMadeComponent implements OnInit {
   }
 
   inquireProduct(productName: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     const phone = '919900000000';
     const message = `Hi Monisha! ✨
 
@@ -995,7 +1061,7 @@ Thank you! 🎂`;
   }
 
   sendToWhatsApp() {
-    if (!this.canSubmit()) return;
+    if (!this.canSubmit() || !isPlatformBrowser(this.platformId)) return;
     const phone = '919900000000';
     const messageOnCake = this.cakeMessage ? `\n\nMessage on cake: "${this.cakeMessage}"` : '';
     const message = `Hi Monisha! ✨
