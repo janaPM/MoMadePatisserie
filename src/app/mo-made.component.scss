@@ -147,6 +147,148 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 // Select dropdown styling
 select option { 
-  background: #2D2926; 
+  background: var(--color-primary); 
   color: white; 
 }
+
+// ============================================
+// Gradient Helpers for CSS Variables
+// ============================================
+// These ensure gradients work correctly with CSS custom properties
+// Tailwind CDN sometimes doesn't properly handle var() in arbitrary values
+
+// Color values derived from _variables.scss:
+// --color-primary: #2D2926 (rgb 45 41 38)
+// --color-secondary: #C49B8D (rgb 196 155 141)
+// --color-accent: #F3DCD4 (rgb 243 220 212)
+// --color-bg: #FDFBF9 (rgb 253 251 249)
+
+// Hero section gradient
+.hero-gradient {
+  --tw-gradient-from: var(--color-bg) var(--tw-gradient-from-position);
+  --tw-gradient-to: color-mix(in srgb, var(--color-accent) 30%, transparent) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--color-bg-alt) var(--tw-gradient-via-position), var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+// LBB Award badge gradient  
+.lbb-badge-gradient {
+  --tw-gradient-from: var(--color-accent) var(--tw-gradient-from-position);
+  --tw-gradient-to: color-mix(in srgb, var(--color-accent) 60%, transparent) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+// Image frame gradient (hero image background)
+.image-frame-gradient {
+  --tw-gradient-from: var(--color-accent) var(--tw-gradient-from-position);
+  --tw-gradient-to: color-mix(in srgb, var(--color-secondary) 30%, transparent) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+// Story section image frame gradient
+.story-frame-gradient {
+  --tw-gradient-from: color-mix(in srgb, var(--color-accent) 50%, transparent) var(--tw-gradient-from-position);
+  --tw-gradient-to: color-mix(in srgb, var(--color-secondary) 20%, transparent) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+// Product card overlay gradient
+.product-overlay-gradient {
+  background-image: linear-gradient(to top, color-mix(in srgb, var(--color-primary) 60%, transparent), transparent, transparent);
+}
+
+// ============================================
+// Background Color Helpers with Opacity
+// ============================================
+// Using color-mix() for better maintainability with CSS variables
+
+// Nav header background (90% opacity)
+.nav-header-bg {
+  background-color: color-mix(in srgb, var(--color-bg) 90%, transparent);
+}
+
+// Accent backgrounds with various opacities
+.bg-accent-5 { background-color: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+.bg-accent-20 { background-color: color-mix(in srgb, var(--color-accent) 20%, transparent); }
+.bg-accent-30 { background-color: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+// Secondary backgrounds with opacity
+.bg-secondary-10 { background-color: color-mix(in srgb, var(--color-secondary) 10%, transparent); }
+
+// ============================================
+// Border Color Helpers with Opacity
+// ============================================
+
+// Accent border colors
+.border-accent-50 { border-color: color-mix(in srgb, var(--color-accent) 50%, transparent); }
+
+// Secondary border colors
+.border-secondary-20 { border-color: color-mix(in srgb, var(--color-secondary) 20%, transparent); }
+.border-secondary-30 { border-color: color-mix(in srgb, var(--color-secondary) 30%, transparent); }
+
+// ============================================
+// Hover State Helpers
+// ============================================
+.hover-bg-accent-30:hover { background-color: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+// ============================================
+// Concierge Selection State Classes
+// ============================================
+// For vibe/flavor selection boxes with dynamic states
+
+// Selected state for vibe/flavor boxes
+.vibe-box-selected {
+  border-color: var(--color-secondary);
+  background-color: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+}
+
+// Default state for vibe/flavor boxes  
+.vibe-box-default {
+  border-color: rgb(255 255 255 / 0.1);
+  background-color: rgb(255 255 255 / 0.05);
+  
+  &:hover {
+    border-color: rgb(255 255 255 / 0.3);
+  }
+}
+
+// Icon container in vibe/flavor boxes
+.vibe-icon-container {
+  background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  border-color: color-mix(in srgb, var(--color-secondary) 20%, transparent);
+}
+
+// ============================================
+// Additional Background Color Helpers
+// ============================================
+.bg-accent-50 { background-color: color-mix(in srgb, var(--color-accent) 50%, transparent); }
+.bg-bg-90 { background-color: color-mix(in srgb, var(--color-bg) 90%, transparent); }
+.bg-bg-95 { background-color: color-mix(in srgb, var(--color-bg) 95%, transparent); }
+
+// ============================================
+// Additional Border Color Helpers  
+// ============================================
+.border-accent-30 { border-color: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+// ============================================
+// Hover Border Color Helpers
+// ============================================
+.hover-border-secondary-30:hover { border-color: color-mix(in srgb, var(--color-secondary) 30%, transparent); }
+
+// ============================================
+// Ring Color Helpers (for focus/active states)
+// ============================================
+.ring-secondary-30 { 
+  --tw-ring-color: color-mix(in srgb, var(--color-secondary) 30%, transparent);
+}
+
+// ============================================
+// Category View Gradient Overlay
+// ============================================
+.category-overlay-gradient {
+  background-image: linear-gradient(to top, color-mix(in srgb, var(--color-primary) 50%, transparent), transparent, transparent);
+}
+
