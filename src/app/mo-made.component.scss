@@ -169,6 +169,29 @@ select option {
   --tw-gradient-to: color-mix(in srgb, var(--color-accent) 30%, transparent) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--color-bg-alt) var(--tw-gradient-via-position), var(--tw-gradient-to);
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+  background-color: var(--color-bg); // Explicit background color to prevent black flash
+  position: relative;
+}
+
+// Decorative blur elements as static background images instead of pseudo-elements
+@supports (background-image: radial-gradient(circle, transparent)) {
+  .hero-gradient {
+    background-image: 
+      radial-gradient(circle at right top, color-mix(in srgb, var(--color-accent) 20%, transparent) 0%, transparent 50%),
+      radial-gradient(circle at left bottom, color-mix(in srgb, var(--color-secondary) 10%, transparent) 0%, transparent 50%),
+      linear-gradient(to bottom right, var(--tw-gradient-from), var(--color-bg));
+    background-size: 
+      500px 500px,
+      400px 400px,
+      100% 100%;
+    background-position: 
+      right 20px top 20px,
+      left 0 bottom 0,
+      0 0;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-attachment: fixed; // Parallax effect
+    will-change: background;
+  }
 }
 
 // LBB Award badge gradient  
