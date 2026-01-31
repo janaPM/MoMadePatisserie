@@ -17,13 +17,28 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
-  // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
+  // ============================================
+  // Cache & Compression Middleware
+  // ============================================
+  // Add Cache-Control headers for static assets
+  server.use(express.static(browserDistFolder, {
+    maxAge: '1y',
+    etag: false,
+    setHeaders: (res, path) => {
+      // Images and assets: cache for 1 year (versioned by webpack)
+      if (path.match(/\.(js|css|png|jpg|jpeg|gif|webp|svg|woff|woff2)$/)) {
+        res.set('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+      // HTML: cache for 1 hour (allows updates)
+      else if (path.match(/\.html$/)) {
+        res.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+      }
+    }
   }));
 
+  // Example Express Rest API endpoints
+  // server.get('/api/**', (req, res) => { });
+  
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
