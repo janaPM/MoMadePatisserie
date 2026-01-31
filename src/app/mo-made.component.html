@@ -16,7 +16,7 @@
           <!-- Contact + CTA -->
           <div class="flex items-center gap-3 sm:gap-4">
             <!-- WhatsApp Quick Contact - hidden on mobile, visible on sm+ -->
-            <a [href]="contactWhatsappUrl" target="_blank" class="hidden sm:flex items-center gap-1.5 text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors opacity-0 animate-fadeIn" style="animation-delay: 0.3s">
+            <a [href]="contactWhatsappUrl" target="_blank" class="hidden sm:flex items-center gap-1.5 text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
               <span class="text-xs font-sans font-medium">{{contactPhone}}</span>
             </a>
@@ -28,6 +28,8 @@
       </nav>
 
       <section class="min-h-screen hero-gradient pt-20 sm:pt-24 relative overflow-hidden">
+        <div class="absolute top-20 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-accent-20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-48 sm:w-80 h-48 sm:h-80 bg-secondary-10 rounded-full blur-3xl"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-20">
           <div class="flex flex-col xl:flex-row items-center gap-8 sm:gap-12 xl:gap-20 2xl:gap-32">
             <div class="flex-1 min-w-[300px] sm:min-w-[340px] max-w-2xl space-y-5 sm:space-y-8 text-center xl:text-left z-10">
@@ -116,7 +118,7 @@
             @for (category of categories; track category.id) {
               <div class="group cursor-pointer active:scale-[0.98] transition-transform" (click)="openCategory(category.id)">
                 <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl mb-3 sm:mb-4 md:mb-6 aspect-[4/5] bg-accent-30">
-                  <img [src]="category.image" [alt]="category.title" loading="lazy" width="600" height="400" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out"/>
+                  <img [src]="category.image" [alt]="category.title" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out"/>
                   <!-- Show gradient on mobile by default -->
                   <div class="absolute inset-0 product-overlay-gradient md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
                   <!-- Show "View Collection" button on mobile by default -->
@@ -155,8 +157,6 @@
                 @for (img of storyImages; track img; let i = $index) {
                   <img [src]="img" 
                        loading="lazy"
-                       width="1200"
-                       height="800"
                        [class]="'absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ' + (currentStoryIndex() === i ? 'opacity-100' : 'opacity-0')"
                        alt="Our Story Video Cover"/>
                 }
@@ -747,16 +747,16 @@
           @for (product of filteredProducts(); track product.id) {
             <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-accent-30 hover-border-secondary-30">
               <div class="relative aspect-[4/5] overflow-hidden">
-                <img [src]="product.image" [alt]="product.name" loading="lazy" width="400" height="500" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+                <img [src]="product.image" [alt]="product.name" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
                 <div class="absolute inset-0 category-overlay-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 border border-accent-50">
                   <span class="text-[10px] font-sans font-bold text-[#9C6544] uppercase tracking-[0.15em]">{{product.flavor}}</span>
                 </div>
               </div>
               <div class="p-6 space-y-4">
-                <h3 class="font-serif text-xl text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors leading-tight line-clamp-2 h-[2.8rem]">{{product.name}}</h3>
+                <h3 class="font-serif text-xl text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors leading-tight">{{product.name}}</h3>
                 <p class="text-[#7A7471] font-sans text-sm leading-relaxed line-clamp-3 h-[4.5rem]">{{product.description}}</p>
-                <div class="flex items-center justify-between pt-2 border-t border-accent-30 h-[2.5rem]">
+                <div class="flex items-center justify-between pt-2 border-t border-accent-30">
                   <p class="font-sans font-bold text-xl text-[var(--color-secondary)] tracking-tight"><span>From </span> <span class="font-bold">₹{{product.price | number}}</span></p>
                   <button (click)="inquireProduct(product.name)" class="inline-flex items-center gap-2 bg-accent-50 hover:bg-[var(--color-secondary)] text-[var(--color-primary)] hover:text-white px-4 py-2 rounded-full text-xs font-sans font-bold uppercase tracking-wider transition-all duration-300">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
