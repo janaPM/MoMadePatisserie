@@ -1,4 +1,4 @@
-import { Component, NgModule, signal, computed, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, NgModule, signal, computed, OnInit, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -49,6 +49,15 @@ export class MoMadeComponent implements OnInit {
   eventDate = '';
   cakeMessage = '';
 
+  // Floating Concierge Menu State
+  isMenuOpen = signal(false);
+  
+  // Scroll visibility tracking
+  isScrolling = signal(false);
+  lastScrollY = signal(0);
+  scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+  conciergeVisible = computed(() => !this.isScrolling());
+
   constructor(
     private location: Location,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -61,6 +70,65 @@ export class MoMadeComponent implements OnInit {
           this.goBack();
         }
       });
+    }
+  }
+
+  // ============================================
+  // Scroll Detection for Concierge Visibility
+  // ============================================
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const currentScrollY = window.scrollY;
+    const lastScroll = this.lastScrollY();
+
+    // Determine if scrolling down (hide) or up (show)
+    if (currentScrollY > lastScroll && currentScrollY > 100) {
+      // Scrolling down
+      this.isScrolling.set(true);
+    } else {
+      // Scrolling up or at top
+      this.isScrolling.set(false);
+    }
+
+    this.lastScrollY.set(currentScrollY);
+
+    // Clear existing timeout
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
+
+    // Set timeout to show after scroll stops
+    this.scrollTimeout = setTimeout(() => {
+      this.isScrolling.set(false);
+    }, 1500); // Show after 1.5 seconds of no scrolling
+  }
+
+  // ============================================
+  // Floating Concierge Menu Methods
+  // ============================================
+  toggleMenu() {
+    this.isMenuOpen.update(v => !v);
+  }
+
+  openWhatsApp() {
+    if (isPlatformBrowser(this.platformId)) {
+      const message = "Hi! I'm interested in your cakes, want to explore on it.";
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://wa.me/918525015160?text=${encodedMessage}`, '_blank');
+    }
+  }
+
+  openInstagram() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.open('https://instagram.com/mo_made_patisserie', '_blank');
+    }
+  }
+
+  callDirectly() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.location.href = 'tel:+918525015160';
     }
   }
 
@@ -91,33 +159,33 @@ export class MoMadeComponent implements OnInit {
     }
   }
 
-  getSeasonalProducts(): Product[] {
-    const month = new Date().getMonth();
-    if (month <= 1 || month >= 10) {
-      return [
-        { id: 101, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
-        { id: 102, name: 'Chocolate Strawberry Dream', price: 1800, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Chocolate sponge with fresh strawberry & Chocolate Ganache' }
-      ];
-    } else if (month >= 2 && month <= 5) {
-      return [
-        { id: 201, name: 'Mango Delight', price: 1700, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango & Vanilla Swiss Meringue Buttercream' },
-        { id: 202, name: 'Pistachio Mango Fusion', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5089.webp', description: 'Pistachio sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' },
-        { id: 203, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
-      ];
-    } else {
-      return [
-        { id: 301, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
-        { id: 302, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
-      ];
-    }
-  }
+  // getSeasonalProducts(): Product[] {
+  //   const month = new Date().getMonth();
+  //   if (month <= 1 || month >= 10) {
+  //     return [
+  //       { id: 101, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
+  //       { id: 102, name: 'Chocolate Strawberry Dream', price: 1800, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Chocolate sponge with fresh strawberry & Chocolate Ganache' }
+  //     ];
+  //   } else if (month >= 2 && month <= 5) {
+  //     return [
+  //       { id: 201, name: 'Mango Delight', price: 1700, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango & Vanilla Swiss Meringue Buttercream' },
+  //       { id: 202, name: 'Pistachio Mango Fusion', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5089.webp', description: 'Pistachio sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' },
+  //       { id: 203, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
+  //     ];
+  //   } else {
+  //     return [
+  //       { id: 301, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
+  //       { id: 302, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
+  //     ];
+  //   }
+  // }
 
-  getSeasonalTitle(): string {
-    const month = new Date().getMonth();
-    if (month <= 1 || month >= 10) return 'Winter Specials';
-    if (month >= 2 && month <= 4) return 'Summer Harvest';
-    return 'Monsoon Delights';
-  }
+  // getSeasonalTitle(): string {
+  //   const month = new Date().getMonth();
+  //   if (month <= 1 || month >= 10) return 'Winter Specials';
+  //   if (month >= 2 && month <= 4) return 'Summer Harvest';
+  //   return 'Monsoon Delights';
+  // }
 
   getCakeMessageLines(): [string, string | null] {
     if (!this.cakeMessage || !this.cakeMessage.trim()) return ["", null];
@@ -187,7 +255,7 @@ export class MoMadeComponent implements OnInit {
     },
     {
       id: 'signature',
-      title: 'Signature Collection',
+      title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless designs',
       price: 'From ₹1,200',
       image: 'assets/images/IMG_5087.webp',
@@ -202,7 +270,7 @@ export class MoMadeComponent implements OnInit {
     },
     {
       id: 'premium',
-      title: 'Premium Collection',
+      title: 'Confectionery',
       description: 'Exquisite ingredients, complex pairings, and luxury finishes',
       price: 'From ₹1,800',
       image: 'assets/images/IMG_5088.webp',
@@ -217,15 +285,20 @@ export class MoMadeComponent implements OnInit {
     },
     {
       id: 'seasonal',
-      title: this.getSeasonalTitle(),
+      title: 'Summer Special',
       description: 'Fresh, limited-edition treats inspired by the season',
       price: 'From ₹1,600',
       image: 'assets/images/IMG_5089.webp',
-      products: this.getSeasonalProducts()
+      products: [
+        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
+        { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
+        { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/IMG_5087.webp', description: 'Almond flour based sponge (Add-on)' },
+        { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/IMG_5089.webp', description: 'Acrylic or Fondant topper with personalized message' }
+      ]
     },
     {
       id: 'custom',
-      title: 'Customization',
+      title: 'Winter Special',
       description: 'Build your own dream cake or customize dietary preferences',
       price: 'From ₹0 (Add-ons)',
       image: 'assets/images/IMG_5090.webp',
