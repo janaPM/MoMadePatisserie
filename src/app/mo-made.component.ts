@@ -58,6 +58,9 @@ export class MoMadeComponent implements OnInit {
   scrollTimeout: ReturnType<typeof setTimeout> | null = null;
   conciergeVisible = computed(() => !this.isScrolling());
 
+  // Boutique Carousel State (Mobile)
+  activeCarouselIndex = signal(0);
+
   constructor(
     private location: Location,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -129,6 +132,20 @@ export class MoMadeComponent implements OnInit {
   callDirectly() {
     if (isPlatformBrowser(this.platformId)) {
       window.location.href = 'tel:+918525015160';
+    }
+  }
+
+  // ============================================
+  // Boutique Carousel Scroll Handler (Mobile)
+  // ============================================
+  onCarouselScroll(event: Event) {
+    const scrollContainer = event.target as HTMLElement;
+    const scrollLeft = scrollContainer.scrollLeft;
+    const cardWidth = scrollContainer.querySelector('.carousel-card')?.getBoundingClientRect().width ?? 0;
+    
+    if (cardWidth > 0) {
+      const index = Math.round(scrollLeft / cardWidth);
+      this.activeCarouselIndex.set(Math.max(0, Math.min(index, this.categories.length - 1)));
     }
   }
 

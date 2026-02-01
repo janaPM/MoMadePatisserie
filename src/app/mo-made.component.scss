@@ -503,3 +503,44 @@ input[type="date"] {
 .z-100 {
   z-index: 100;
 }
+
+// ============================================
+// Boutique Carousel Styles (Mobile)
+// ============================================
+.boutique-carousel {
+  // Hide scrollbar - all browsers
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  
+  // Hide scrollbar - Webkit (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  // Hide scrollbar - Firefox
+  scrollbar-width: none;
+  
+  // Hide scrollbar - IE/Edge
+  -ms-overflow-style: none;
+  
+  // Touch optimization
+  touch-action: pan-x pinch-zoom;
+  will-change: scroll-position;
+  
+  // Smooth snap behavior
+  scroll-snap-type: x mandatory;
+}
+
+// Carousel card touch optimization
+.carousel-card {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  
+  // Prevent text selection during swipe
+  user-select: none;
+  -webkit-user-select: none;
+  
+  // Optimize touch feedback
+  -webkit-tap-highlight-color: transparent;
+}

@@ -114,15 +114,15 @@
             <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-[var(--color-primary)] font-bold">The Boutique</h2>
             <p class="text-[#7A7471] font-sans text-sm sm:text-base md:text-lg max-w-2xl mx-auto">Curated collections of edible artistry, each piece handcrafted to perfection</p>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+          <!-- Desktop Grid (sm and up) -->
+          <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             @for (category of categories; track category.id) {
               <div class="group cursor-pointer active:scale-[0.98] transition-transform" (click)="openCategory(category.id)">
                 <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl mb-3 sm:mb-4 md:mb-6 aspect-[4/5] bg-accent-30">
                   <img [src]="category.image" [alt]="category.title" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out"/>
-                  <!-- Show gradient on mobile by default -->
-                  <div class="absolute inset-0 product-overlay-gradient md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <!-- Show "View Collection" button on mobile by default -->
-                  <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500">
+                  <div class="absolute inset-0 product-overlay-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                     <span class="inline-flex items-center gap-1.5 sm:gap-2 bg-white/90 backdrop-blur text-[var(--color-primary)] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-sans font-medium">
                       <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                       View Collection
@@ -131,16 +131,57 @@
                 </div>
                 <div class="space-y-2 px-2">
                   <div class="flex items-center justify-between">
-                    <!-- Title colored on mobile by default -->
-                    <h3 class="font-serif text-2xl text-[var(--color-secondary)] md:text-[var(--color-primary)] md:group-hover:text-[var(--color-secondary)] transition-colors">{{category.title}}</h3>
-                    <!-- Arrow visible on mobile by default -->
-                    <svg class="w-5 h-5 text-[var(--color-secondary)] md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    <h3 class="font-serif text-2xl text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors">{{category.title}}</h3>
+                    <svg class="w-5 h-5 text-[var(--color-secondary)] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                   </div>
                   <p class="text-[#7A7471] font-sans text-sm leading-relaxed">{{category.description}}</p>
                   <p class="text-[var(--color-secondary)] font-sans font-bold text-lg">{{category.price}}</p>
                 </div>
               </div>
             }
+          </div>
+
+          <!-- Mobile Horizontal Carousel (xs only) -->
+          <div class="sm:hidden">
+            <div 
+              (scroll)="onCarouselScroll($event)"
+              class="boutique-carousel flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 -mx-4 pb-4"
+            >
+              @for (category of categories; track category.id; let i = $index) {
+                <div 
+                  class="carousel-card flex-shrink-0 w-[80vw] snap-center"
+                  (click)="openCategory(category.id)"
+                >
+                  <div class="group cursor-pointer active:scale-[0.98] transition-transform">
+                    <div class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-accent-30">
+                      <img [src]="category.image" [alt]="category.title" loading="lazy" class="w-full h-full object-cover transition-all duration-500"/>
+                      <div class="absolute inset-0 product-overlay-gradient"></div>
+                      <div class="absolute bottom-4 left-4 right-4">
+                        <span class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur text-[var(--color-primary)] px-3 py-1.5 rounded-full text-xs font-sans font-medium">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                          View
+                        </span>
+                      </div>
+                    </div>
+                    <div class="space-y-1.5 px-1">
+                      <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-serif text-xl text-[var(--color-secondary)]">{{category.title}}</h3>
+                        <svg class="w-4 h-4 text-[var(--color-secondary)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                      </div>
+                      <p class="text-[#7A7471] font-sans text-xs leading-relaxed line-clamp-2">{{category.description}}</p>
+                      <p class="text-[var(--color-secondary)] font-sans font-bold text-sm">{{category.price}}</p>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Index Indicators -->
+            <div class="flex items-center justify-center gap-2 mt-5">
+              @for (category of categories; track category.id; let i = $index) {
+                <div [class]="'transition-all duration-300 rounded-full ' + (activeCarouselIndex() === i ? 'w-6 h-1 bg-[var(--color-secondary)]' : 'w-1.5 h-1 bg-[var(--color-accent)]')"></div>
+              }
+            </div>
           </div>
         </div>
       </section>
