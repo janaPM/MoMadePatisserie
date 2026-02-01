@@ -60,6 +60,7 @@ export class MoMadeComponent implements OnInit {
 
   // Boutique Carousel State (Mobile)
   activeCarouselIndex = signal(0);
+  carouselScrollPosition = 0; // Store horizontal scroll position
 
   constructor(
     private location: Location,
@@ -143,9 +144,24 @@ export class MoMadeComponent implements OnInit {
     const scrollLeft = scrollContainer.scrollLeft;
     const cardWidth = scrollContainer.querySelector('.carousel-card')?.getBoundingClientRect().width ?? 0;
     
+    // Save horizontal scroll position
+    this.carouselScrollPosition = scrollLeft;
+    
     if (cardWidth > 0) {
       const index = Math.round(scrollLeft / cardWidth);
       this.activeCarouselIndex.set(Math.max(0, Math.min(index, this.categories.length - 1)));
+    }
+  }
+
+  // Restore carousel scroll position after returning from category view
+  restoreCarouselPosition() {
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        const carousel = document.querySelector('.boutique-carousel') as HTMLElement;
+        if (carousel && this.carouselScrollPosition > 0) {
+          carousel.scrollTo({ left: this.carouselScrollPosition, behavior: 'smooth' });
+        }
+      }, 100);
     }
   }
 
@@ -366,6 +382,8 @@ export class MoMadeComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {
         window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
+        // Restore carousel horizontal scroll position
+        this.restoreCarouselPosition();
       }, 50);
     }
   }

@@ -861,19 +861,20 @@
     <button 
       (click)="toggleMenu()" 
       class="w-16 h-16 rounded-full bg-[#7E5539] text-white flex items-center justify-center shadow-2xl hover:shadow-xl transition-all duration-500 hover:scale-110 active:scale-95"
+      style="background-color: #7E5539; border: none; color: white; border-radius: 9999px; width: 4rem; height: 4rem;"
       [class.scale-125]="isMenuOpen()"
       [attr.aria-expanded]="isMenuOpen()"
       aria-label="Open concierge menu"
     >
       <!-- Message Icon (when closed) -->
       @if (!isMenuOpen()) {
-        <svg class="w-7 h-7 transition-all duration-500 rotate-0" fill="currentColor" viewBox="0 0 24 24">
+        <svg class="w-7 h-7 transition-all duration-500 rotate-0" fill="#FFFFFF" viewBox="0 0 24 24">
           <path d="M20.656 21.528L.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/>
         </svg>
       }
       <!-- Close Icon (when open) -->
       @if (isMenuOpen()) {
-        <svg class="w-7 h-7 transition-all duration-500 rotate-90" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <svg class="w-7 h-7 transition-all duration-500 rotate-90" fill="none" stroke="#FFFFFF" stroke-width="1.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       }

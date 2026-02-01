@@ -524,9 +524,8 @@ input[type="date"] {
   // Hide scrollbar - IE/Edge
   -ms-overflow-style: none;
   
-  // Touch optimization
-  touch-action: pan-x pinch-zoom;
-  will-change: scroll-position;
+  // Allow both horizontal scroll AND vertical page scroll
+  touch-action: pan-x pan-y;
   
   // Smooth snap behavior
   scroll-snap-type: x mandatory;
