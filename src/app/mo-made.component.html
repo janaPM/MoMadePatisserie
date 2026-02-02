@@ -122,6 +122,16 @@
                 <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl mb-3 sm:mb-4 md:mb-6 aspect-[4/5] bg-accent-30">
                   <img [src]="category.image" [alt]="category.title" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out"/>
                   <div class="absolute inset-0 product-overlay-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <!-- Brand Signature Watermark -->
+                  <div class="signature-watermark absolute bottom-5 right-5 pointer-events-none z-10 select-none text-center">
+                    <div class="text-white/90 text-sm font-serif leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Mo</div>
+                    <div class="text-white/90 text-sm font-serif leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Made</div>
+                    <div class="flex items-center justify-center gap-1 mt-0.5">
+                      <span class="w-1 h-1 rounded-full bg-white/60"></span>
+                      <span class="text-white/80 text-[6px] tracking-[0.2em] uppercase font-sans drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]">Patisserie</span>
+                      <span class="w-1 h-1 rounded-full bg-white/60"></span>
+                    </div>
+                  </div>
                   <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                     <span class="inline-flex items-center gap-1.5 sm:gap-2 bg-white/90 backdrop-blur text-[var(--color-primary)] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-sans font-medium">
                       <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -156,6 +166,16 @@
                     <div class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-accent-30">
                       <img [src]="category.image" [alt]="category.title" loading="lazy" class="w-full h-full object-cover transition-all duration-500"/>
                       <div class="absolute inset-0 product-overlay-gradient"></div>
+                      <!-- Brand Signature Watermark -->
+                      <div class="signature-watermark absolute bottom-4 right-3 pointer-events-none z-10 select-none text-center">
+                        <div class="text-white/90 text-xs font-serif leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Mo</div>
+                        <div class="text-white/90 text-xs font-serif leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Made</div>
+                        <div class="flex items-center justify-center gap-0.5 mt-0.5">
+                          <span class="w-0.5 h-0.5 rounded-full bg-white/60"></span>
+                          <span class="text-white/80 text-[5px] tracking-[0.15em] uppercase font-sans drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]">Patisserie</span>
+                          <span class="w-0.5 h-0.5 rounded-full bg-white/60"></span>
+                        </div>
+                      </div>
                       <div class="absolute bottom-4 left-4 right-4">
                         <span class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur text-[var(--color-primary)] px-3 py-1.5 rounded-full text-xs font-sans font-medium">
                           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -365,7 +385,7 @@
                       </div>
                       <div class="space-y-1.5 sm:space-y-2">
                         <label class="text-[10px] sm:text-xs font-sans uppercase tracking-widest text-gray-400">Event Date</label>
-                        <input type="date" [(ngModel)]="eventDate" class="w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all appearance-none leading-tight line-height-tight"/>
+                        <input type="date" [(ngModel)]="eventDate" class="date-input-ios w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all"/>
                       </div>
                     </div>
                     <div class="space-y-1.5 sm:space-y-2">
@@ -833,7 +853,8 @@
   <!-- ============================================
        FLOATING CONCIERGE COMPONENT
        ============================================ -->
-  <div class="fixed bottom-6 right-6 z-100 flex flex-col items-end gap-3 transition-all duration-500" [class.opacity-0]="!conciergeVisible()" [class.pointer-events-none]="!conciergeVisible()">
+  <div class="fixed bottom-8 sm:bottom-6 right-4 sm:right-6 z-[100] flex flex-col items-end gap-3 transition-all duration-500" [class.opacity-0]="!conciergeVisible()" [class.pointer-events-none]="!conciergeVisible()"
+       style="bottom: max(2rem, env(safe-area-inset-bottom, 1.5rem) + 0.5rem);">
     <!-- Menu Items (Animated Stack) -->
     @if (isMenuOpen()) {
       <div class="transition-all duration-500 space-y-3 animate-fadeIn">
@@ -862,7 +883,7 @@
       (click)="toggleMenu()" 
       class="w-16 h-16 rounded-full bg-[#7E5539] text-white flex items-center justify-center shadow-2xl hover:shadow-xl transition-all duration-500 hover:scale-110 active:scale-95"
       style="background-color: #7E5539; border: none; color: white; border-radius: 9999px; width: 4rem; height: 4rem;"
-      [class.scale-125]="isMenuOpen()"
+      [class.scale-110]="isMenuOpen()"
       [attr.aria-expanded]="isMenuOpen()"
       aria-label="Open concierge menu"
     >
