@@ -49,6 +49,18 @@ export class MoMadeComponent implements OnInit {
   eventDate = '';
   cakeMessage = '';
 
+  // Auto-advance step 1 when vibe is selected
+  onVibeSelect(vibeName: string) {
+    this.selectedVibe.set(vibeName);
+    setTimeout(() => this.nextStep(), 300); // Small delay for visual feedback
+  }
+
+  // Auto-advance step 2 when flavor is selected
+  onFlavorSelect(flavorName: string) {
+    this.selectedFlavor.set(flavorName);
+    setTimeout(() => this.nextStep(), 300); // Small delay for visual feedback
+  }
+
   // Floating Concierge Menu State
   isMenuOpen = signal(false);
   
@@ -80,20 +92,19 @@ export class MoMadeComponent implements OnInit {
     }
   }
 
-  // Prevent iOS Safari auto-zoom on input focus
+  // Prevent iOS Safari auto-zoom on input focus by setting font-size to 16px
   private setupIOSZoomPrevention() {
-    const viewport = document.querySelector('meta[name=viewport]');
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     
-    if (isIOS && viewport) {
-      document.querySelectorAll('input, select, textarea').forEach(element => {
-        element.addEventListener('focus', () => {
-          viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1');
-        });
-        element.addEventListener('blur', () => {
-          viewport.setAttribute('content', 'width=device-width, initial-scale=1');
-        });
-      });
+    if (isIOS) {
+      // Add a style tag to set all inputs to 16px font (iOS only zooms when font < 16px)
+      const style = document.createElement('style');
+      style.textContent = `
+        input, select, textarea {
+          font-size: 16px !important;
+        }
+      `;
+      document.head.appendChild(style);
     }
   }
 

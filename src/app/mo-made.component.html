@@ -301,7 +301,7 @@
                     </div>
                     <div class="grid sm:grid-cols-3 gap-3 sm:gap-4">
                       @for (vibe of vibes; track vibe.name) {
-                        <div (click)="selectedVibe.set(vibe.name)" [class]="'relative cursor-pointer rounded-lg sm:rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 border ' + (selectedVibe() === vibe.name ? 'vibe-box-selected' : 'vibe-box-default')">
+                        <div (click)="onVibeSelect(vibe.name)" [class]="'relative cursor-pointer rounded-lg sm:rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 border ' + (selectedVibe() === vibe.name ? 'vibe-box-selected' : 'vibe-box-default')">
                           <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-full vibe-icon-container flex items-center justify-center border">
                             <svg class="w-7 h-7 sm:w-7 sm:h-7 text-[var(--color-secondary)]" fill="none" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24">
                               @if (vibe.name === 'Romantic') {
@@ -328,10 +328,8 @@
                         </div>
                       }
                     </div>
-                    <button (click)="nextStep()" [disabled]="!selectedVibe()" [class]="'w-full py-3 sm:py-4 rounded-lg sm:rounded-xl font-sans font-bold text-sm sm:text-base text-white transition-all duration-300 flex items-center justify-center gap-2 ' + (selectedVibe() ? 'bg-[var(--color-secondary)] hover:bg-[#B38A7C] shadow-lg hover:shadow-xl' : 'bg-gray-600 cursor-not-allowed')">
-                      Continue to Flavors
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-                    </button>
+                    <!-- Step 1 Continue Button - Hidden since auto-advance on selection -->
+                    <!-- <button (click)="nextStep()" [disabled]="!selectedVibe()" class="w-full py-3 sm:py-4 rounded-lg sm:rounded-xl font-sans font-bold text-sm sm:text-base text-white transition-all duration-300 flex items-center justify-center gap-2 bg-[var(--color-secondary)] hover:bg-[#B38A7C] shadow-lg hover:shadow-xl">Continue to Flavors</button> -->
                   </div>
                 }
 
@@ -343,7 +341,7 @@
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                       @for (flavor of flavors; track flavor.name) {
-                        <div (click)="selectedFlavor.set(flavor.name)" [class]="'cursor-pointer rounded-lg sm:rounded-xl p-3 sm:p-4 text-center transition-all duration-300 border ' + (selectedFlavor() === flavor.name ? 'vibe-box-selected' : 'vibe-box-default')">
+                        <div (click)="onFlavorSelect(flavor.name)" [class]="'cursor-pointer rounded-lg sm:rounded-xl p-3 sm:p-4 text-center transition-all duration-300 border ' + (selectedFlavor() === flavor.name ? 'vibe-box-selected' : 'vibe-box-default')">
                           <div class="w-9 h-9 sm:w-10 sm:h-10 mx-auto mb-2 sm:mb-3 rounded-full vibe-icon-container flex items-center justify-center border">
                             <svg class="w-5 h-5 text-[var(--color-secondary)]" fill="none" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24">
                               <circle cx="12" cy="12" r="8"/>
@@ -355,15 +353,11 @@
                         </div>
                       }
                     </div>
+                    <!-- Step 2 Buttons - Back button only, Next is auto-advance on selection -->
                     <div class="flex gap-2 sm:gap-4">
                       <button (click)="prevStep()" class="flex-1 py-3 sm:py-4 rounded-lg sm:rounded-xl font-sans font-bold text-xs sm:text-base text-white bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
                         <span class="hidden sm:inline">Back</span>
-                      </button>
-                      <button (click)="nextStep()" [disabled]="!selectedFlavor()" [class]="'flex-1 py-3 sm:py-4 rounded-lg sm:rounded-xl font-sans font-bold text-xs sm:text-base transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 ' + (selectedFlavor() ? 'bg-[var(--color-secondary)] hover:bg-[#B38A7C] text-white shadow-lg' : 'bg-gray-600 text-gray-400 cursor-not-allowed')">
-                        <span class="hidden sm:inline">Continue</span>
-                        <span class="sm:hidden">Next</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                       </button>
                     </div>
                   </div>
@@ -378,19 +372,19 @@
                     <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
                       <div class="space-y-1.5 sm:space-y-2">
                         <label class="text-[10px] sm:text-xs font-sans uppercase tracking-widest text-gray-400">Your Name</label>
-                        <input type="text" [(ngModel)]="customerName" placeholder="e.g. Priya Sharma" class="w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans placeholder-gray-500 focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all"/>
+                        <input type="text" [(ngModel)]="customerName" placeholder="e.g. Priya Sharma" class="w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-base text-white font-sans placeholder-gray-500 focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all" style="font-size: 16px !important;"/>
                       </div>
                       <div class="space-y-1.5 sm:space-y-2">
                         <label class="text-[10px] sm:text-xs font-sans uppercase tracking-widest text-gray-400">Event Date</label>
                         <div class="relative">
-                          <input type="date" [(ngModel)]="eventDate" class="date-input-ios w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all pr-10"/>
+                          <input type="date" [(ngModel)]="eventDate" class="date-input-ios w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-base text-white font-sans focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all pr-10" style="font-size: 16px !important;"/>
                           <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
                         </div>
                       </div>
                     </div>
                     <div class="space-y-1.5 sm:space-y-2">
                       <label class="text-[10px] sm:text-xs font-sans uppercase tracking-widest text-gray-400">Message on Cake</label>
-                      <input type="text" [(ngModel)]="cakeMessage" placeholder="e.g. Happy Birthday Priya!" class="w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans placeholder-gray-500 focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all"/>
+                      <input type="text" [(ngModel)]="cakeMessage" placeholder="e.g. Happy Birthday Priya!" class="w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-base text-white font-sans placeholder-gray-500 focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all" style="font-size: 16px !important;"/>
                       <p class="text-[10px] text-gray-500 font-sans">Leave blank if no message needed</p>
                     </div>
                     <div class="bg-secondary-10 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-secondary-30">
