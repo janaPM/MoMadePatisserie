@@ -89,7 +89,29 @@ export class MoMadeComponent implements OnInit {
 
       // iOS Safari zoom prevention on input focus
       this.setupIOSZoomPrevention();
+
+      // Signal app is ready - removes splash screen and triggers fade-in
+      this.triggerAppReady();
     }
+  }
+
+  // Mark app as ready - hides splash screen and triggers fade-in animation
+  private triggerAppReady() {
+    // Use requestAnimationFrame to ensure DOM is fully rendered
+    requestAnimationFrame(() => {
+      const splashScreen = document.getElementById('splash-screen');
+      const appRoot = document.querySelector('app-root');
+      
+      if (splashScreen) {
+        // Add hidden class to splash screen to fade it out
+        splashScreen.classList.add('hidden');
+      }
+      
+      if (appRoot) {
+        // Add app-ready class to app-root to fade in content
+        appRoot.classList.add('app-ready');
+      }
+    });
   }
 
   // Prevent iOS Safari auto-zoom on input focus by setting font-size to 16px

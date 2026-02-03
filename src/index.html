@@ -226,6 +226,109 @@
   </script>
   
   <style>
+    /* ============================================
+       CRITICAL LOADING CSS - FOUC Prevention
+       ============================================ */
+    
+    /* Initialize page to buttercream background before any content renders */
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #FDFBF9;
+    }
+    
+    /* Ensure app-root is visible and ready for content */
+    app-root {
+      display: block;
+      width: 100%;
+      min-height: 100vh;
+      background-color: #FDFBF9;
+    }
+    
+    /* Splash screen styles - visible only during loading */
+    .mo-splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #FDFBF9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.8s ease-out 0.2s, visibility 0.8s ease-out 0.2s;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    /* When app is ready, fade out splash screen */
+    .mo-splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    /* Main content fade-in when app is ready */
+    app-root.app-ready {
+      animation: siteReveal 0.8s ease-out forwards;
+    }
+    
+    /* Splash screen content styling */
+    .splash-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2D2926;
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+    }
+    
+    /* Loading bar container */
+    .splash-loader {
+      width: 120px;
+      height: 1px;
+      background-color: #E8DED5;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    /* Animated loading bar */
+    .splash-loader-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #7E5539, #A0744D, #7E5539);
+      border-radius: 1px;
+      animation: loadingProgress 2s ease-in-out forwards;
+      box-shadow: 0 0 8px rgba(126, 85, 57, 0.4);
+    }
+    
+    /* Loading animation keyframes */
+    @keyframes loadingProgress {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+    
+    /* Smooth reveal animation */
+    @keyframes siteReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Original body styles */
     html { scroll-behavior: smooth; }
     body { 
       font-family: 'Inter', system-ui, sans-serif;
@@ -235,6 +338,16 @@
     }
     ::selection { background: #F3DCD4; }
   </style>
+  <!-- ============================================
+       SPLASH SCREEN - Positioned outside app-root
+       to remain visible during Angular bootstrap
+       ============================================ -->
+  <div id="splash-screen" class="mo-splash-screen">
+    <div class="splash-logo">Mo Made</div>
+    <div class="splash-loader">
+      <div class="splash-loader-bar"></div>
+    </div>
+  </div>
 </head>
 <body>
   <app-root></app-root>
