@@ -28,8 +28,6 @@
       </nav>
 
       <section class="min-h-screen hero-gradient pt-20 sm:pt-24 relative overflow-hidden">
-        <div class="absolute top-20 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-accent-20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-48 sm:w-80 h-48 sm:h-80 bg-secondary-10 rounded-full blur-3xl"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-20">
           <div class="flex flex-col xl:flex-row items-center gap-8 sm:gap-12 xl:gap-20 2xl:gap-32">
             <div class="flex-1 min-w-[300px] sm:min-w-[340px] max-w-2xl space-y-5 sm:space-y-8 text-center xl:text-left z-10">
@@ -207,7 +205,6 @@
       </section>
 
       <section id="story" class="py-20 sm:py-28 bg-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
           <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div class="relative order-2 lg:order-1 group cursor-pointer" (click)="toggleStoryImage()">
@@ -385,7 +382,10 @@
                       </div>
                       <div class="space-y-1.5 sm:space-y-2">
                         <label class="text-[10px] sm:text-xs font-sans uppercase tracking-widest text-gray-400">Event Date</label>
-                        <input type="date" [(ngModel)]="eventDate" class="date-input-ios w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all"/>
+                        <div class="relative">
+                          <input type="date" [(ngModel)]="eventDate" class="date-input-ios w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3.5 text-xs sm:text-base text-white font-sans focus:outline-none focus:border-[var(--color-secondary)] focus:ring-1 focus:ring-[var(--color-secondary)] transition-all pr-10"/>
+                          <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                        </div>
                       </div>
                     </div>
                     <div class="space-y-1.5 sm:space-y-2">

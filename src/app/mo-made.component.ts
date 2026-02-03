@@ -74,6 +74,26 @@ export class MoMadeComponent implements OnInit {
           this.goBack();
         }
       });
+
+      // iOS Safari zoom prevention on input focus
+      this.setupIOSZoomPrevention();
+    }
+  }
+
+  // Prevent iOS Safari auto-zoom on input focus
+  private setupIOSZoomPrevention() {
+    const viewport = document.querySelector('meta[name=viewport]');
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    if (isIOS && viewport) {
+      document.querySelectorAll('input, select, textarea').forEach(element => {
+        element.addEventListener('focus', () => {
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1');
+        });
+        element.addEventListener('blur', () => {
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1');
+        });
+      });
     }
   }
 

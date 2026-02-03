@@ -553,84 +553,49 @@ input[type="date"] {
 }
 
 // ============================================
-// iOS Input Zoom Prevention
+// iOS Input Zoom Prevention (handled via JS in component)
 // ============================================
-// iOS auto-zooms when input font-size < 16px
-// Solution: Set 16px font on focus for iOS only
 
-// Target iOS devices specifically
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 640px) {
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="date"],
-    input[type="number"],
-    textarea,
-    select {
-      // Set 16px on focus to prevent zoom
-      &:focus {
-        font-size: 16px !important;
-      }
-    }
-  }
-}
-
-// Date input specific iOS fixes
+// Date input specific fixes
 .date-input-ios {
-  // Reset iOS appearance completely
+  // Reset appearance completely
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   
-  // Force minimum height on iOS
-  min-height: 44px;
-  line-height: normal;
+  // Ensure proper sizing
+  min-height: 40px;
+  line-height: 1.5;
   
-  // Ensure proper display
-  display: block;
+  // Fix color scheme for dark inputs
+  color-scheme: dark;
   
-  // iOS Safari specific fixes
-  @supports (-webkit-touch-callout: none) {
-    // Force height and padding on iOS
-    min-height: 48px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    
-    // Prevent zoom on focus
-    &:focus {
-      font-size: 16px !important;
-    }
-    
-    // Fix color scheme for dark inputs
-    color-scheme: dark;
-    
-    // Ensure text is visible
-    &::-webkit-date-and-time-value {
-      text-align: left;
-      color: white;
-    }
-    
-    // Style the calendar icon
-    &::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-      opacity: 0.6;
-      cursor: pointer;
-      
-      &:hover {
-        opacity: 1;
-      }
-    }
+  // Background fix - ensure it matches other inputs
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  
+  // Hide the native calendar picker icon (we use custom SVG)
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
   
-  // Fallback for all mobile
-  @media (max-width: 640px) {
-    min-height: 44px;
-    padding: 12px 14px;
+  // Show native date format (dd/mm/yyyy or MM/DD/YYYY)
+  &::-webkit-date-and-time-value {
+    text-align: left;
+    color: white;
+  }
+  
+  // Fix for iOS Safari
+  @supports (-webkit-touch-callout: none) {
+    color: white;
     
-    &::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-      opacity: 0.6;
+    &::-webkit-date-and-time-value {
+      color: white;
     }
   }
 }
