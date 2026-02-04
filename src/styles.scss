@@ -7,15 +7,13 @@
    GLOBAL ANIMATIONS & TRANSITIONS
    ============================================ */
 
-/* Site reveal animation - triggered when app is ready */
+/* Site reveal animation - opacity only to preserve fixed positioning */
 @keyframes siteReveal {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

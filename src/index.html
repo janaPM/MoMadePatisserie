@@ -316,15 +316,13 @@
       100% { width: 100%; }
     }
     
-    /* Smooth reveal animation */
+    /* Smooth reveal animation - opacity only to preserve fixed positioning */
     @keyframes siteReveal {
       from {
         opacity: 0;
-        transform: translateY(10px);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
       }
     }
     
