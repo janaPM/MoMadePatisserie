@@ -173,7 +173,13 @@ export class MoMadeComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const message = "Hi! I'm interested in your cakes, want to explore on it.";
       const encodedMessage = encodeURIComponent(message);
-      window.open(`https://wa.me/918525015160?text=${encodedMessage}`, '_blank');
+      // Try to open WhatsApp app directly on mobile, fallback to web
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = `whatsapp://send?phone=918525015160&text=${encodedMessage}`;
+      } else {
+        window.open(`https://wa.me/918525015160?text=${encodedMessage}`, '_blank');
+      }
     }
   }
 
@@ -329,7 +335,7 @@ export class MoMadeComponent implements OnInit {
       title: 'Wedding Cakes',
       description: 'Multi-tier floral masterpieces with handcrafted sugar flowers',
       price: 'From ₹5,500',
-      image: 'assets/images/IMG_5089.webp',
+      image: 'assets/images/IMG_5088.webp',
       products: [
         { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
         { id: 2, name: 'Midnight Elegance', price: 15000, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Dark chocolate ganache with deep burgundy sugar flowers' },
@@ -344,14 +350,14 @@ export class MoMadeComponent implements OnInit {
       title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless designs',
       price: 'From ₹1,200',
-      image: 'assets/images/IMG_5087.webp',
+      image: 'assets/images/c1.webp',
       products: [
-        { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
-        { id: 22, name: 'Chocolate Raspberry', price: 1500, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
-        { id: 23, name: 'Chocolate Hazelnut', price: 1600, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' },
-        { id: 24, name: 'Red Velvet', price: 1300, flavor: 'vanilla', image: 'assets/images/IMG_5089.webp', description: 'Red Velvet sponge with cream cheese frosting or chocolate ganache' },
-        { id: 25, name: 'Vanilla Berry', price: 1400, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge, Berry Compote, White Chocolate Pistachio feuilletine & Vanilla Swiss Meringue buttercream' },
-        { id: 26, name: 'Lemon Blueberry', price: 1200, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge, Lemon curd, Blueberry compote & Vanilla Swiss Meringue buttercream' }
+        { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c1.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
+        { id: 22, name: 'Chocolate Raspberry', price: 1500, flavor: 'chocolate', image: 'assets/images/c2.webp', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
+        { id: 23, name: 'Chocolate Hazelnut', price: 1600, flavor: 'chocolate', image: 'assets/images/c3.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' },
+        { id: 24, name: 'Red Velvet', price: 1300, flavor: 'vanilla', image: 'assets/images/c4.webp', description: 'Red Velvet sponge with cream cheese frosting or chocolate ganache' },
+        { id: 25, name: 'Vanilla Berry', price: 1400, flavor: 'fruit', image: 'assets/images/c5.webp', description: 'Vanilla Sponge, Berry Compote, White Chocolate Pistachio feuilletine & Vanilla Swiss Meringue buttercream' },
+        { id: 26, name: 'Lemon Blueberry', price: 1200, flavor: 'fruit', image: 'assets/images/c6.webp', description: 'Vanilla Sponge, Lemon curd, Blueberry compote & Vanilla Swiss Meringue buttercream' }
       ]
     },
     {
@@ -359,7 +365,7 @@ export class MoMadeComponent implements OnInit {
       title: 'Confectionery',
       description: 'Exquisite ingredients, complex pairings, and luxury finishes',
       price: 'From ₹1,800',
-      image: 'assets/images/IMG_5088.webp',
+      image: 'assets/images/IMG_5089.webp',
       products: [
         { id: 31, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5088.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
         { id: 32, name: 'Coconut Passionfruit', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
@@ -458,7 +464,13 @@ export class MoMadeComponent implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     const phone = '919538954851';
     const message = 'Hi Monisha! I am interested in the "' + productName + '" from Mo Made Patisserie. Could you please share more details about customization options and pricing? Thank you!';
-    window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message), '_blank');
+    // Try to open WhatsApp app directly on mobile, fallback to web
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = 'whatsapp://send?phone=' + phone + '&text=' + encodeURIComponent(message);
+    } else {
+      window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message), '_blank');
+    }
   }
 
   sendToWhatsApp() {
@@ -466,7 +478,13 @@ export class MoMadeComponent implements OnInit {
     const phone = '919538954851';
     const messageOnCake = this.cakeMessage ? ' Message on cake: "' + this.cakeMessage + '"' : '';
     const message = 'Hi Monisha! I am ' + this.customerName + ', and I am absolutely in love with Mo Made artistry! I am looking for a cake with a *' + this.selectedVibe() + '* vibe and *' + this.selectedFlavor() + '* flavor for *' + this.formatDate(this.eventDate) + '*.' + messageOnCake + ' Would love to discuss this with you!';
-    window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message), '_blank');
+    // Try to open WhatsApp app directly on mobile, fallback to web
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = 'whatsapp://send?phone=' + phone + '&text=' + encodeURIComponent(message);
+    } else {
+      window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message), '_blank');
+    }
   }
 
   formatDate(dateStr: string): string {
