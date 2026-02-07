@@ -334,7 +334,7 @@ export class MoMadeComponent implements OnInit {
       id: 'wedding',
       title: 'Wedding Cakes',
       description: 'Multi-tier floral masterpieces with handcrafted sugar flowers',
-      price: 'From ₹5,500',
+      price: 'From ₹3,000',
       image: 'assets/images/w1.webp',
       products: [
         { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/w1.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
@@ -342,14 +342,14 @@ export class MoMadeComponent implements OnInit {
         { id: 3, name: 'Tropical Paradise', price: 11000, flavor: 'fruit', image: 'assets/images/w3.webp', description: 'Mango passion fruit layers with edible orchids' },
         { id: 4, name: 'Classic White', price: 9500, flavor: 'vanilla', image: 'assets/images/w4.webp', description: 'Traditional white fondant with delicate lace patterns' },
         { id: 5, name: 'Hazelnut Dream', price: 13500, flavor: 'nutty', image: 'assets/images/w5.webp', description: 'Praline buttercream with caramelized hazelnuts' },
-        { id: 6, name: 'Berry Romance', price: 14000, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Mixed berry compote with white chocolate drip' }
+        { id: 6, name: 'Berry Romance', price: 14000, flavor: 'fruit', image: 'assets/images/c9.webp', description: 'Mixed berry compote with white chocolate drip' }
       ]
     },
     {
       id: 'signature',
       title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless designs',
-      price: 'From ₹1,200',
+      price: 'From ₹3,000',
       image: 'assets/images/c1.webp',
       products: [
         { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c1.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
@@ -357,7 +357,10 @@ export class MoMadeComponent implements OnInit {
         { id: 23, name: 'Chocolate Hazelnut', price: 1600, flavor: 'chocolate', image: 'assets/images/c3.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' },
         { id: 24, name: 'Red Velvet', price: 1300, flavor: 'vanilla', image: 'assets/images/c4.webp', description: 'Red Velvet sponge with cream cheese frosting or chocolate ganache' },
         { id: 25, name: 'Vanilla Berry', price: 1400, flavor: 'fruit', image: 'assets/images/c5.webp', description: 'Vanilla Sponge, Berry Compote, White Chocolate Pistachio feuilletine & Vanilla Swiss Meringue buttercream' },
-        { id: 26, name: 'Lemon Blueberry', price: 1200, flavor: 'fruit', image: 'assets/images/c6.webp', description: 'Vanilla Sponge, Lemon curd, Blueberry compote & Vanilla Swiss Meringue buttercream' }
+        { id: 26, name: 'Lemon Blueberry', price: 1200, flavor: 'fruit', image: 'assets/images/c6.webp', description: 'Vanilla Sponge, Lemon curd, Blueberry compote & Vanilla Swiss Meringue buttercream' },
+        { id: 27, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c7.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
+        { id: 28, name: 'Chocolate Raspberry', price: 1500, flavor: 'chocolate', image: 'assets/images/c8.webp', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
+        { id: 29, name: 'Chocolate Hazelnut', price: 1600, flavor: 'chocolate', image: 'assets/images/c9.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' }
       ]
     },
     {
