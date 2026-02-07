@@ -335,13 +335,13 @@ export class MoMadeComponent implements OnInit {
       title: 'Wedding Cakes',
       description: 'Multi-tier floral masterpieces with handcrafted sugar flowers',
       price: 'From ₹5,500',
-      image: 'assets/images/IMG_5088.webp',
+      image: 'assets/images/w1.webp',
       products: [
-        { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
-        { id: 2, name: 'Midnight Elegance', price: 15000, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Dark chocolate ganache with deep burgundy sugar flowers' },
-        { id: 3, name: 'Tropical Paradise', price: 11000, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Mango passion fruit layers with edible orchids' },
-        { id: 4, name: 'Classic White', price: 9500, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Traditional white fondant with delicate lace patterns' },
-        { id: 5, name: 'Hazelnut Dream', price: 13500, flavor: 'nutty', image: 'assets/images/IMG_5088.webp', description: 'Praline buttercream with caramelized hazelnuts' },
+        { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/w1.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
+        { id: 2, name: 'Midnight Elegance', price: 15000, flavor: 'chocolate', image: 'assets/images/w2.webp', description: 'Dark chocolate ganache with deep burgundy sugar flowers' },
+        { id: 3, name: 'Tropical Paradise', price: 11000, flavor: 'fruit', image: 'assets/images/w3.webp', description: 'Mango passion fruit layers with edible orchids' },
+        { id: 4, name: 'Classic White', price: 9500, flavor: 'vanilla', image: 'assets/images/w4.webp', description: 'Traditional white fondant with delicate lace patterns' },
+        { id: 5, name: 'Hazelnut Dream', price: 13500, flavor: 'nutty', image: 'assets/images/w5.webp', description: 'Praline buttercream with caramelized hazelnuts' },
         { id: 6, name: 'Berry Romance', price: 14000, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Mixed berry compote with white chocolate drip' }
       ]
     },
