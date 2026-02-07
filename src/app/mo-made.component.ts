@@ -290,26 +290,33 @@ export class MoMadeComponent implements OnInit {
     return [firstLine, secondLine];
   }
   
-  flavorFilterSignal = signal('all');
-  priceSortSignal = signal('default');
+  categoryTypeFilterSignal = signal('wedding');
   mobileFiltersOpen = signal(false);
+  zoomedProduct = signal<{id: number; name: string; image: string; description: string} | null>(null);
+  
+  // Getter/setter for ngModel binding
+  get categoryTypeFilter() { return this.categoryTypeFilterSignal(); }
+  set categoryTypeFilter(val: string) { 
+    this.categoryTypeFilterSignal.set(val);
+    this.selectedCategoryId.set(val);
+  }
   
   toggleMobileFilters() {
     this.mobileFiltersOpen.update(v => !v);
   }
   
-  get flavorFilter() { return this.flavorFilterSignal(); }
-  set flavorFilter(val: string) { this.flavorFilterSignal.set(val); }
-  
-  get priceSort() { return this.priceSortSignal(); }
-  set priceSort(val: string) { this.priceSortSignal.set(val); }
-
-  onFlavorFilterChange(value: string) {
-    this.flavorFilterSignal.set(value);
+  openZoom(product: {id: number; name: string; image: string; description: string}) {
+    this.zoomedProduct.set(product);
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = 'hidden';
+    }
   }
-
-  onPriceSortChange(value: string) {
-    this.priceSortSignal.set(value);
+  
+  closeZoom() {
+    this.zoomedProduct.set(null);
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = '';
+    }
   }
 
   vibes = [
@@ -411,18 +418,7 @@ export class MoMadeComponent implements OnInit {
   filteredProducts = computed(() => {
     const category = this.activeCategory();
     if (!category) return [];
-    let products = [...category.products];
-    const flavorVal = this.flavorFilterSignal();
-    const sortVal = this.priceSortSignal();
-    if (flavorVal !== 'all') {
-      products = products.filter(p => p.flavor === flavorVal);
-    }
-    if (sortVal === 'low') {
-      products.sort((a, b) => a.price - b.price);
-    } else if (sortVal === 'high') {
-      products.sort((a, b) => b.price - a.price);
-    }
-    return products;
+    return [...category.products];
   });
 
   openCategory(categoryId: string) {
@@ -439,8 +435,7 @@ export class MoMadeComponent implements OnInit {
 
   goBack() {
     this.currentView.set('landing');
-    this.flavorFilterSignal.set('all');
-    this.priceSortSignal.set('default');
+    this.categoryTypeFilterSignal.set('wedding');
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {
         window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
