@@ -421,36 +421,16 @@ export class MoMadeComponent implements OnInit {
     const product = this.zoomedProduct();
     if (!product || !isPlatformBrowser(this.platformId)) return;
     
-    // Use the hosted site URL for sharing (even if testing locally)
+    // Use the hosted site URL for sharing
     const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
-    const shareText = `✨ ${product.name} - Mo Made Patisserie ✨\n\n${product.description}\n\n👆 View & Order:`;
     
-    // Try to share with image using Web Share API Level 2
-    try {
-      // Use GitHub raw URL for the image (accessible publicly)
-      const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const file = new File([blob], `${product.name.replace(/\s+/g, '-')}.webp`, { type: 'image/webp' });
-      
-      // Check if we can share files
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: `${product.name} - Mo Made Patisserie`,
-          text: shareText,
-          url: productUrl
-        });
-        return;
-      }
-    } catch (err) {
-      console.log('Image share not supported, falling back to text share:', err);
-    }
+    // Update meta tags first so the URL has correct OG data when shared
+    this.updateMetaTags(product);
     
-    // Fallback: Share without image
+    // Share just the URL - WhatsApp/social media will fetch OG tags and show preview with image
     const shareData = {
       title: `${product.name} - Mo Made Patisserie`,
-      text: shareText,
+      text: `${product.description}`,
       url: productUrl
     };
     
@@ -458,17 +438,17 @@ export class MoMadeComponent implements OnInit {
       try {
         await navigator.share(shareData);
       } catch (err) {
-        console.log('Share cancelled or failed:', err);
+        // User cancelled or share failed
+        console.log('Share cancelled:', err);
       }
     } else {
       // Desktop fallback: Copy to clipboard
       try {
-        await navigator.clipboard.writeText(`${shareText}\n${productUrl}`);
+        await navigator.clipboard.writeText(productUrl);
         alert('Link copied to clipboard!');
       } catch (err) {
-        // Ultimate fallback: WhatsApp web
-        const message = encodeURIComponent(`${shareText}\n${productUrl}`);
-        window.open(`https://wa.me/?text=${message}`, '_blank');
+        // Ultimate fallback: WhatsApp web with just URL
+        window.open(`https://wa.me/?text=${encodeURIComponent(productUrl)}`, '_blank');
       }
     }
   }
