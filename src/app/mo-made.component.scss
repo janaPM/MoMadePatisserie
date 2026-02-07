@@ -33,6 +33,11 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes pulse-subtle {
+  0%, 100% { box-shadow: 0 4px 15px rgba(126, 85, 57, 0.4); }
+  50% { box-shadow: 0 4px 25px rgba(126, 85, 57, 0.7); }
+}
+
 // Animation utility classes
 .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
 .animate-slideUp { animation: slideUp 0.4s ease-out forwards; }
@@ -41,6 +46,7 @@
   stroke-dashoffset: 1000; 
   animation: draw 2s ease-out forwards; 
 }
+.animate-pulse-subtle { animation: pulse-subtle 2s ease-in-out infinite; }
 
 // 3D Cake Preview
 .cake-3d {

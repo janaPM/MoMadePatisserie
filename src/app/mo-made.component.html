@@ -784,9 +784,16 @@
             <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-accent-30 hover-border-secondary-30">
               <div class="relative aspect-[4/5] overflow-hidden cursor-zoom-in" (click)="openZoom(product)">
                 <img [src]="product.image" [alt]="product.name" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
-                <div class="absolute inset-0 category-overlay-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full p-2 border border-accent-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <svg class="w-4 h-4 text-[var(--color-secondary)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <!-- Zoom icon - top right, circular, transparent grey -->
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div class="w-9 h-9 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/50 transition-colors duration-200">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="11" cy="11" r="6"/>
+                      <path stroke-linecap="round" d="M20 20l-3.5-3.5"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M11 8v6m3-3H8"/>
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div class="p-6 space-y-4">
@@ -881,23 +888,85 @@
 <!-- Product Zoom Modal -->
 @if (zoomedProduct()) {
   <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fadeIn p-4" (click)="closeZoom()">
-    <div class="relative max-w-4xl max-h-[85vh] w-full" (click)="$event.stopPropagation()">
-      <!-- Zoomed Image -->
+    
+    <!-- MOBILE VIEW: Card-style modal -->
+    <div class="lg:hidden relative max-w-md w-full max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
       <div class="bg-white rounded-2xl overflow-hidden shadow-2xl relative">
-        <!-- Close button - inside the modal, always visible -->
-        <button (click)="closeZoom()" class="absolute top-3 right-3 z-10 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <!-- Close button - top right -->
+        <button (click)="closeZoom()" class="absolute top-3 right-3 z-10 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
         
-        <img [src]="zoomedProduct()?.image" [alt]="zoomedProduct()?.name" class="w-full max-h-[55vh] sm:max-h-[60vh] object-contain"/>
-        <div class="p-4 sm:p-6 bg-white">
-          <h3 class="font-serif text-xl sm:text-2xl text-[var(--color-primary)] mb-2">{{zoomedProduct()?.name}}</h3>
-          <p class="text-[#7A7471] font-sans text-xs sm:text-sm leading-relaxed">{{zoomedProduct()?.description}}</p>
-          <button (click)="inquireProduct(zoomedProduct()?.name || ''); closeZoom()" class="mt-4 inline-flex items-center gap-2 bg-[var(--color-secondary)] hover:bg-[var(--color-primary)] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-sans font-bold uppercase tracking-wider transition-all duration-300">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+        <!-- Image Container - fixed height, cover width, align top -->
+        <div class="relative w-full h-[50vh] overflow-hidden bg-gray-100">
+          <img [src]="zoomedProduct()?.image" [alt]="zoomedProduct()?.name" class="w-full h-full object-cover object-top"/>
+          <!-- Share button - bottom right of image -->
+          <button (click)="shareProduct()" class="absolute bottom-3 right-3 z-10 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Info Card -->
+        <div class="p-5 bg-white">
+          <h3 class="font-serif text-xl text-[var(--color-primary)] mb-2">{{zoomedProduct()?.name}}</h3>
+          <p class="text-[#7A7471] font-sans text-sm leading-relaxed mb-4">{{zoomedProduct()?.description}}</p>
+          <button (click)="inquireProduct(zoomedProduct()?.name || ''); closeZoom()" class="w-full inline-flex items-center justify-center gap-2.5 bg-[var(--color-secondary)] hover:bg-[var(--color-primary)] text-white px-5 py-3.5 rounded-full text-sm font-sans font-bold uppercase tracking-wider transition-all duration-300 shadow-lg animate-pulse-subtle">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/>
+            </svg>
             Inquire Now
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- DESKTOP VIEW: Side-by-side layout -->
+    <div class="hidden lg:flex relative w-full max-w-6xl h-[80vh] items-center gap-10 px-8" (click)="$event.stopPropagation()">
+      
+      <!-- Close button - floating top right -->
+      <button (click)="closeZoom()" class="absolute top-0 right-8 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/90 hover:text-white transition-all duration-300 border border-white/20 hover:border-white/40 hover:scale-110">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Image Container -->
+      <div class="relative w-3/5 h-full flex items-center justify-center">
+        <img 
+          [src]="zoomedProduct()?.image" 
+          [alt]="zoomedProduct()?.name" 
+          class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+        />
+      </div>
+      
+      <!-- Info Panel -->
+      <div class="w-2/5 flex flex-col items-start text-left">
+        <h3 class="font-serif text-4xl text-white mb-4 leading-tight">
+          {{zoomedProduct()?.name}}
+        </h3>
+        
+        <p class="text-white/70 font-sans text-base leading-relaxed mb-8">
+          {{zoomedProduct()?.description}}
+        </p>
+        
+        <!-- Action buttons - same size -->
+        <div class="flex items-center gap-4">
+          <button (click)="inquireProduct(zoomedProduct()?.name || ''); closeZoom()" class="inline-flex items-center gap-2.5 bg-[var(--color-secondary)] hover:bg-white text-white hover:text-[var(--color-primary)] px-6 py-3.5 rounded-full text-sm font-sans font-bold uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/>
+            </svg>
+            Inquire Now
+          </button>
+          
+          <button (click)="shareProduct()" class="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 text-white px-6 py-3.5 rounded-full text-sm font-sans font-bold uppercase tracking-wider transition-all duration-300 border border-white/20 hover:border-white/40 hover:scale-105">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
+            </svg>
+            Share
           </button>
         </div>
       </div>

@@ -82,7 +82,9 @@ export class MoMadeComponent implements OnInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       window.addEventListener('popstate', () => {
-        if (this.currentView() === 'category') {
+        if (this.zoomedProduct()) {
+          this.closeZoom();
+        } else if (this.currentView() === 'category') {
           this.goBack();
         }
       });
@@ -92,6 +94,30 @@ export class MoMadeComponent implements OnInit {
 
       // Signal app is ready - removes splash screen and triggers fade-in
       this.triggerAppReady();
+      
+      // Handle product URL on page load
+      this.handleProductUrl();
+    }
+  }
+  
+  // Check URL for product ID and open zoom if found
+  private handleProductUrl() {
+    const hash = window.location.hash;
+    const productMatch = hash.match(/#product\/(\d+)/);
+    if (productMatch) {
+      const productId = parseInt(productMatch[1], 10);
+      // Find product across all categories
+      for (const category of this.categories) {
+        const product = category.products.find(p => p.id === productId);
+        if (product) {
+          // Set the category and view first
+          this.selectedCategoryId.set(category.id);
+          this.currentView.set('category');
+          // Open the product zoom after a short delay
+          setTimeout(() => this.openZoom(product), 300);
+          break;
+        }
+      }
     }
   }
 
@@ -309,6 +335,8 @@ export class MoMadeComponent implements OnInit {
     this.zoomedProduct.set(product);
     if (isPlatformBrowser(this.platformId)) {
       document.body.style.overflow = 'hidden';
+      // Update URL to product-specific URL
+      window.history.pushState({ view: 'product', productId: product.id }, '', '#product/' + product.id);
     }
   }
   
@@ -316,6 +344,45 @@ export class MoMadeComponent implements OnInit {
     this.zoomedProduct.set(null);
     if (isPlatformBrowser(this.platformId)) {
       document.body.style.overflow = '';
+      // Restore URL to category view or home
+      const categoryId = this.selectedCategoryId();
+      if (categoryId && this.currentView() === 'category') {
+        window.history.replaceState({ view: 'category', categoryId }, '', '#category/' + categoryId);
+      } else {
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    }
+  }
+  
+  async shareProduct() {
+    const product = this.zoomedProduct();
+    if (!product || !isPlatformBrowser(this.platformId)) return;
+    
+    const shareData = {
+      title: `${product.name} - Mo Made Patisserie`,
+      text: `Check out this amazing "${product.name}" from Mo Made Patisserie! ${product.description}`,
+      url: window.location.origin + '/#product/' + product.id
+    };
+    
+    // Try native Web Share API (works on mobile + some desktops)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // User cancelled or share failed - silently ignore
+        console.log('Share cancelled or failed:', err);
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      try {
+        await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+        // Could show a toast notification here
+        alert('Link copied to clipboard!');
+      } catch (err) {
+        // Fallback for older browsers: open WhatsApp share
+        const message = encodeURIComponent(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+        window.open(`https://wa.me/?text=${message}`, '_blank');
+      }
     }
   }
 
