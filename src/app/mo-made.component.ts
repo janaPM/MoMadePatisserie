@@ -96,13 +96,18 @@ export class MoMadeComponent implements OnInit {
       this.triggerAppReady();
       
       // Handle product URL on page load
-      this.handleProductUrl();
+      setTimeout(() => this.handleProductUrl(), 500);
+      
+      // Listen for hash changes (when user navigates via browser)
+      window.addEventListener('hashchange', () => this.handleProductUrl());
     }
   }
   
   // Check URL for product ID and open zoom if found
   private handleProductUrl() {
     const hash = window.location.hash;
+    
+    // Handle product URL
     const productMatch = hash.match(/#product\/(\d+)/);
     if (productMatch) {
       const productId = parseInt(productMatch[1], 10);
@@ -114,7 +119,7 @@ export class MoMadeComponent implements OnInit {
           this.selectedCategoryId.set(category.id);
           this.currentView.set('category');
           // Open the product zoom after a short delay
-          setTimeout(() => this.openZoom(product), 300);
+          setTimeout(() => this.openZoom(product), 100);
           break;
         }
       }
@@ -337,6 +342,62 @@ export class MoMadeComponent implements OnInit {
       document.body.style.overflow = 'hidden';
       // Update URL to product-specific URL
       window.history.pushState({ view: 'product', productId: product.id }, '', '#product/' + product.id);
+      // Update OG meta tags for social sharing
+      this.updateMetaTags(product);
+    }
+  }
+  
+  // GitHub raw URL base for images (works before site is hosted)
+  private readonly GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/karthickajan/MoMadePatisserie/main/src/';
+  private readonly SITE_BASE_URL = 'https://momadepatisserie.com';
+  
+  // Update Open Graph meta tags for product sharing
+  private updateMetaTags(product: {id: number; name: string; image: string; description: string}) {
+    const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
+    // Use GitHub raw URL for images (works even before hosting)
+    const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
+    const title = `${product.name} - Mo Made Patisserie`;
+    const description = product.description;
+    
+    // Update document title
+    document.title = title;
+    
+    // Update OG tags
+    this.setMetaContent('og-title', title);
+    this.setMetaContent('og-description', description);
+    this.setMetaContent('og-url', productUrl);
+    this.setMetaContent('og-image', imageUrl);
+    this.setMetaContent('og-type', 'product');
+    
+    // Update Twitter tags
+    this.setMetaContent('twitter-title', title);
+    this.setMetaContent('twitter-description', description);
+    this.setMetaContent('twitter-image', imageUrl);
+  }
+  
+  // Reset meta tags to default
+  private resetMetaTags() {
+    const defaultTitle = 'Best Custom Cakes Bangalore | Luxury Patisserie by Monisha | Mo Made Patisserie';
+    const defaultDescription = 'Award-winning patisserie creating bespoke wedding cakes and luxury desserts in Bangalore';
+    const defaultImage = `${this.GITHUB_RAW_BASE}assets/images/IMG_5087.webp`;
+    
+    document.title = defaultTitle;
+    
+    this.setMetaContent('og-title', 'Mo Made Patisserie | Premium Custom Cakes Bangalore');
+    this.setMetaContent('og-description', defaultDescription);
+    this.setMetaContent('og-url', this.SITE_BASE_URL);
+    this.setMetaContent('og-image', defaultImage);
+    this.setMetaContent('og-type', 'website');
+    
+    this.setMetaContent('twitter-title', 'Mo Made Patisserie | Premium Cakes Bangalore');
+    this.setMetaContent('twitter-description', defaultDescription);
+    this.setMetaContent('twitter-image', defaultImage);
+  }
+  
+  private setMetaContent(id: string, content: string) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.setAttribute('content', content);
     }
   }
   
@@ -351,6 +412,8 @@ export class MoMadeComponent implements OnInit {
       } else {
         window.history.replaceState({}, '', window.location.pathname);
       }
+      // Reset meta tags to default
+      this.resetMetaTags();
     }
   }
   
@@ -358,29 +421,53 @@ export class MoMadeComponent implements OnInit {
     const product = this.zoomedProduct();
     if (!product || !isPlatformBrowser(this.platformId)) return;
     
+    // Use the hosted site URL for sharing (even if testing locally)
+    const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
+    const shareText = `✨ ${product.name} - Mo Made Patisserie ✨\n\n${product.description}\n\n👆 View & Order:`;
+    
+    // Try to share with image using Web Share API Level 2
+    try {
+      // Use GitHub raw URL for the image (accessible publicly)
+      const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `${product.name.replace(/\s+/g, '-')}.webp`, { type: 'image/webp' });
+      
+      // Check if we can share files
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: `${product.name} - Mo Made Patisserie`,
+          text: shareText,
+          url: productUrl
+        });
+        return;
+      }
+    } catch (err) {
+      console.log('Image share not supported, falling back to text share:', err);
+    }
+    
+    // Fallback: Share without image
     const shareData = {
       title: `${product.name} - Mo Made Patisserie`,
-      text: `Check out this amazing "${product.name}" from Mo Made Patisserie! ${product.description}`,
-      url: window.location.origin + '/#product/' + product.id
+      text: shareText,
+      url: productUrl
     };
     
-    // Try native Web Share API (works on mobile + some desktops)
     if (navigator.share) {
       try {
         await navigator.share(shareData);
       } catch (err) {
-        // User cancelled or share failed - silently ignore
         console.log('Share cancelled or failed:', err);
       }
     } else {
-      // Fallback: Copy to clipboard
+      // Desktop fallback: Copy to clipboard
       try {
-        await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
-        // Could show a toast notification here
+        await navigator.clipboard.writeText(`${shareText}\n${productUrl}`);
         alert('Link copied to clipboard!');
       } catch (err) {
-        // Fallback for older browsers: open WhatsApp share
-        const message = encodeURIComponent(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+        // Ultimate fallback: WhatsApp web
+        const message = encodeURIComponent(`${shareText}\n${productUrl}`);
         window.open(`https://wa.me/?text=${message}`, '_blank');
       }
     }
