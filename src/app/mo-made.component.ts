@@ -351,7 +351,8 @@ export class MoMadeComponent implements OnInit {
   
   // GitHub raw URL base for images (works before site is hosted)
   private readonly GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/karthickajan/MoMadePatisserie/main/src/';
-  private readonly SITE_BASE_URL = 'https://momadepatisserie.com';
+  // Use GitHub Pages URL for now, change to custom domain when ready
+  private readonly SITE_BASE_URL = 'https://karthickajan.github.io/MoMadePatisserie';
   
   // Update Open Graph meta tags for product sharing
   private updateMetaTags(product: {id: number; name: string; image: string; description: string}) {
@@ -423,51 +424,45 @@ export class MoMadeComponent implements OnInit {
     const product = this.zoomedProduct();
     if (!product || !isPlatformBrowser(this.platformId)) return;
     
-    // Use the hosted site URL for sharing
+    // Product URL that opens zoom view
     const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
     
     // Try to share with image using Web Share API Level 2
     try {
-      // Use GitHub raw URL for the image (accessible publicly)
       const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
       const response = await fetch(imageUrl);
       const blob = await response.blob();
       const file = new File([blob], `${product.name.replace(/\s+/g, '-')}.webp`, { type: 'image/webp' });
       
-      // Check if we can share files
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        // When sharing with files, include URL in the text (not as separate url property)
-        // This prevents the URL from being malformed
+        // Share image with just the URL in text
         await navigator.share({
           files: [file],
-          text: `${product.name} - Mo Made Patisserie\n\n${product.description}\n\nView & Order: ${productUrl}`
+          text: `${product.name} - Mo Made Patisserie\n${productUrl}`
         });
         return;
       }
     } catch (err) {
-      console.log('Image share not supported, falling back to text share:', err);
+      console.log('Image share failed:', err);
     }
     
-    // Fallback: Share without image (text + URL)
+    // Fallback: Share URL only (cleaner for copy)
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${product.name} - Mo Made Patisserie`,
-          text: `${product.name} - Mo Made Patisserie\n\n${product.description}\n\nView & Order:`,
+          title: product.name,
           url: productUrl
         });
       } catch (err) {
-        console.log('Share cancelled or failed:', err);
+        console.log('Share cancelled:', err);
       }
     } else {
-      // Desktop fallback: Copy to clipboard
-      const shareMessage = `${product.name} - Mo Made Patisserie\n\n${product.description}\n\nView & Order: ${productUrl}`;
+      // Desktop: Copy just the URL
       try {
-        await navigator.clipboard.writeText(shareMessage);
+        await navigator.clipboard.writeText(productUrl);
         alert('Link copied to clipboard!');
       } catch (err) {
-        // Ultimate fallback: WhatsApp web
-        window.open(`https://wa.me/?text=${encodeURIComponent(shareMessage)}`, '_blank');
+        window.open(`https://wa.me/?text=${encodeURIComponent(productUrl)}`, '_blank');
       }
     }
   }
