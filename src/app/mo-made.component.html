@@ -117,6 +117,37 @@
           <!-- Desktop Grid (sm and up) -->
           <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             @for (category of categories; track category.id) {
+              @if (category.isCatalog) {
+                <!-- Catalog Card - Special Design -->
+                <div class="group cursor-pointer active:scale-[0.98] transition-transform" (click)="openCatalog()">
+                  <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl mb-3 sm:mb-4 md:mb-6 aspect-[4/5] catalog-card-bg">
+                    <!-- Elegant diagonal pattern -->
+                    <div class="absolute inset-0 catalog-pattern opacity-20"></div>
+                    <!-- Shimmer effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <!-- Centered content -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                      <!-- Brand Logo Style -->
+                      <div class="mb-6">
+                        <div class="text-white text-5xl lg:text-6xl font-serif tracking-wide leading-none group-hover:scale-105 transition-transform duration-500">Mo</div>
+                        <div class="text-white text-5xl lg:text-6xl font-serif tracking-wide leading-none group-hover:scale-105 transition-transform duration-500">Made</div>
+                        <div class="flex items-center justify-center gap-2 mt-2">
+                          <span class="w-8 h-[1px] bg-[#C49B8D]"></span>
+                          <span class="text-[#C49B8D] text-xs tracking-[0.3em] uppercase font-sans">Patisserie</span>
+                          <span class="w-8 h-[1px] bg-[#C49B8D]"></span>
+                        </div>
+                      </div>
+                      <p class="text-[#C49B8D]/80 font-sans text-xs mb-8 tracking-widest uppercase">Complete Collection</p>
+                      <span class="inline-flex items-center gap-2 bg-[#C49B8D] text-[#2D2926] px-5 py-2.5 rounded-full text-sm font-sans font-bold uppercase tracking-wider group-hover:bg-white transition-colors duration-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Download PDF
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              } @else {
               <div class="group cursor-pointer active:scale-[0.98] transition-transform" (click)="openCategory(category.id)">
                 <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl mb-3 sm:mb-4 md:mb-6 aspect-[4/5] bg-accent-30">
                   <img [src]="category.image" [alt]="category.title" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out"/>
@@ -147,6 +178,7 @@
                   <p class="text-[var(--color-secondary)] font-sans font-bold text-lg">{{category.price}}</p>
                 </div>
               </div>
+              }
             }
           </div>
 
@@ -157,6 +189,45 @@
               class="boutique-carousel flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 -mx-4 pb-4"
             >
               @for (category of categories; track category.id; let i = $index) {
+                @if (category.isCatalog) {
+                  <!-- Mobile Catalog Card -->
+                  <div 
+                    class="carousel-card flex-shrink-0 w-[80vw] snap-center"
+                    (click)="openCatalog()"
+                  >
+                    <div class="group cursor-pointer active:scale-[0.98] transition-transform">
+                      <div class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] catalog-card-bg">
+                        <div class="absolute inset-0 catalog-pattern opacity-20"></div>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                          <!-- Brand Logo Style -->
+                          <div class="mb-5">
+                            <div class="text-white text-4xl font-serif tracking-wide leading-none">Mo</div>
+                            <div class="text-white text-4xl font-serif tracking-wide leading-none">Made</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1.5">
+                              <span class="w-5 h-[1px] bg-[#C49B8D]"></span>
+                              <span class="text-[#C49B8D] text-[8px] tracking-[0.2em] uppercase font-sans">Patisserie</span>
+                              <span class="w-5 h-[1px] bg-[#C49B8D]"></span>
+                            </div>
+                          </div>
+                          <p class="text-[#C49B8D]/80 font-sans text-[10px] mb-5 tracking-widest uppercase">Complete Collection</p>
+                          <span class="inline-flex items-center gap-1.5 bg-[#C49B8D] text-[#2D2926] px-4 py-2 rounded-full text-xs font-sans font-bold uppercase tracking-wider">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Download PDF
+                          </span>
+                        </div>
+                      </div>
+                      <div class="space-y-1.5 px-1">
+                        <div class="flex items-center justify-between gap-2">
+                          <h3 class="font-serif text-xl text-[var(--color-secondary)]">The Collection</h3>
+                          <svg class="w-4 h-4 text-[var(--color-secondary)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        </div>
+                        <p class="text-[#7A7471] font-sans text-xs leading-relaxed line-clamp-2">Download our complete catalog</p>
+                      </div>
+                    </div>
+                  </div>
+                } @else {
                 <div 
                   class="carousel-card flex-shrink-0 w-[80vw] snap-center"
                   (click)="openCategory(category.id)"
@@ -192,6 +263,7 @@
                     </div>
                   </div>
                 </div>
+                }
               }
             </div>
 
@@ -659,17 +731,27 @@
             <div class="lg:col-span-2 space-y-3 sm:space-y-4">
               <div class="flex items-center gap-1.5 sm:gap-2">
                 <span class="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-[var(--color-primary)]">Mo Made</span>
-                <span class="text-[var(--color-secondary)] font-serif italic text-xs sm:text-sm md:text-base">Patisserie</span>
+                <span class="text-[var(--color-secondary)] font-serif font-bold italic text-xs sm:text-sm md:text-base">Patisserie</span>
               </div>
               <p class="text-[#7A7471] font-sans text-xs sm:text-sm md:text-base leading-relaxed max-w-sm">Artisanal cakes crafted with love and precision. Making your celebrations sweeter since 2013.</p>
-              <!-- Contact Info -->
-              <div class="space-y-1.5 sm:space-y-2">
-                <a [href]="contactWhatsappUrl" class="flex items-center gap-2 text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">
+              <!-- Contact Info - Mobile: phone + icons on same row -->
+              <div class="flex items-center justify-between sm:block">
+                <a [href]="contactWhatsappUrl" class="flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" width="16" height="16"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
                   <span class="font-sans text-xs sm:text-sm font-medium">{{contactPhone}}</span>
                 </a>
+                <!-- Mobile: Icons inline with phone (right side) -->
+                <div class="flex gap-2 sm:hidden">
+                  <a href="https://instagram.com/mo_made_patisserie" target="_blank" class="w-8 h-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white transition-all duration-300 active:scale-95">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  </a>
+                  <a [href]="contactWhatsappUrl" target="_blank" class="w-8 h-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white transition-all duration-300 active:scale-95">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" width="16" height="16"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
+                  </a>
+                </div>
               </div>
-              <div class="flex gap-2 sm:gap-3">
+              <!-- Desktop: Icons below phone -->
+              <div class="hidden sm:flex gap-2 sm:gap-3">
                 <a href="https://instagram.com/mo_made_patisserie" target="_blank" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white transition-all duration-300 active:scale-95">
                   <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
@@ -690,7 +772,7 @@
               <div class="space-y-2 sm:space-y-3 flex-1 text-right md:text-left md:flex-none">
                 <h4 class="font-serif text-sm sm:text-base md:text-lg text-[var(--color-primary)] font-bold">Visit Us</h4>
                 <p class="text-[#7A7471] font-sans text-xs sm:text-sm leading-relaxed">Mahalakshmipuram Layout<br/>Bangalore, Karnataka<br/>India</p>
-                <p class="text-[var(--color-secondary)] font-sans font-medium text-xs sm:text-sm">By Appointment Only</p>
+                <p class="hidden sm:block text-[var(--color-secondary)] font-sans font-medium text-xs sm:text-sm">By Appointment Only</p>
               </div>
             </div>
           </div>

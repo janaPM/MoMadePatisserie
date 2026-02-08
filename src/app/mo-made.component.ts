@@ -27,6 +27,8 @@ interface Category {
   price: string;
   image: string;
   products: Product[];
+  isCatalog?: boolean;
+  catalogUrl?: string;
 }
 
 @Component({
@@ -424,31 +426,48 @@ export class MoMadeComponent implements OnInit {
     // Use the hosted site URL for sharing
     const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
     
-    // Update meta tags first so the URL has correct OG data when shared
-    this.updateMetaTags(product);
+    // Try to share with image using Web Share API Level 2
+    try {
+      // Use GitHub raw URL for the image (accessible publicly)
+      const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `${product.name.replace(/\s+/g, '-')}.webp`, { type: 'image/webp' });
+      
+      // Check if we can share files
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        // When sharing with files, include URL in the text (not as separate url property)
+        // This prevents the URL from being malformed
+        await navigator.share({
+          files: [file],
+          text: `${product.name} - Mo Made Patisserie\n\n${product.description}\n\nView & Order: ${productUrl}`
+        });
+        return;
+      }
+    } catch (err) {
+      console.log('Image share not supported, falling back to text share:', err);
+    }
     
-    // Share just the URL - WhatsApp/social media will fetch OG tags and show preview with image
-    const shareData = {
-      title: `${product.name} - Mo Made Patisserie`,
-      text: `${product.description}`,
-      url: productUrl
-    };
-    
+    // Fallback: Share without image (text + URL)
     if (navigator.share) {
       try {
-        await navigator.share(shareData);
+        await navigator.share({
+          title: `${product.name} - Mo Made Patisserie`,
+          text: `${product.name} - Mo Made Patisserie\n\n${product.description}\n\nView & Order:`,
+          url: productUrl
+        });
       } catch (err) {
-        // User cancelled or share failed
-        console.log('Share cancelled:', err);
+        console.log('Share cancelled or failed:', err);
       }
     } else {
       // Desktop fallback: Copy to clipboard
+      const shareMessage = `${product.name} - Mo Made Patisserie\n\n${product.description}\n\nView & Order: ${productUrl}`;
       try {
-        await navigator.clipboard.writeText(productUrl);
+        await navigator.clipboard.writeText(shareMessage);
         alert('Link copied to clipboard!');
       } catch (err) {
-        // Ultimate fallback: WhatsApp web with just URL
-        window.open(`https://wa.me/?text=${encodeURIComponent(productUrl)}`, '_blank');
+        // Ultimate fallback: WhatsApp web
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareMessage)}`, '_blank');
       }
     }
   }
@@ -544,8 +563,25 @@ export class MoMadeComponent implements OnInit {
         { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/IMG_5087.webp', description: 'Almond flour based sponge (Add-on)' },
         { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/IMG_5089.webp', description: 'Acrylic or Fondant topper with personalized message' }
       ]
+    },
+    {
+      id: 'catalog',
+      title: 'The Collection',
+      description: 'Explore our complete artisanal portfolio',
+      price: 'Download PDF',
+      image: '',
+      products: [],
+      isCatalog: true,
+      catalogUrl: 'assets/Mo_Made_Patisserie.pdf'
     }
   ];
+
+  // Open PDF catalog
+  openCatalog() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.open('assets/Mo_Made_Patisserie.pdf', '_blank');
+    }
+  }
 
   activeCategory = computed(() => this.categories.find(c => c.id === this.selectedCategoryId()));
 

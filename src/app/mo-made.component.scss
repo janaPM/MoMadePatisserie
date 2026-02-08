@@ -605,3 +605,22 @@ input[type="date"] {
     }
   }
 }
+
+// ============================================
+// Catalog Card Styles
+// ============================================
+.catalog-card-bg {
+  background: linear-gradient(135deg, #2D2926 0%, #4A3F3A 40%, #3D3330 70%, #2D2926 100%);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(196, 155, 141, 0.2);
+}
+
+.catalog-pattern {
+  background-image: 
+    linear-gradient(45deg, transparent 45%, #C49B8D 45%, #C49B8D 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, #C49B8D 45%, #C49B8D 55%, transparent 55%);
+  background-size: 30px 30px;
+}
+
