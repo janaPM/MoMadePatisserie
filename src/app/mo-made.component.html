@@ -146,6 +146,14 @@
                       </span>
                     </div>
                   </div>
+                  <!-- Text below card -->
+                  <div class="space-y-2 px-2">
+                    <div class="flex items-center justify-between">
+                      <h3 class="font-serif text-2xl text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors">The Collection</h3>
+                      <svg class="w-5 h-5 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </div>
+                    <p class="text-[#7A7471] font-sans text-sm leading-relaxed">Download our complete catalog</p>
+                  </div>
                 </div>
               } @else {
               <div class="group cursor-pointer active:scale-[0.98] transition-transform" (click)="openCategory(category.id)">

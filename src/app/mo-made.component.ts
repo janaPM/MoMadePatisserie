@@ -503,7 +503,7 @@ export class MoMadeComponent implements OnInit {
     {
       id: 'signature',
       title: 'Celebration Cakes',
-      description: 'Our most loved classic flavors and timeless designs',
+      description: 'Our most loved classic flavors and timeless celebration designs',
       price: 'From ₹3,000',
       image: 'assets/images/c1.webp',
       products: [
@@ -522,41 +522,52 @@ export class MoMadeComponent implements OnInit {
       id: 'premium',
       title: 'Confectionery',
       description: 'Exquisite ingredients, complex pairings, and luxury finishes',
-      price: 'From ₹1,800',
-      image: 'assets/images/IMG_5089.webp',
+      price: 'Commissioned Pieces',
+      image: 'assets/images/co1.webp',
       products: [
-        { id: 31, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5088.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
+        { id: 31, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/co1.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
         { id: 32, name: 'Coconut Passionfruit', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 33, name: 'Carrot Walnut', price: 1800, flavor: 'nutty', image: 'assets/images/IMG_5087.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
-        { id: 34, name: 'Banana Dulce', price: 1900, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
-        { id: 35, name: 'Pistachio Raspberry', price: 2400, flavor: 'nutty', image: 'assets/images/IMG_5089.webp', description: 'Pistachio Sponge, Raspberry compote, White Chocolate feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 36, name: 'Lychee Rose', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla Raspberry Sponge, Lychee Filling & Rose Swiss Meringue Buttercream' }
+        { id: 33, name: 'Carrot Walnut', price: 1800, flavor: 'nutty', image: 'assets/images/co2.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
+        { id: 34, name: 'Banana Dulce', price: 1900, flavor: 'vanilla', image: 'assets/images/co4.webp', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
+        { id: 35, name: 'Pistachio Raspberry', price: 2400, flavor: 'nutty', image: 'assets/images/co5.webp', description: 'Pistachio Sponge, Raspberry compote, White Chocolate feuilletine & Vanilla Swiss Meringue Buttercream' },
+        { id: 36, name: 'Lychee Rose', price: 2200, flavor: 'fruit', image: 'assets/images/co6.webp', description: 'Vanilla Raspberry Sponge, Lychee Filling & Rose Swiss Meringue Buttercream' },
+        { id: 37, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/co7.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
+        { id: 38, name: 'Coconut Passionfruit', price: 2200, flavor: 'fruit', image: 'assets/images/co8.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
+        { id: 39, name: 'Carrot Walnut', price: 1800, flavor: 'nutty', image: 'assets/images/co9.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
+        { id: 40, name: 'Banana Dulce', price: 1900, flavor: 'vanilla', image: 'assets/images/co10.webp', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
+        { id: 41, name: 'Pistachio Raspberry', price: 2400, flavor: 'nutty', image: 'assets/images/co11.webp', description: 'Pistachio Sponge, Raspberry compote, White Chocolate feuilletine & Vanilla Swiss Meringue Buttercream' },
+        { id: 42, name: 'Lychee Rose', price: 2200, flavor: 'fruit', image: 'assets/images/co12.webp', description: 'Vanilla Raspberry Sponge, Lychee Filling & Rose Swiss Meringue Buttercream' },
+        { id: 43, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/co13.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
+        { id: 44, name: 'Coconut Passionfruit', price: 2200, flavor: 'fruit', image: 'assets/images/co14.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
+        { id: 45, name: 'Carrot Walnut', price: 1800, flavor: 'nutty', image: 'assets/images/co15.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' }
       ]
     },
     {
       id: 'seasonal',
       title: 'Summer Special',
-      description: 'Fresh, limited-edition treats inspired by the season',
-      price: 'From ₹1,600',
-      image: 'assets/images/IMG_5089.webp',
+      description: 'Fresh, limited-edition treats inspired by the summer season',
+      price: 'By Consultation',
+      image: 'assets/images/s1.webp',
       products: [
-        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
-        { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
-        { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/IMG_5087.webp', description: 'Almond flour based sponge (Add-on)' },
-        { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/IMG_5089.webp', description: 'Acrylic or Fondant topper with personalized message' }
+        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/s1.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
+        { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/s6.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
+        { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/s3.webp', description: 'Almond flour based sponge (Add-on)' },
+        { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/s4.webp', description: 'Acrylic or Fondant topper with personalized message' },
+        { id: 45, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/s5.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' }
       ]
     },
     {
       id: 'custom',
       title: 'Winter Special',
       description: 'Build your own dream cake or customize dietary preferences',
-      price: 'From ₹0 (Add-ons)',
+      price: 'By Consultation',
       image: 'assets/images/IMG_5090.webp',
       products: [
+        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5090.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
         { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
-        { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
-        { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/IMG_5087.webp', description: 'Almond flour based sponge (Add-on)' },
-        { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/IMG_5089.webp', description: 'Acrylic or Fondant topper with personalized message' }
+        { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/wi1.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
+        { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/wi2.webp', description: 'Almond flour based sponge (Add-on)' },
+        { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/wi3.webp', description: 'Acrylic or Fondant topper with personalized message' }
       ]
     },
     {
