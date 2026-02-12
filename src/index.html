@@ -43,11 +43,21 @@
   
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   
-  <!-- Preload LCP Image (Hero Cake) -->
-  <link rel="preload" as="image" href="assets/images/IMG_5087.webp" type="image/webp">
+  <!-- Preload LCP Image (Hero Cake) with fetchpriority -->
+  <link rel="preload" as="image" href="assets/images/IMG_5087.webp" type="image/webp" fetchpriority="high">
   
-  <!-- Tailwind CSS with defer to reduce render-blocking -->
-  <script src="https://cdn.tailwindcss.com" defer></script>
+  <!-- Critical CSS for Above-the-Fold Content -->
+  <style>
+    /* Hero section critical styles to prevent layout shift */
+    .hero-image-container {
+      width: 100%;
+      aspect-ratio: 4/5;
+      max-height: 320px;
+    }
+    @media (min-width: 640px) { .hero-image-container { max-height: 400px; } }
+    @media (min-width: 768px) { .hero-image-container { max-height: 500px; } }
+    @media (min-width: 1024px) { .hero-image-container { max-height: 550px; } }
+  </style>
   
   <!-- ============================================
        Structured Data for SEO (Schema.org)
@@ -208,6 +218,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS (defer to reduce render-blocking, config follows) -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
   
   <!-- Tailwind Config -->
   <script>
