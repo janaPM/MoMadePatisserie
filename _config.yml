@@ -1,0 +1,35 @@
+# GitHub Pages Jekyll Configuration
+# This file configures how GitHub Pages serves your static site
+
+# Build settings
+markdown: kramdown
+exclude: 
+  - node_modules
+  - package.json
+  - package-lock.json
+  - README.md
+  - .git
+
+# Serve assets with proper cache headers
+# Note: GitHub Pages uses default 10-minute cache. 
+# For production, consider using a CDN (Cloudflare, Netlify, Vercel) 
+# or a custom domain with proper HTTP headers configuration
+
+# Disable Jekyll processing for specific files to improve performance
+include:
+  - .nojekyll
+
+# Enable compression
+compress_output: true
+
+# Build options
+strict_front_matter: false
+future: false
+
+# Plugins (if any)
+plugins:
+  - jekyll-minifier
+
+# For better performance, disable Jekyll processing entirely and rely on pre-built dist files
+# Uncomment the line below when deploying via GitHub Actions
+# skip-jekyll: true
