@@ -46,9 +46,83 @@
   <!-- Preload LCP Image (Hero Cake) with fetchpriority -->
   <link rel="preload" as="image" href="assets/images/IMG_5087.webp" type="image/webp" fetchpriority="high">
   
-  <!-- Critical CSS for Above-the-Fold Content -->
+  <!-- Google Fonts - Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  
+  <!-- ============ CRITICAL CSS - ABOVE THE FOLD ============ -->
   <style>
-    /* Hero section critical styles to prevent layout shift */
+    /* Prevent FOUC - Flash of Unstyled Content */
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #FDFBF9;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    app-root {
+      display: block;
+      width: 100%;
+      min-height: 100vh;
+      background-color: #FDFBF9;
+    }
+
+    /* Splash Screen - Visible during loading */
+    .mo-splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #FDFBF9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .splash-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2D2926;
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+    }
+
+    .splash-loader {
+      width: 120px;
+      height: 1px;
+      background-color: #E8DED5;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .splash-loader-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #7E5539, #A0744D, #7E5539);
+      animation: loadingBar 1.5s ease-in-out forwards;
+    }
+
+    @keyframes loadingBar {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    /* Hide splash when app is ready */
+    .mo-splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Hero section critical styles to prevent CLS */
     .hero-image-container {
       width: 100%;
       aspect-ratio: 4/5;
@@ -57,6 +131,11 @@
     @media (min-width: 640px) { .hero-image-container { max-height: 400px; } }
     @media (min-width: 768px) { .hero-image-container { max-height: 500px; } }
     @media (min-width: 1024px) { .hero-image-container { max-height: 550px; } }
+
+    /* Prevent font loading flicker */
+    body {
+      font-display: swap;
+    }
   </style>
   
   <!-- ============================================
@@ -213,11 +292,6 @@
     ]
   }
   </script>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS is now compiled at build time via styles.scss -->
   
