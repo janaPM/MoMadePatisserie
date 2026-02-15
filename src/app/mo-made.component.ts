@@ -48,6 +48,33 @@ export class MoMadeComponent implements OnInit {
   selectedVibe = signal('');
   selectedFlavor = signal('');
   customerName = '';
+
+  // Policy Modal State
+  activePolicyModal = signal<'payment' | 'shipping' | 'refund' | 'terms' | null>(null);
+
+  openPolicyModal(policy: 'payment' | 'shipping' | 'refund' | 'terms') {
+    this.activePolicyModal.set(policy);
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  closePolicyModal() {
+    this.activePolicyModal.set(null);
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  getPolicyTitle(): string {
+    const titles = {
+      payment: 'Payment Policy',
+      shipping: 'Delivery Policy',
+      refund: 'Refund & Cancellation Policy',
+      terms: 'Terms of Service'
+    };
+    return titles[this.activePolicyModal() || 'payment'];
+  }
   eventDate = '';
   cakeMessage = '';
 
@@ -264,6 +291,7 @@ export class MoMadeComponent implements OnInit {
   currentStoryIndex = signal(0);
 
   googleRating = signal(4.9);
+  yearsCrafting = signal(new Date().getFullYear() - 2014);
   
   readonly GOOGLE_REVIEW_URL = 'https://search.google.com/local/reviews?placeid=ChIJSeo3hiE9rjsRc3uMRT1FxGY';
   readonly GOOGLE_WRITE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJSeo3hiE9rjsRc3uMRT1FxGY';
@@ -489,7 +517,7 @@ export class MoMadeComponent implements OnInit {
       id: 'wedding',
       title: 'Wedding Cakes',
       description: 'Multi-tier floral masterpieces with handcrafted sugar flowers',
-      price: 'From ₹3,000',
+      price: '₹3,000/kg onwards',
       image: 'assets/images/w1.webp',
       products: [
         { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/w1.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
@@ -504,7 +532,7 @@ export class MoMadeComponent implements OnInit {
       id: 'signature',
       title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless celebration designs',
-      price: 'From ₹3,000',
+      price: '₹1,200/kg onwards',
       image: 'assets/images/c1.webp',
       products: [
         { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c1.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },

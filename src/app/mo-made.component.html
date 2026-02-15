@@ -3,10 +3,14 @@
     @if (currentView() === 'landing') {
       <div class="animate-fadeIn">
       <nav class="fixed w-full z-50 nav-header-bg backdrop-blur-md border-b border-accent-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4 flex justify-between items-center">
-          <div class="flex items-center gap-1.5 sm:gap-2">
-            <span class="font-serif text-lg sm:text-2xl font-bold tracking-wider text-[var(--color-primary)]">Mo Made</span>
-            <span class="text-[var(--color-secondary)] font-serif italic font-semibold text-xs sm:text-sm">Patisserie</span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+          <!-- Spacer for mobile to center logo -->
+          <div class="w-20 md:hidden"></div>
+          <div class="flex items-center gap-2 sm:gap-3 absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
+            <picture>
+              <source srcset="assets/images/MO_MADE_PATISSERIE_HEADER_LOGO_transparent.webp" type="image/webp">
+              <img src="assets/images/MO_MADE_PATISSERIE_HEADER_LOGO_transparent.png" alt="Mo Made Patisserie Logo" class="h-8 sm:h-10 w-auto object-contain" width="120" height="40">
+            </picture>            
           </div>
           <!-- Desktop Nav Links -->
           <div class="hidden md:flex items-center gap-8 text-sm font-sans font-medium tracking-wide">
@@ -16,11 +20,6 @@
           </div>
           <!-- Contact + CTA -->
           <div class="flex items-center gap-3 sm:gap-4">
-            <!-- WhatsApp Quick Contact - hidden on mobile, visible on sm+ -->
-            <!-- <a [href]="contactWhatsappUrl" target="_blank" class="hidden sm:flex items-center gap-1.5 text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" width="20" height="20"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
-              <span class="text-xs font-sans font-medium">{{contactPhone}}</span>
-            </a> -->
             <a href="#concierge" class="bg-[var(--color-primary)] text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-sans font-medium hover:bg-[var(--color-secondary)] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95">
               Book Now
             </a>
@@ -58,6 +57,7 @@
               <div class="absolute -inset-3 sm:-inset-4 md:-inset-6 image-frame-gradient rounded-[32px] sm:rounded-[40px] -rotate-3 shadow-2xl"></div>
               <div class="relative group">
                 <picture>
+                  <source media="(max-width: 639px)" srcset="assets/images/IMG_5087_m.webp" type="image/webp"/>
                   <source srcset="assets/images/IMG_5087.webp" type="image/webp"/>
                   <img src="assets/images/IMG_5087.jpeg" alt="Signature handcrafted floral cake by Monisha Prakash - Mo Made Patisserie Bangalore" width="800" height="1000" fetchpriority="high" loading="eager" class="relative rounded-[24px] sm:rounded-[32px] shadow-2xl z-10 w-full object-cover h-[320px] sm:h-[400px] md:h-[500px] lg:h-[550px] group-hover:scale-[1.02] transition-transform duration-700"/>
                 </picture>
@@ -84,14 +84,14 @@
             <button (click)="openGoogleReviews()" class="group space-y-0.5 sm:space-y-1 cursor-pointer hover:scale-105 transition-transform duration-300 active:scale-95">
               <p class="font-serif text-2xl sm:text-3xl md:text-4xl text-[var(--color-primary)] font-bold group-hover:text-[var(--color-secondary)] transition-colors">{{googleRating()}}<span class="text-[var(--color-secondary)]">/5</span></p>
               <p class="text-[10px] sm:text-xs font-sans uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[#7A7471] group-hover:text-[var(--color-secondary)] transition-colors">Google Rating</p>
-              <p class="text-[10px] sm:text-xs font-sans text-[var(--color-secondary)] opacity-0 group-hover:opacity-100 transition-opacity">View Reviews →</p>
+              <p class="text-[10px] sm:text-xs font-sans text-[var(--color-secondary)]">View Reviews →</p>
             </button>
             <div class="space-y-0.5 sm:space-y-1">
               <p class="font-serif text-2xl sm:text-3xl md:text-4xl text-[var(--color-primary)] font-bold">100<span class="text-[var(--color-secondary)]">%</span></p>
               <p class="text-[10px] sm:text-xs font-sans uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[#7A7471]">Eggless Options</p>
             </div>
             <div class="space-y-0.5 sm:space-y-1">
-              <p class="font-serif text-2xl sm:text-3xl md:text-4xl text-[var(--color-primary)] font-bold">13<span class="text-[var(--color-secondary)]">+</span></p>
+              <p class="font-serif text-2xl sm:text-3xl md:text-4xl text-[var(--color-primary)] font-bold">{{yearsCrafting()}}<span class="text-[var(--color-secondary)]">+</span></p>
               <p class="text-[10px] sm:text-xs font-sans uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[#7A7471]">Years Crafting</p>
             </div>
             <div class="space-y-0.5 sm:space-y-1">
@@ -741,10 +741,12 @@
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12 mb-6 sm:mb-8 lg:mb-12">
             <div class="lg:col-span-2 space-y-3 sm:space-y-4">
               <div class="flex items-center gap-1.5 sm:gap-2">
-                <span class="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-[var(--color-primary)]">Mo Made</span>
-                <span class="text-[var(--color-secondary)] font-serif font-bold italic text-xs sm:text-sm md:text-base">Patisserie</span>
+                <picture>
+                  <source srcset="assets/images/MO_MADE_PATISSERIE.webp" type="image/webp">
+                  <img src="assets/images/MO_MADE_PATISSERIE.png" alt="Mo Made Patisserie Logo" class="h-12 sm:h-14 md:h-16 w-auto object-contain" width="200" height="64">
+                </picture>
               </div>
-              <p class="text-[#7A7471] font-sans text-xs sm:text-sm md:text-base leading-relaxed max-w-sm">Artisanal cakes crafted with love and precision. Making your celebrations sweeter since 2013.</p>
+              <p class="text-[#7A7471] font-sans text-xs sm:text-sm md:text-base leading-relaxed max-w-sm">Artisanal cakes crafted with love and precision. Making your celebrations sweeter since 2014.</p>
               <!-- Contact Info - Mobile: phone + icons on same row -->
               <div class="flex items-center justify-between sm:block">
                 <a [href]="contactWhatsappUrl" class="flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors">
@@ -787,12 +789,97 @@
               </div>
             </div>
           </div>
-          <div class="border-t border-accent-50 pt-4 sm:pt-6 md:pt-8 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3 md:gap-4">
-            <p class="text-[9px] sm:text-[10px] md:text-xs text-[#7A7471] font-sans uppercase tracking-widest">&copy; 2026 Mo Made Patisserie. All rights reserved.</p>
-            <p class="text-[9px] sm:text-[10px] md:text-xs text-[#7A7471] font-sans">Crafted with <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 inline text-[var(--color-secondary)]" fill="currentColor" viewBox="0 0 24 24" width="10" height="10"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> in Bangalore</p>
+          <div class="border-t border-accent-50 pt-4 sm:pt-6 md:pt-8">
+            <!-- Policy Links -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-4 sm:mb-6 text-[9px] sm:text-[10px] md:text-xs text-[#7A7471] font-sans">
+              <button (click)="openPolicyModal('payment')" class="hover:text-[var(--color-secondary)] transition-colors underline-offset-2 hover:underline">Payment Policy</button>
+              <span class="text-accent-50">·</span>
+              <button (click)="openPolicyModal('shipping')" class="hover:text-[var(--color-secondary)] transition-colors underline-offset-2 hover:underline">Delivery Policy</button>
+              <span class="text-accent-50">·</span>
+              <button (click)="openPolicyModal('refund')" class="hover:text-[var(--color-secondary)] transition-colors underline-offset-2 hover:underline">Refund Policy</button>
+              <span class="text-accent-50">·</span>
+              <button (click)="openPolicyModal('terms')" class="hover:text-[var(--color-secondary)] transition-colors underline-offset-2 hover:underline">Terms of Service</button>
+              <span class="text-accent-50">·</span>
+              <a [href]="contactWhatsappUrl" target="_blank" class="hover:text-[var(--color-secondary)] transition-colors underline-offset-2 hover:underline">Contact Us</a>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3 md:gap-4">
+              <p class="text-[9px] sm:text-[10px] md:text-xs text-[#7A7471] font-sans uppercase tracking-widest">&copy; 2026 Mo Made Patisserie. All rights reserved.</p>
+              <p class="text-[9px] sm:text-[10px] md:text-xs text-[#7A7471] font-sans">Crafted with <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 inline text-[var(--color-secondary)]" fill="currentColor" viewBox="0 0 24 24" width="10" height="10"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> in Bangalore</p>
+            </div>
           </div>
         </div>
       </footer>
+
+      <!-- Policy Modal -->
+      @if (activePolicyModal()) {
+        <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" (click)="closePolicyModal()">
+          <div class="bg-white rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl" (click)="$event.stopPropagation()">
+            <div class="sticky top-0 bg-white border-b border-accent-50 px-6 py-4 flex justify-between items-center">
+              <h3 class="font-serif text-lg sm:text-xl text-[var(--color-primary)] font-bold">{{getPolicyTitle()}}</h3>
+              <button (click)="closePolicyModal()" class="w-8 h-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-[var(--color-primary)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div class="px-6 py-5 text-sm text-[#5A5552] font-sans leading-relaxed space-y-4">
+              @if (activePolicyModal() === 'payment') {
+                <p><strong class="text-[var(--color-primary)]">Advance Payment:</strong> A 50% advance payment is required to confirm your order. Preparation begins only after the advance is received.</p>
+                <p><strong class="text-[var(--color-primary)]">Final Payment:</strong> The remaining 50% must be paid before the cake is handed over or delivered.</p>
+                <p><strong class="text-[var(--color-primary)]">Payment Methods:</strong> We accept UPI, bank transfer, and cash payments.</p>
+              }
+              @if (activePolicyModal() === 'shipping') {
+                <div class="space-y-4">
+                  <div>
+                    <p class="font-semibold text-[var(--color-primary)] mb-2">Pickup & Delivery Options:</p>
+                    <ul class="list-disc list-inside space-y-1 text-[#5A5552]">
+                      <li>Cakes can be picked up from our location at Mo Made Patisserie</li>
+                      <li>We can arrange an Uber/Ola to deliver your order to your preferred location. You will be notified once the ride begins. Please pay the delivery charges directly to the driver.</li>
+                      <li>Our team will instruct the driver, but we cannot take responsibility for any damages once the ride has started.</li>
+                      <li>Orders above 5 kilos can be delivered with additional charges based on the location.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[var(--color-primary)] mb-2">About Our Cakes:</p>
+                    <ul class="list-disc list-inside space-y-1 text-[#5A5552]">
+                      <li>All our cakes are finished with buttercream frosting.</li>
+                      <li>We specialize only in buttercream cakes with very minimal use of fondant.</li>
+                      <li>Our cakes are extremely soft and delicate. We highly recommend you handle the cake with care and refrigerate as soon as you receive it.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[var(--color-primary)] mb-2">Pricing:</p>
+                    <ul class="list-disc list-inside space-y-1 text-[#5A5552]">
+                      <li>Basic price starts from ₹2,999/- per kilo. Price varies according to design & details.</li>
+                      <li>50% advance payment required to confirm the order.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[var(--color-primary)] mb-2">Pickup Address:</p>
+                    <p class="text-[#5A5552]">#1399, 12th B Cross, 2nd Stage, West of Chord Road, Mahalakshmipuram, Bangalore 560086</p>
+                    <a href="https://goo.gl/maps/TfmoHf6kuffL28dEA" target="_blank" class="inline-flex items-center gap-1 text-[var(--color-secondary)] font-medium hover:underline mt-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      View on Google Maps
+                    </a>
+                  </div>
+                </div>
+              }
+              @if (activePolicyModal() === 'refund') {
+                <p><strong class="text-[var(--color-primary)]">No Refunds:</strong> Due to the perishable and customized nature of our products, we do not offer refunds once an order is confirmed.</p>
+                <p><strong class="text-[var(--color-primary)]">No Cancellations:</strong> Orders cannot be cancelled after the advance payment is made and preparation has begun.</p>
+                <p><strong class="text-[var(--color-primary)]">Quality Assurance:</strong> We use only the finest ingredients and ensure every cake meets our quality standards. Please inspect upon delivery.</p>
+              }
+              @if (activePolicyModal() === 'terms') {
+                <p><strong class="text-[var(--color-primary)]">Order Confirmation:</strong> Orders are confirmed only after 50% advance payment is received.</p>
+                <p><strong class="text-[var(--color-primary)]">Customization:</strong> Custom designs require at least 3-5 days advance notice. Complex designs may need more time.</p>
+                <p><strong class="text-[var(--color-primary)]">Allergies:</strong> Please inform us of any allergies. While we take precautions, our kitchen handles nuts, dairy, and gluten.</p>
+                <p><strong class="text-[var(--color-primary)]">Photography:</strong> We may photograph our creations for portfolio use unless you request otherwise.</p>
+              }
+            </div>
+            <div class="px-6 py-4 border-t border-accent-50 bg-[var(--color-accent)]/30">
+              <p class="text-xs text-[#7A7471] font-sans">For any questions, please <a [href]="contactWhatsappUrl" target="_blank" class="text-[var(--color-secondary)] font-medium hover:underline">contact us on WhatsApp</a>.</p>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   } @else {
     <div class="animate-slideUp">
@@ -804,8 +891,10 @@
               <span class="hidden sm:inline">Back to Home</span>
             </button>
             <div class="flex items-center gap-1 sm:gap-2">
-              <span class="font-serif text-lg sm:text-xl font-bold text-[var(--color-primary)]">Mo Made</span>
-              <span class="text-[var(--color-secondary)] font-serif italic text-xs sm:text-sm">Patisserie</span>
+              <picture>
+                <source srcset="assets/images/MO_MADE_PATISSERIE_HEADER_LOGO_transparent.webp" type="image/webp">
+                <img src="assets/images/MO_MADE_PATISSERIE_HEADER_LOGO_transparent.png" alt="Mo Made Patisserie Logo" class="h-8 sm:h-10 w-auto object-contain" width="120" height="40">
+              </picture>
             </div>
             <a href="#" (click)="inquireProduct(activeCategory()?.title || ''); $event.preventDefault()" class="bg-[var(--color-primary)] text-white px-3 sm:px-4 py-2 rounded-full text-sm font-sans font-medium hover:bg-[var(--color-secondary)] transition-all inline-flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
