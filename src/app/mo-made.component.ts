@@ -1,7 +1,6 @@
 import { Component, NgModule, signal, computed, OnInit, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Location } from '@angular/common';
 
 // ============================================
 // Contact Information Constants
@@ -104,7 +103,6 @@ export class MoMadeComponent implements OnInit {
   carouselScrollPosition = 0; // Store horizontal scroll position
 
   constructor(
-    private location: Location,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -350,30 +348,23 @@ export class MoMadeComponent implements OnInit {
     }
   }
   
-  // GitHub raw URL base for images (works before site is hosted)
-  private readonly GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/karthickajan/MoMadePatisserie/main/src/';
-  // Use GitHub Pages URL for now, change to custom domain when ready
   private readonly SITE_BASE_URL = 'https://karthickajan.github.io/MoMadePatisserie';
   
   // Update Open Graph meta tags for product sharing
   private updateMetaTags(product: {id: number; name: string; image: string; description: string}) {
     const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
-    // Use GitHub raw URL for images (works even before hosting)
-    const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
+    const imageUrl = `${this.SITE_BASE_URL}/${product.image}`;
     const title = `${product.name} - Mo Made Patisserie`;
     const description = product.description;
     
-    // Update document title
     document.title = title;
     
-    // Update OG tags
     this.setMetaContent('og-title', title);
     this.setMetaContent('og-description', description);
     this.setMetaContent('og-url', productUrl);
     this.setMetaContent('og-image', imageUrl);
     this.setMetaContent('og-type', 'product');
     
-    // Update Twitter tags
     this.setMetaContent('twitter-title', title);
     this.setMetaContent('twitter-description', description);
     this.setMetaContent('twitter-image', imageUrl);
@@ -383,7 +374,7 @@ export class MoMadeComponent implements OnInit {
   private resetMetaTags() {
     const defaultTitle = 'Best Custom Cakes Bangalore | Luxury Patisserie by Monisha | Mo Made Patisserie';
     const defaultDescription = 'Award-winning patisserie creating bespoke wedding cakes and luxury desserts in Bangalore';
-    const defaultImage = `${this.GITHUB_RAW_BASE}assets/images/IMG_5087.webp`;
+    const defaultImage = `${this.SITE_BASE_URL}/assets/images/IMG_5087.webp`;
     
     document.title = defaultTitle;
     
@@ -425,45 +416,30 @@ export class MoMadeComponent implements OnInit {
     const product = this.zoomedProduct();
     if (!product || !isPlatformBrowser(this.platformId)) return;
     
-    // Product URL that opens zoom view
     const productUrl = `${this.SITE_BASE_URL}/#product/${product.id}`;
+    const shareText = `Check out "${product.name}" from Mo Made Patisserie 🎂`;
     
-    // Try to share with image using Web Share API Level 2
-    try {
-      const imageUrl = `${this.GITHUB_RAW_BASE}${product.image}`;
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const file = new File([blob], `${product.name.replace(/\s+/g, '-')}.webp`, { type: 'image/webp' });
-      
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        // Share image with just the URL in text
-        await navigator.share({
-          files: [file],
-          text: `${product.name} - Mo Made Patisserie\n${productUrl}`
-        });
-        return;
-      }
-    } catch (err) {
-      console.log('Image share failed:', err);
-    }
-    
-    // Fallback: Share URL only (cleaner for copy)
+    // Use Web Share API (text + url only — no file sharing for cross-platform reliability)
     if (navigator.share) {
       try {
         await navigator.share({
-          title: product.name,
+          title: `${product.name} - Mo Made Patisserie`,
+          text: shareText,
           url: productUrl
         });
-      } catch (err) {
-        console.log('Share cancelled:', err);
+      } catch (err: any) {
+        // User cancelled — not an error
+        if (err?.name !== 'AbortError') {
+          console.log('Share failed:', err);
+        }
       }
     } else {
-      // Desktop: Copy just the URL
+      // Desktop fallback: copy link
       try {
-        await navigator.clipboard.writeText(productUrl);
+        await navigator.clipboard.writeText(`${shareText}\n${productUrl}`);
         alert('Link copied to clipboard!');
-      } catch (err) {
-        window.open(`https://wa.me/?text=${encodeURIComponent(productUrl)}`, '_blank');
+      } catch {
+        window.open(`https://wa.me/?text=${encodeURIComponent(`${shareText}\n${productUrl}`)}`, '_blank');
       }
     }
   }
