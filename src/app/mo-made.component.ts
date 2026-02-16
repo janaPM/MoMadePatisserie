@@ -532,7 +532,7 @@ export class MoMadeComponent implements OnInit {
       id: 'signature',
       title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless celebration designs',
-      price: '₹1,200/kg onwards',
+      price: '₹3,000/kg onwards',
       image: 'assets/images/c1.webp',
       products: [
         { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c1.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
