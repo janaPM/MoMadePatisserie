@@ -285,8 +285,8 @@ export class MoMadeComponent implements OnInit {
   }
 
   storyImages = [
-    'assets/images/IMG_5087.webp',
-    'assets/images/IMG_5088.webp'
+    'assets/images/IMG_5087_m.webp',
+    'assets/images/co1_m.webp'
   ];
   currentStoryIndex = signal(0);
 
@@ -312,33 +312,6 @@ export class MoMadeComponent implements OnInit {
     }
   }
 
-  // getSeasonalProducts(): Product[] {
-  //   const month = new Date().getMonth();
-  //   if (month <= 1 || month >= 10) {
-  //     return [
-  //       { id: 101, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
-  //       { id: 102, name: 'Chocolate Strawberry Dream', price: 1800, flavor: 'chocolate', image: 'assets/images/IMG_5088.webp', description: 'Chocolate sponge with fresh strawberry & Chocolate Ganache' }
-  //     ];
-  //   } else if (month >= 2 && month <= 5) {
-  //     return [
-  //       { id: 201, name: 'Mango Delight', price: 1700, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango & Vanilla Swiss Meringue Buttercream' },
-  //       { id: 202, name: 'Pistachio Mango Fusion', price: 2000, flavor: 'nutty', image: 'assets/images/IMG_5089.webp', description: 'Pistachio sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' },
-  //       { id: 203, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
-  //     ];
-  //   } else {
-  //     return [
-  //       { id: 301, name: 'Strawberry Bliss', price: 1600, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Vanilla sponge with Strawberry Compote & Vanilla Swiss Meringue Buttercream' },
-  //       { id: 302, name: 'Tropical Berry', price: 1800, flavor: 'fruit', image: 'assets/images/IMG_5087.webp', description: 'Vanilla Sponge with Fresh Mango, Raspberry & Vanilla Swiss Meringue Buttercream' }
-  //     ];
-  //   }
-  // }
-
-  // getSeasonalTitle(): string {
-  //   const month = new Date().getMonth();
-  //   if (month <= 1 || month >= 10) return 'Winter Specials';
-  //   if (month >= 2 && month <= 4) return 'Summer Harvest';
-  //   return 'Monsoon Delights';
-  // }
 
   getCakeMessageLines(): [string, string | null] {
     if (!this.cakeMessage || !this.cakeMessage.trim()) return ["", null];
@@ -518,9 +491,9 @@ export class MoMadeComponent implements OnInit {
       title: 'Wedding Cakes',
       description: 'Multi-tier floral masterpieces with handcrafted sugar flowers',
       price: '₹3,000/kg onwards',
-      image: 'assets/images/w1.webp',
+      image: 'assets/images/w1_m.webp',
       products: [
-        { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/w1.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
+        { id: 1, name: 'Blush Garden Tier', price: 12500, flavor: 'vanilla', image: 'assets/images/w1_m.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
         { id: 2, name: 'Midnight Elegance', price: 15000, flavor: 'chocolate', image: 'assets/images/w2.webp', description: 'Dark chocolate ganache with deep burgundy sugar flowers' },
         { id: 3, name: 'Tropical Paradise', price: 11000, flavor: 'fruit', image: 'assets/images/w3.webp', description: 'Mango passion fruit layers with edible orchids' },
         { id: 4, name: 'Classic White', price: 9500, flavor: 'vanilla', image: 'assets/images/w4.webp', description: 'Traditional white fondant with delicate lace patterns' },
@@ -533,9 +506,9 @@ export class MoMadeComponent implements OnInit {
       title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless celebration designs',
       price: '₹3,000/kg onwards',
-      image: 'assets/images/c1.webp',
+      image: 'assets/images/c1_m.webp',
       products: [
-        { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c1.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
+        { id: 21, name: 'Chocolate Caramel', price: 1400, flavor: 'chocolate', image: 'assets/images/c1_m.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
         { id: 22, name: 'Chocolate Raspberry', price: 1500, flavor: 'chocolate', image: 'assets/images/c2.webp', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
         { id: 23, name: 'Chocolate Hazelnut', price: 1600, flavor: 'chocolate', image: 'assets/images/c3.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' },
         { id: 24, name: 'Red Velvet', price: 1300, flavor: 'vanilla', image: 'assets/images/c4.webp', description: 'Red Velvet sponge with cream cheese frosting or chocolate ganache' },
@@ -551,9 +524,9 @@ export class MoMadeComponent implements OnInit {
       title: 'Confectionery',
       description: 'Exquisite ingredients, complex pairings, and luxury finishes',
       price: 'Commissioned Pieces',
-      image: 'assets/images/co1.webp',
+      image: 'assets/images/co1_m.webp',
       products: [
-        { id: 31, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/co1.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
+        { id: 31, name: 'Coffee Hazelnut', price: 2000, flavor: 'nutty', image: 'assets/images/co1_m.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
         { id: 32, name: 'Coconut Passionfruit', price: 2200, flavor: 'fruit', image: 'assets/images/IMG_5089.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
         { id: 33, name: 'Carrot Walnut', price: 1800, flavor: 'nutty', image: 'assets/images/co2.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
         { id: 34, name: 'Banana Dulce', price: 1900, flavor: 'vanilla', image: 'assets/images/co4.webp', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
@@ -575,9 +548,9 @@ export class MoMadeComponent implements OnInit {
       title: 'Summer Special',
       description: 'Fresh, limited-edition treats inspired by the summer season',
       price: 'By Consultation',
-      image: 'assets/images/s1.webp',
+      image: 'assets/images/s1_m.webp',
       products: [
-        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/s1.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
+        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/s1_m.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
         { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/s6.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
         { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/s3.webp', description: 'Almond flour based sponge (Add-on)' },
         { id: 44, name: 'Custom Topper', price: 450, flavor: 'vanilla', image: 'assets/images/s4.webp', description: 'Acrylic or Fondant topper with personalized message' },
@@ -589,9 +562,9 @@ export class MoMadeComponent implements OnInit {
       title: 'Winter Special',
       description: 'Build your own dream cake or customize dietary preferences',
       price: 'By Consultation',
-      image: 'assets/images/IMG_5090.webp',
+      image: 'assets/images/IMG_5290_m.webp',
       products: [
-        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5090.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
+        { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5290_m.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
         { id: 41, name: 'Sugar Free Option', price: 300, flavor: 'vanilla', image: 'assets/images/IMG_5087.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
         { id: 42, name: 'Eggless Sponge Base', price: 0, flavor: 'vanilla', image: 'assets/images/wi1.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
         { id: 43, name: 'Gluten Free Almond', price: 500, flavor: 'nutty', image: 'assets/images/wi2.webp', description: 'Almond flour based sponge (Add-on)' },
