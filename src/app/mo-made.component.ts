@@ -348,7 +348,7 @@ export class MoMadeComponent implements OnInit {
     }
   }
   
-  private readonly SITE_BASE_URL = 'https://karthickajan.github.io/MoMadePatisserie';
+  private readonly SITE_BASE_URL = 'https://momadepatisserie.com';
   
   // Update Open Graph meta tags for product sharing
   private updateMetaTags(product: {id: number; name: string; image: string; description: string}) {
@@ -372,19 +372,19 @@ export class MoMadeComponent implements OnInit {
   
   // Reset meta tags to default
   private resetMetaTags() {
-    const defaultTitle = 'Best Custom Cakes Bangalore | Luxury Patisserie by Monisha | Mo Made Patisserie';
-    const defaultDescription = 'Award-winning patisserie creating bespoke wedding cakes and luxury desserts in Bangalore';
+    const defaultTitle = 'Best Custom Cakes in Bangalore | Wedding, Birthday & Anniversary Cakes | Mo Made Patisserie';
+    const defaultDescription = 'Best custom cakes in Bangalore. Order wedding cakes, birthday cakes, anniversary cakes, eggless cakes & luxury desserts. LBB Award Winner.';
     const defaultImage = `${this.SITE_BASE_URL}/assets/images/IMG_5087.webp`;
     
     document.title = defaultTitle;
     
-    this.setMetaContent('og-title', 'Mo Made Patisserie | Premium Custom Cakes Bangalore');
+    this.setMetaContent('og-title', defaultTitle);
     this.setMetaContent('og-description', defaultDescription);
     this.setMetaContent('og-url', this.SITE_BASE_URL);
     this.setMetaContent('og-image', defaultImage);
     this.setMetaContent('og-type', 'website');
     
-    this.setMetaContent('twitter-title', 'Mo Made Patisserie | Premium Cakes Bangalore');
+    this.setMetaContent('twitter-title', 'Best Custom Cakes in Bangalore | Mo Made Patisserie');
     this.setMetaContent('twitter-description', defaultDescription);
     this.setMetaContent('twitter-image', defaultImage);
   }
