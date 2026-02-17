@@ -1,0 +1,28 @@
+# Mo Made Patisserie - robots.txt
+# https://momadepatisserie.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://momadepatisserie.com/sitemap.xml
+
+# Prioritize crawling
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+# Block non-essential paths
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /server/
+
+# Allow all assets for rendering
+Allow: /assets/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.webp$
+Allow: /*.woff2$
