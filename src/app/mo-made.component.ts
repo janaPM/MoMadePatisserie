@@ -75,16 +75,14 @@ export class MoMadeComponent implements OnInit {
   eventDate = '';
   cakeMessage = '';
 
-  // Auto-advance step 1 when vibe is selected
+  // Select vibe (user must click Next to proceed)
   onVibeSelect(vibeName: string) {
     this.selectedVibe.set(vibeName);
-    setTimeout(() => this.nextStep(), 300); // Small delay for visual feedback
   }
 
-  // Auto-advance step 2 when flavor is selected
+  // Select flavor (user must click Next to proceed)
   onFlavorSelect(flavorName: string) {
     this.selectedFlavor.set(flavorName);
-    setTimeout(() => this.nextStep(), 300); // Small delay for visual feedback
   }
 
   // Floating Concierge Menu State
