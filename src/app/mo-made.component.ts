@@ -120,34 +120,61 @@ export class MoMadeComponent implements OnInit {
       // Signal app is ready - removes splash screen and triggers fade-in
       this.triggerAppReady();
       
-      // Handle product URL on page load
-      setTimeout(() => this.handleProductUrl(), 500);
+      // Handle hash URL on page load (category, product, or section anchor)
+      setTimeout(() => this.handleHashUrl(), 500);
       
       // Listen for hash changes (when user navigates via browser)
-      window.addEventListener('hashchange', () => this.handleProductUrl());
+      window.addEventListener('hashchange', () => this.handleHashUrl());
     }
   }
   
-  // Check URL for product ID and open zoom if found
-  private handleProductUrl() {
+  // Handle all hash-based URLs: #category/*, #product/*, #boutique, #story, #concierge
+  private handleHashUrl() {
     const hash = window.location.hash;
+    if (!hash) return;
+
+    // Handle #category/<id> — open category view
+    const categoryMatch = hash.match(/#category\/([a-zA-Z0-9_-]+)/);
+    if (categoryMatch) {
+      const categoryId = categoryMatch[1];
+      const category = this.categories.find(c => c.id === categoryId);
+      if (category && !category.isCatalog) {
+        this.selectedCategoryId.set(categoryId);
+        this.currentView.set('category');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
     
-    // Handle product URL
+    // Handle #product/<id> — open product zoom
     const productMatch = hash.match(/#product\/(\d+)/);
     if (productMatch) {
       const productId = parseInt(productMatch[1], 10);
-      // Find product across all categories
       for (const category of this.categories) {
         const product = category.products.find(p => p.id === productId);
         if (product) {
-          // Set the category and view first
           this.selectedCategoryId.set(category.id);
           this.currentView.set('category');
-          // Open the product zoom after a short delay
           setTimeout(() => this.openZoom(product), 100);
           break;
         }
       }
+      return;
+    }
+
+    // Handle section anchors: #boutique, #story, #concierge
+    const sectionMatch = hash.match(/#(boutique|story|concierge)/);
+    if (sectionMatch) {
+      // Make sure we're on landing view first
+      if (this.currentView() !== 'landing') {
+        this.currentView.set('landing');
+      }
+      setTimeout(() => {
+        const el = document.getElementById(sectionMatch[1]);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
   }
 
@@ -370,19 +397,19 @@ export class MoMadeComponent implements OnInit {
   
   // Reset meta tags to default
   private resetMetaTags() {
-    const defaultTitle = 'Best Custom Cakes in Bangalore | Wedding, Birthday & Anniversary Cakes | Mo Made Patisserie';
-    const defaultDescription = 'Best custom cakes in Bangalore. Order wedding cakes, birthday cakes, anniversary cakes, eggless cakes & luxury desserts. LBB Award Winner.';
+    const defaultTitle = 'Mo Made Patisserie | Bespoke Wedding & Luxury Custom Cakes Bangalore';
+    const defaultDescription = 'Bespoke architectural wedding cakes & luxury custom confections by Architect Monisha Prakash. Handcrafted in Bangalore. LBB Award Winner.';
     const defaultImage = `${this.SITE_BASE_URL}/assets/images/IMG_5087.webp`;
     
     document.title = defaultTitle;
     
-    this.setMetaContent('og-title', defaultTitle);
-    this.setMetaContent('og-description', defaultDescription);
+    this.setMetaContent('og-title', 'Mo Made Patisserie | Bespoke Wedding & Luxury Cakes Bangalore');
+    this.setMetaContent('og-description', 'Architectural sugar art by Monisha Prakash. Bespoke wedding tiers, milestone celebration cakes & luxury confections. Handcrafted in Bangalore.');
     this.setMetaContent('og-url', this.SITE_BASE_URL);
     this.setMetaContent('og-image', defaultImage);
     this.setMetaContent('og-type', 'website');
     
-    this.setMetaContent('twitter-title', 'Best Custom Cakes in Bangalore | Mo Made Patisserie');
+    this.setMetaContent('twitter-title', 'Mo Made Patisserie | Architectural Sugar Art Bangalore');
     this.setMetaContent('twitter-description', defaultDescription);
     this.setMetaContent('twitter-image', defaultImage);
   }
@@ -476,7 +503,7 @@ export class MoMadeComponent implements OnInit {
       ]
     },
     {
-      id: 'signature',
+      id: 'celebration',
       title: 'Celebration Cakes',
       description: 'Our most loved classic flavors and timeless celebration designs',
       price: '₹3,000/kg onwards',
@@ -494,7 +521,7 @@ export class MoMadeComponent implements OnInit {
       ]
     },
     {
-      id: 'premium',
+      id: 'confectionery',
       title: 'Confectionery',
       description: 'Exquisite ingredients, complex pairings, and luxury finishes',
       price: 'Commissioned Pieces',
@@ -518,7 +545,7 @@ export class MoMadeComponent implements OnInit {
       ]
     },
     {
-      id: 'seasonal',
+      id: 'summer',
       title: 'Summer Special',
       description: 'Fresh, limited-edition treats inspired by the summer season',
       price: 'By Consultation',
@@ -532,7 +559,7 @@ export class MoMadeComponent implements OnInit {
       ]
     },
     {
-      id: 'custom',
+      id: 'winter',
       title: 'Winter Special',
       description: 'Build your own dream cake or customize dietary preferences',
       price: 'By Consultation',
@@ -588,6 +615,8 @@ export class MoMadeComponent implements OnInit {
     this.currentView.set('landing');
     this.categoryTypeFilterSignal.set('wedding');
     if (isPlatformBrowser(this.platformId)) {
+      // Clear hash from URL
+      window.history.replaceState({}, '', window.location.pathname);
       setTimeout(() => {
         window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
         // Restore carousel horizontal scroll position
