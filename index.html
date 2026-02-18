@@ -58,9 +58,8 @@
   <!-- Google Fonts - Non-render-blocking async loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Async load Google Fonts CSS (non-render-blocking) -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"></noscript>
+  <!-- Use official Google Fonts stylesheet for Inter and Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
   
   <!-- ============ CRITICAL CSS - ABOVE THE FOLD ============ -->
   <style>
@@ -72,13 +71,7 @@
       font-display: swap;
       src: local('Inter'), local('Inter-Regular'), url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2) format('woff2');
     }
-    @font-face {
-      font-family: 'Playfair Display';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: local('Playfair Display Bold'), url(https://fonts.gstatic.com/s/playfairdisplay/v31/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtXK-F2qC0s.woff2) format('woff2');
-    }
+    /* Playfair Display now loaded via Google Fonts stylesheet above */
     
     /* Prevent FOUC - Flash of Unstyled Content */
     html, body {
@@ -226,15 +219,57 @@
           "name": "Wedding Cakes",
           "description": "Bespoke multi-tier architectural wedding cakes with handcrafted sugar flowers and structural precision",
           "itemListElement": [
-            {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Multi-Tier Wedding Cakes", "description": "Architectural multi-tier designs with handcrafted sugar florals"}},
-            {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Intimate Wedding Cakes", "description": "Elegant single and two-tier designs for intimate ceremonies"}},
-            {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Wedding Dessert Tables", "description": "Curated dessert spreads for wedding receptions"}}
+            {"@type": "Offer", "itemOffered": {
+              "@type": "Product",
+              "name": "Multi-Tier Wedding Cakes",
+              "description": "Architectural multi-tier designs with handcrafted sugar florals",
+              "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+              "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+            }},
+            {"@type": "Offer", "itemOffered": {
+              "@type": "Product",
+              "name": "Intimate Wedding Cakes",
+              "description": "Elegant single and two-tier designs for intimate ceremonies",
+              "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+              "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+            }},
+            {"@type": "Offer", "itemOffered": {
+              "@type": "Product",
+              "name": "Wedding Dessert Tables",
+              "description": "Curated dessert spreads for wedding receptions",
+              "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+              "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+            }}
           ]
         },
-        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Milestone Birthday Cakes", "description": "Luxury custom birthday cakes for landmark celebrations"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Anniversary Cakes", "description": "Bespoke anniversary cake commissions for every milestone"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Celebration & Party Cakes", "description": "Custom designed cakes for luxury celebrations and events"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Luxury Confectionery", "description": "Macarons, cakesicles, cookies, brownies, cupcakes & dessert boxes"}}
+        {"@type": "Offer", "itemOffered": {
+          "@type": "Product",
+          "name": "Milestone Birthday Cakes",
+          "description": "Luxury custom birthday cakes for landmark celebrations",
+          "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+          "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+        }},
+        {"@type": "Offer", "itemOffered": {
+          "@type": "Product",
+          "name": "Anniversary Cakes",
+          "description": "Bespoke anniversary cake commissions for every milestone",
+          "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+          "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+        }},
+        {"@type": "Offer", "itemOffered": {
+          "@type": "Product",
+          "name": "Celebration & Party Cakes",
+          "description": "Custom designed cakes for luxury celebrations and events",
+          "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+          "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+        }},
+        {"@type": "Offer", "itemOffered": {
+          "@type": "Product",
+          "name": "Luxury Confectionery",
+          "description": "Macarons, cakesicles, cookies, brownies, cupcakes & dessert boxes",
+          "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "200"},
+          "offers": {"@type": "Offer", "price": "3000", "priceCurrency": "INR", "priceSpecification": {"@type": "PriceSpecification", "price": "3000", "priceCurrency": "INR", "description": "from ₹3000/kg"}}
+        }}
       ]
     },
     "award": "LBB Award Winner — Best Custom Cakes in Bangalore",
