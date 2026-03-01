@@ -524,13 +524,11 @@ export class MoMadeComponent implements OnInit {
         // c5 — White buttercream with chocolate ganache drip, fresh strawberries, blueberries & kiwi on top
         { id: 25, name: 'Chocolate Drip Mixed Fruit', image: 'assets/images/c5.webp', description: 'White buttercream cake with rich chocolate ganache drip, topped with fresh strawberries, blueberries & kiwi' },
         // c6 — White cake with golden honey drip, Winnie the Pooh character art, fondant bees & honeycomb
-        { id: 26, name: 'Honey Drip Character', image: 'assets/images/c6.webp', description: 'White buttercream cake with golden honey drip, hand-painted character art & fondant bee and honeycomb accents' },
+        { id: 26, name: 'Pooh\'s Hunny Drip', image: 'assets/images/c6.webp', description: 'White buttercream cake with golden honey drip, hand-painted character art & fondant bee and honeycomb accents' },
         // c7 — Three-tier teal/mint kids cake with fondant race cars, checkered flags, boy figurine, personalised name
-        { id: 27, name: 'Racing Tier Custom', image: 'assets/images/c7.webp', description: 'Three-tier custom buttercream cake with fondant race cars, checkered flags, personalised name & character topper' },
+        { id: 27, name: 'Wheelie Big Birthday', image: 'assets/images/c7.webp', description: 'Three-tier custom buttercream cake with fondant race cars, checkered flags, personalised name & character topper' },
         // c8 — Pastel rainbow fondant disc cake with rainbow fondant topper
-        { id: 28, name: 'Rainbow Pastel Petal', image: 'assets/images/c8.webp', description: 'White buttercream cake layered with pastel rainbow fondant discs & topped with a handcrafted rainbow fondant topper' },
-        // c9 — Two-tier white cake with vibrant tropical fresh flowers — bird of paradise, anthurium, monstera
-        { id: 29, name: 'Tropical Bloom Tier', image: 'assets/images/c9.webp', description: 'Two-tier white cake adorned with fresh tropical blooms — bird of paradise, anthurium & monstera — with orange & strawberry accents at the base' }
+        { id: 28, name: 'Rainbow Pastel Petal', image: 'assets/images/c8.webp', description: 'White buttercream cake layered with pastel rainbow fondant discs & topped with a handcrafted rainbow fondant topper' }
       ]
     },
     {
