@@ -892,18 +892,18 @@
     <div class="animate-slideUp">
       <div class="sticky top-0 z-50 bg-bg-95 backdrop-blur-md border-b border-accent-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div class="flex items-center justify-between">
-            <button (click)="goBack()" class="inline-flex items-center gap-2 text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors font-sans font-medium group">
+          <div class="flex items-center justify-between relative">
+            <button (click)="goBack()" class="inline-flex items-center gap-2 text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors font-sans font-medium group z-10">
               <svg class="w-5 h-5 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
               <span class="hidden sm:inline">Back to Home</span>
             </button>
-            <div class="flex items-center gap-1 sm:gap-2">
+            <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 sm:gap-2">
               <picture>
                 <source srcset="assets/images/MO_MADE_PATISSERIE_HEADER_LOGO_transparent.webp" type="image/webp">
                 <img src="assets/images/MO_MADE_PATISSERIE_HEADER_LOGO_transparent.png" alt="Mo Made Patisserie Logo" class="h-8 sm:h-10 w-auto object-contain" width="126" height="80">
               </picture>
             </div>
-            <a href="#" (click)="inquireProduct(activeCategory()?.title || ''); $event.preventDefault()" class="bg-[var(--color-primary)] text-white px-3 sm:px-4 py-2 rounded-full text-sm font-sans font-medium hover:bg-[var(--color-secondary)] transition-all inline-flex items-center gap-2">
+            <a href="#" (click)="inquireProduct(activeCategory()?.title || ''); $event.preventDefault()" class="bg-[var(--color-primary)] text-white px-3 sm:px-4 py-2 rounded-full text-sm font-sans font-medium hover:bg-[var(--color-secondary)] transition-all inline-flex items-center gap-2 z-10">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
               <span class="hidden sm:inline">Inquire</span>
             </a>
