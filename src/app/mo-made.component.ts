@@ -484,7 +484,7 @@ export class MoMadeComponent implements OnInit {
     { name: 'Coffee' }
   ];
 
-  categories: Category[] = [
+ categories: Category[] = [
     {
       id: 'wedding',
       title: 'Wedding Cakes',
@@ -492,12 +492,18 @@ export class MoMadeComponent implements OnInit {
       price: '₹3,000/kg onwards',
       image: 'assets/images/w1_m.webp',
       products: [
-        { id: 1, name: 'Blush Garden Tier', image: 'assets/images/w1_m.webp', description: 'Three-tier vanilla sponge with fresh roses and gold leaf accents' },
-        { id: 2, name: 'Midnight Elegance', image: 'assets/images/w2.webp', description: 'Dark chocolate ganache with deep burgundy sugar flowers' },
-        { id: 3, name: 'Tropical Paradise', image: 'assets/images/w3.webp', description: 'Mango passion fruit layers with edible orchids' },
-        { id: 4, name: 'Classic White', image: 'assets/images/w4.webp', description: 'Traditional white fondant with delicate lace patterns' },
-        { id: 5, name: 'Hazelnut Dream', image: 'assets/images/w5.webp', description: 'Praline buttercream with caramelized hazelnuts' },
-        { id: 6, name: 'Berry Romance', image: 'assets/images/c9.webp', description: 'Mixed berry compote with white chocolate drip' }
+        // w1_m / w1 — Grand 5-tier white cake, blush & white sugar roses, gold baroque scroll detailing, "VS" monogram & couple silhouette topper
+        { id: 1, name: 'Grand Rose Baroque', image: 'assets/images/w1_m.webp', description: 'Magnificent five-tier white cake adorned with blush & white sugar roses, intricate gold baroque scroll detailing, personalised monogram & couple silhouette topper' },
+        // w2 — Two-tier: dusty mauve top tier, white base, cascading mauve & white sugar roses, gold "SS" monogram topper & gold leaf accents
+        { id: 2, name: 'Mauve Rose Monogram', image: 'assets/images/w2.webp', description: 'Two-tier cake with a dusty mauve top and ivory base, cascading mauve & white sugar roses, gold leaf accents & a personalised gold monogram topper' },
+        // w3 — Two-tier white embossed lace texture, cascading deep burgundy & blush roses, gold initial letters "S&G", pearl border
+        { id: 3, name: 'Lace & Burgundy Rose', image: 'assets/images/w3.webp', description: 'Two-tier white cake with embossed lace texture, cascading deep burgundy & blush sugar roses, gold initial letters & a delicate pearl border' },
+        // w4 — Three-tier white cake with cascading purple, pink & gold edible butterflies, pink watercolor brushstrokes, gold monogram "S&P"
+        { id: 4, name: 'Butterfly Garden Tier', image: 'assets/images/w4.webp', description: 'Three-tier white cake with cascading purple, pink & gold edible butterflies, soft watercolor brushstrokes & a personalised gold monogram' },
+        // w5 — Two-tier white textured buttercream, white dahlia flower, fresh green foliage & gold leaf rim
+        { id: 5, name: 'White Dahlia Greens', image: 'assets/images/w5.webp', description: 'Two-tier white textured buttercream cake with a statement white dahlia bloom, fresh green foliage sprigs & a delicate gold leaf rim' },
+        // c9 — Two-tier white cake with vibrant tropical fresh flowers — bird of paradise, anthurium, monstera
+        { id: 6, name: 'Tropical Bloom Tier', image: 'assets/images/c9.webp', description: 'Two-tier white cake adorned with fresh tropical blooms — bird of paradise, anthurium & monstera — with orange & strawberry accents at the base' }
       ]
     },
     {
@@ -507,15 +513,24 @@ export class MoMadeComponent implements OnInit {
       price: '₹3,000/kg onwards',
       image: 'assets/images/c1_m.webp',
       products: [
-        { id: 21, name: 'Chocolate Caramel', image: 'assets/images/c1_m.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
-        { id: 22, name: 'Chocolate Raspberry', image: 'assets/images/c2.webp', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
-        { id: 23, name: 'Chocolate Hazelnut', image: 'assets/images/c3.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' },
-        { id: 24, name: 'Red Velvet', image: 'assets/images/c4.webp', description: 'Red Velvet sponge with cream cheese frosting or chocolate ganache' },
-        { id: 25, name: 'Vanilla Berry', image: 'assets/images/c5.webp', description: 'Vanilla Sponge, Berry Compote, White Chocolate Pistachio feuilletine & Vanilla Swiss Meringue buttercream' },
-        { id: 26, name: 'Lemon Blueberry', image: 'assets/images/c6.webp', description: 'Vanilla Sponge, Lemon curd, Blueberry compote & Vanilla Swiss Meringue buttercream' },
-        { id: 27, name: 'Chocolate Caramel', image: 'assets/images/c7.webp', description: 'Chocolate sponge, salted caramel, Chocolate Feuilletine filling & Chocolate Ganache Frosting' },
-        { id: 28, name: 'Chocolate Raspberry', image: 'assets/images/c8.webp', description: 'Chocolate Sponge, Raspberry compote, Chocolate Feuilletine filling & Chocolate Swiss Meringue buttercream' },
-        { id: 29, name: 'Chocolate Hazelnut', image: 'assets/images/c9.webp', description: 'Chocolate sponge, Hazelnut praline, Chocolate Feuilletine filling & Chocolate Ganache frosting' }
+        // c1_m / c1 — Two-tier white buttercream with sugar roses, fresh berries, orange slices & wavy gold piping
+        { id: 21, name: 'Floral Fruit Celebration', image: 'assets/images/c1_m.webp', description: 'Two-tier white buttercream cake adorned with handcrafted sugar roses, fresh berries, orange slices & wavy gold piping' },
+        // c2 — Custom multi-tier fondant cake with cat character toppers, "Happy Birthday" lettering & gold ball decorations
+        { id: 22, name: 'Character Fondant Tier', image: 'assets/images/c2.webp', description: 'Custom multi-tier fondant cake with personalised character toppers, name lettering & gold ball decorations' },
+        // c3 — White buttercream with fresh strawberries on top, red satin ribbon & gold candles
+        { id: 23, name: 'Strawberry Ribbon Cake', image: 'assets/images/c3.webp', description: 'White buttercream cake topped with fresh strawberries & gold candles, adorned with a classic red satin ribbon' },
+        // c4 — Elegant two-tier white cake with white peonies, gold butterfly accents & gold pregnant silhouette line art
+        { id: 24, name: 'White Peony Gold Tier', image: 'assets/images/c4.webp', description: 'Elegant two-tier white cake with white peonies, gold butterfly accents, gold leaf & a hand-drawn gold silhouette' },
+        // c5 — White buttercream with chocolate ganache drip, fresh strawberries, blueberries & kiwi on top
+        { id: 25, name: 'Chocolate Drip Mixed Fruit', image: 'assets/images/c5.webp', description: 'White buttercream cake with rich chocolate ganache drip, topped with fresh strawberries, blueberries & kiwi' },
+        // c6 — White cake with golden honey drip, Winnie the Pooh character art, fondant bees & honeycomb
+        { id: 26, name: 'Honey Drip Character', image: 'assets/images/c6.webp', description: 'White buttercream cake with golden honey drip, hand-painted character art & fondant bee and honeycomb accents' },
+        // c7 — Three-tier teal/mint kids cake with fondant race cars, checkered flags, boy figurine, personalised name
+        { id: 27, name: 'Racing Tier Custom', image: 'assets/images/c7.webp', description: 'Three-tier custom buttercream cake with fondant race cars, checkered flags, personalised name & character topper' },
+        // c8 — Pastel rainbow fondant disc cake with rainbow fondant topper
+        { id: 28, name: 'Rainbow Pastel Petal', image: 'assets/images/c8.webp', description: 'White buttercream cake layered with pastel rainbow fondant discs & topped with a handcrafted rainbow fondant topper' },
+        // c9 — Two-tier white cake with vibrant tropical fresh flowers — bird of paradise, anthurium, monstera
+        { id: 29, name: 'Tropical Bloom Tier', image: 'assets/images/c9.webp', description: 'Two-tier white cake adorned with fresh tropical blooms — bird of paradise, anthurium & monstera — with orange & strawberry accents at the base' }
       ]
     },
     {
@@ -525,21 +540,36 @@ export class MoMadeComponent implements OnInit {
       price: 'Commissioned Pieces',
       image: 'assets/images/co1_m.webp',
       products: [
-        { id: 31, name: 'Coffee Hazelnut', image: 'assets/images/co1_m.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
-        { id: 32, name: 'Coconut Passionfruit', image: 'assets/images/IMG_5089.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 33, name: 'Carrot Walnut', image: 'assets/images/co2.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
-        { id: 34, name: 'Banana Dulce', image: 'assets/images/co4.webp', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
-        { id: 35, name: 'Pistachio Raspberry', image: 'assets/images/co5.webp', description: 'Pistachio Sponge, Raspberry compote, White Chocolate feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 36, name: 'Lychee Rose', image: 'assets/images/co6.webp', description: 'Vanilla Raspberry Sponge, Lychee Filling & Rose Swiss Meringue Buttercream' },
-        { id: 37, name: 'Coffee Hazelnut', image: 'assets/images/co7.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
-        { id: 38, name: 'Coconut Passionfruit', image: 'assets/images/co8.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 39, name: 'Carrot Walnut', image: 'assets/images/co9.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' },
-        { id: 40, name: 'Banana Dulce', image: 'assets/images/co10.webp', description: 'Banana Walnut Sponge, Dulce Filling & Vanilla Swiss Meringue Buttercream' },
-        { id: 41, name: 'Pistachio Raspberry', image: 'assets/images/co11.webp', description: 'Pistachio Sponge, Raspberry compote, White Chocolate feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 42, name: 'Lychee Rose', image: 'assets/images/co12.webp', description: 'Vanilla Raspberry Sponge, Lychee Filling & Rose Swiss Meringue Buttercream' },
-        { id: 43, name: 'Coffee Hazelnut', image: 'assets/images/co13.webp', description: 'Vanilla Sponge, Chocolate Hazelnut feuilletine & Coffee Buttercream' },
-        { id: 44, name: 'Coconut Passionfruit', image: 'assets/images/co14.webp', description: 'Coconut sponge, Passionfruit filling, White chocolate Feuilletine & Vanilla Swiss Meringue Buttercream' },
-        { id: 45, name: 'Carrot Walnut', image: 'assets/images/co15.webp', description: 'Carrot Walnut Sponge with Cream cheese frosting' }
+        // co1_m / co1 — Chocolate cupcakes with chocolate SMB, pink fondant bow toppers & white cake pops with pearl sprinkles
+        { id: 31, name: 'Chocolate Bow Cupcakes & Pops', image: 'assets/images/co1_m.webp', description: 'Rich chocolate cupcakes with chocolate Swiss meringue buttercream & pink fondant bow toppers, paired with white vanilla cake pops with pearl sprinkles' },
+        // IMG_5089 — Pink & mocha macaron tower on gold board, white peony & gold candle
+        { id: 32, name: 'Macaron Tower', image: 'assets/images/IMG_5089.webp', description: 'Elegant tower of pink & mocha French macarons on a gold board, crowned with a white peony & gold candle — perfect as a centrepiece gift' },
+        // co2 — Vanilla cupcakes with lavender buttercream & edible butterfly toppers, purple glazed mini donuts
+        { id: 33, name: 'Butterfly Garden Collection', image: 'assets/images/co2.webp', description: 'Vanilla cupcakes with lavender buttercream & edible butterfly toppers, paired with purple glazed mini donuts' },
+        // co4 — Vanilla cupcakes with vanilla SMB, fresh raspberries, blueberries & passionfruit on top
+        { id: 34, name: 'Berry Passionfruit Cupcakes', image: 'assets/images/co4.webp', description: 'Light vanilla cupcakes with silky vanilla Swiss meringue buttercream, topped with fresh raspberries, blueberries & passionfruit' },
+        // co5 — Mixed dessert spread: vanilla cupcakes, pink glazed donuts, cake pops & sugar cookies with pink flower decorations
+        { id: 35, name: 'Celebration Dessert Spread', image: 'assets/images/co5.webp', description: 'A curated assortment of vanilla cupcakes, pink glazed donuts, cake pops & fondant flower sugar cookies' },
+        // co6 — Chocolate crinkle cookies in glass domes with blue ribbon, Mo Made gift boxes
+        { id: 36, name: 'Crinkle Cookie Gift Domes', image: 'assets/images/co6.webp', description: 'Chocolate crinkle cookies presented in elegant glass cloches tied with blue ribbon, gift-boxed in Mo Made signature packaging' },
+        // co7 — Vanilla cupcakes with soft vanilla buttercream swirl & pink fondant flower toppers
+        { id: 37, name: 'Vanilla Blossom Cupcakes', image: 'assets/images/co7.webp', description: 'Delicate vanilla cupcakes with a soft vanilla buttercream swirl & handcrafted pink fondant flower toppers' },
+        // co8 — Vanilla cupcakes with pink buttercream & white fondant bow toppers + pink royal iced sugar cookies
+        { id: 38, name: 'Pink Bow Cupcakes & Cookies', image: 'assets/images/co8.webp', description: 'Vanilla cupcakes with pink buttercream & white fondant bow toppers, paired with pink royal iced sugar cookies' },
+        // co9 — Assorted dessert bars: vanilla cream, strawberry & chocolate ganache topped with fresh mixed berries
+        { id: 39, name: 'Fresh Berry Dessert Bars', image: 'assets/images/co9.webp', description: 'Assorted dessert bars — vanilla cream, strawberry & chocolate ganache — topped with fresh strawberries, raspberries, blueberries & blackberries' },
+        // co10 — Assorted cupcake boxes: vanilla with red ribbon, strawberry pink, chocolate crushed hazelnut & lemon curd swirl
+        { id: 40, name: 'Signature Cupcake Box', image: 'assets/images/co10.webp', description: 'Assorted cupcake box featuring vanilla with red ribbon bow, strawberry pink frosting, chocolate with crushed hazelnuts & lemon curd swirl' },
+        // co11 — Tiramisu dessert cups layered with ladyfingers, mascarpone cream & cocoa dusting, topped with a fresh whole cherry
+        { id: 41, name: 'Tiramisu Cherry Cups', image: 'assets/images/co11.webp', description: 'Individual tiramisu dessert cups layered with espresso-soaked ladyfingers, mascarpone cream & cocoa dusting, each topped with a fresh whole cherry' },
+        // co12 — Mermaid themed collection: vanilla cupcakes, teal & pink sugar cookies with mermaid tails, starfish, cake pops
+        { id: 42, name: 'Mermaid Collection', image: 'assets/images/co12.webp', description: 'Whimsical mermaid-themed collection of vanilla cupcakes, teal & pink royal iced sugar cookies with mermaid tails & starfish, and cake pops' },
+        // co13 — Pink daisy cakesicles, French macarons, cake pops & rainbow cakesicles
+        { id: 43, name: 'Pink Daisy Dessert Collection', image: 'assets/images/co13.webp', description: 'Charming collection of pink chocolate-coated cakesicles with fondant daisy flowers, French macarons & rainbow cake pops' },
+        // co14 — Pink molded chocolate confectionery: waffle cone cake pops, heart-embossed choc slabs, mini donuts in pink & lavender
+        { id: 44, name: 'Pink Chocolate Confectionery', image: 'assets/images/co14.webp', description: 'Playful pink molded chocolate collection featuring waffle cone cake pops, heart-embossed chocolate slabs & mini donuts in pink and lavender' },
+        // co15 — Chocolate sponge cake slice cross-section: rich chocolate layers, red berry compote filling, white cream frosting
+        { id: 45, name: 'Chocolate Berry Layer Cake', image: 'assets/images/co15.webp', description: 'Rich chocolate sponge layered with vibrant red berry compote & finished with smooth white cream frosting — shown as a generous cross-section slice' }
       ]
     },
     {
@@ -549,11 +579,20 @@ export class MoMadeComponent implements OnInit {
       price: 'By Consultation',
       image: 'assets/images/s1_m.webp',
       products: [
-        { id: 41, name: 'Sugar Free Option', image: 'assets/images/s1_m.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
-        { id: 42, name: 'Eggless Sponge Base', image: 'assets/images/s6.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
-        { id: 43, name: 'Gluten Free Almond', image: 'assets/images/s3.webp', description: 'Almond flour based sponge (Add-on)' },
-        { id: 44, name: 'Custom Topper', image: 'assets/images/s4.webp', description: 'Acrylic or Fondant topper with personalized message' },
-        { id: 45, name: 'Sugar Free Option', image: 'assets/images/s5.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' }
+        // s1_m / s1 — Vanilla mango cake slices: vanilla sponge, fresh mango pieces, raspberry compote drizzle & white meringue kisses (flat lay)
+        { id: 51, name: 'Vanilla Mango Raspberry', image: 'assets/images/s1_m.webp', description: 'Vanilla sponge layered with fresh mango pieces & raspberry compote drizzle, served with delicate white meringue kisses on the side' },
+        // s2 — Top-down white cream cake piled with fresh mango cubes, strawberries & blueberries, gold "Happy Birthday" acrylic topper
+        { id: 52, name: 'Mango Berry Birthday', image: 'assets/images/s2.webp', description: 'White buttercream cake generously topped with fresh mango cubes, halved strawberries & whole blueberries with a gold acrylic birthday topper' },
+        // s3 — Two-tier statement cake: yellow fondant ruffle bottom tier, white top tier with dried orange slices, pearls & gold wire curls
+        { id: 53, name: 'Citrus Ruffle Tier', image: 'assets/images/s3.webp', description: 'Show-stopping two-tier cake with a vibrant yellow fondant ruffle base, white top tier adorned with dried citrus slices, pearls & delicate gold wire curls' },
+        // s4 — White buttercream cylinder cake with whole dried orange slices, white orchid blooms & gold leaf scattered across
+        { id: 54, name: 'Dried Orange Orchid', image: 'assets/images/s4.webp', description: 'Sleek white buttercream cake decorated with whole dried orange slices, fresh white orchid blooms & scattered gold leaf accents' },
+        // s5 — Semi-naked mango layer cake: cream & sponge layers visible on side, fresh mango chunks piled on top, daisy flowers & gold "Happy Birthday" disc
+        { id: 55, name: 'Fresh Mango Layer Cake', image: 'assets/images/s5.webp', description: 'Semi-naked layer cake with visible cream & sponge layers, piled high with fresh mango chunks, fondant daisy flowers & a gold birthday disc topper' },
+        // s6 — Top-down view: white cream cake covered in fresh mango cubes, strawberries & blueberries, gold "Happy Birthday" acrylic topper
+        { id: 56, name: 'Mango Strawberry Blueberry', image: 'assets/images/s6.webp', description: 'White buttercream cake topped with a vibrant medley of fresh mango cubes, halved strawberries & whole blueberries with a gold acrylic topper' },
+        // s7 — Individual fresh mango cream cups: rows of white paper cups filled with cream and generous fresh mango pieces
+        { id: 57, name: 'Fresh Mango Cream Cups', image: 'assets/images/s7.webp', description: 'Individual dessert cups filled with light cream and generous portions of fresh mango — ideal for bulk orders & celebrations' }
       ]
     },
     {
@@ -563,11 +602,18 @@ export class MoMadeComponent implements OnInit {
       price: 'By Consultation',
       image: 'assets/images/IMG_5290_m.webp',
       products: [
-        { id: 41, name: 'Sugar Free Option', image: 'assets/images/IMG_5290_m.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
-        { id: 41, name: 'Sugar Free Option', image: 'assets/images/IMG_5087.webp', description: 'Replace refined sugar with natural sweeteners (Add-on)' },
-        { id: 42, name: 'Eggless Sponge Base', image: 'assets/images/wi1.webp', description: '100% Eggless sponge for any flavor (Select to customize)' },
-        { id: 43, name: 'Gluten Free Almond', image: 'assets/images/wi2.webp', description: 'Almond flour based sponge (Add-on)' },
-        { id: 44, name: 'Custom Topper', image: 'assets/images/wi3.webp', description: 'Acrylic or Fondant topper with personalized message' }
+        // IMG_5290_m — Chocolate drip cake with Ferrero Rocher, chocolate bars & miniature whiskey bottles (from previous batch)
+        { id: 61, name: 'Chocolate Whiskey Drip', image: 'assets/images/IMG_5290_m.webp', description: 'Indulgent white buttercream cake with chocolate ganache drip, loaded with Ferrero Rocher, chocolate bars & miniature whiskey bottle toppers' },
+        // IMG_5087 — Semi-naked cake with fresh mixed fruits (strawberries, raspberries, blueberries, orange) & rosemary on rustic wooden board
+        { id: 62, name: 'Rustic Naked Fruit Cake', image: 'assets/images/IMG_5087.webp', description: 'Semi-naked buttercream cake topped with fresh strawberries, raspberries, blueberries, orange slices & fragrant rosemary sprigs on a rustic wooden board' },
+        // wi1 — White buttercream cake with mixed fresh berries, gold leaf, custom Starbucks fondant mug topper & "Happy Birthday" acrylic plaque
+        { id: 63, name: 'Berry Gold Birthday Cake', image: 'assets/images/wi1.webp', description: 'White buttercream cake piled with fresh strawberries, raspberries, blackberries & blueberries, gold leaf accents & a custom fondant character mug topper' },
+        // wi2 — Full chocolate ganache drip cake: Nutella jar, Oreo cookies, KitKat bars, Maltesers & fresh strawberries
+        { id: 64, name: 'Nutella Oreo Chocolate Drip', image: 'assets/images/wi2.webp', description: 'All-chocolate ganache drip cake loaded with a Nutella jar, Oreo cookies, KitKat bars, Maltesers & fresh strawberries — the ultimate indulgence' },
+        // wi3 — Dark chocolate bubble/sphere cake with gold spatter, dark red rose buds, fresh strawberries & gold "Happy Birthday" plaque
+        { id: 65, name: 'Dark Chocolate Bubble Cake', image: 'assets/images/wi3.webp', description: 'Dramatic dark chocolate bubble cake with gold spatter, dark red rose buds, fresh strawberries & a gold "Happy Birthday" plaque' },
+        // wi4 — White buttercream with chocolate ganache drip, Jack Daniel's mini bottles, Ferrero Rocher, KitKat & gold leaf
+        { id: 66, name: 'Jack Daniels Chocolate Drip', image: 'assets/images/wi4.webp', description: 'White buttercream cake with chocolate ganache drip, Jack Daniel\'s miniature bottles, Ferrero Rocher, KitKat bars & gold leaf — perfect for a grown-up celebration' }
       ]
     },
     {
