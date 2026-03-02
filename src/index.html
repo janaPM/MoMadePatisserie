@@ -546,7 +546,7 @@
        SPLASH SCREEN - Positioned outside app-root
        to remain visible during Angular bootstrap
        ============================================ -->
-  <div id="splash-screen" class="mo-splash-screen" data-nosnippet>
+  <div id="splash-screen" class="mo-splash-screen" aria-hidden="true">
     <div class="splash-logo">Mo Made</div>
     <div class="splash-loader">
       <div class="splash-loader-bar"></div>
@@ -554,6 +554,25 @@
   </div>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <!-- ============================================
+         SEO Shadow Content — Pre-bootstrap text for crawlers.
+         Angular replaces this entire block once it bootstraps.
+         Uses sr-only pattern (screen-reader-only) so it's
+         accessible but not visually intrusive during load.
+         ============================================ -->
+    <div style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">
+      <h1>Mo Made Patisserie | Bespoke Wedding &amp; Luxury Custom Cakes Bangalore</h1>
+      <p>Architectural sugar art by Monisha Prakash. Bespoke multi-tier wedding cakes, milestone birthday cakes, anniversary cakes &amp; luxury confections handcrafted in Mahalakshmipuram, Bangalore. 100% eggless options available. LBB Award Winner.</p>
+      <p>Commission your edible masterpiece — custom designed wedding cakes, celebration cakes, macarons, cakesicles, cookies, brownies, cupcakes &amp; dessert tables.</p>
+      <nav aria-label="Primary">
+        <a href="#boutique">Collections</a>
+        <a href="#wedding">Wedding Cakes</a>
+        <a href="#story">Our Story</a>
+        <a href="#concierge">Commission a Cake</a>
+      </nav>
+      <address>Mo Made Patisserie, #1399, 12th B Cross, 2nd Stage, West of Chord Road, Mahalakshmipuram, Bangalore, Karnataka 560086. Phone: +91 9538954851</address>
+    </div>
+  </app-root>
 </body>
 </html>
