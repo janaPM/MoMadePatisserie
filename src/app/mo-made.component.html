@@ -1088,9 +1088,9 @@
           </svg>
         </button>
         
-        <!-- Image Container - fixed height, cover width, align top -->
+        <!-- Image Container - fixed height, cover width, centered -->
         <div class="relative w-full h-[50vh] overflow-hidden bg-gray-100">
-          <img [src]="zoomedProduct()?.image" [alt]="zoomedProduct()?.name" class="w-full h-full object-cover object-top"/>
+          <img [src]="zoomedProduct()?.image" [alt]="zoomedProduct()?.name" class="w-full h-full object-cover object-center"/>
           <!-- Share button - bottom right of image -->
           <button (click)="shareProduct()" class="absolute bottom-3 right-3 z-10 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
