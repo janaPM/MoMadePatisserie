@@ -129,7 +129,11 @@ export class MoMadeComponent implements OnInit {
   // Handle all hash-based URLs: #category/*, #product/*, #boutique, #story, #concierge
   private handleHashUrl() {
     const hash = window.location.hash;
-    if (!hash) return;
+
+    if (!hash) {
+      this.updateHashMetaTags('');
+      return;
+    }
 
     // Handle #category/<id> — open category view
     const categoryMatch = hash.match(/#category\/([a-zA-Z0-9_-]+)/);
@@ -140,6 +144,7 @@ export class MoMadeComponent implements OnInit {
         this.selectedCategoryId.set(categoryId);
         this.currentView.set('category');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.updateHashMetaTags(hash);
       }
       return;
     }
@@ -167,6 +172,7 @@ export class MoMadeComponent implements OnInit {
       if (this.currentView() !== 'landing') {
         this.currentView.set('landing');
       }
+      this.updateHashMetaTags(hash);
       setTimeout(() => {
         const el = document.getElementById(sectionMatch[1]);
         if (el) {
@@ -174,6 +180,63 @@ export class MoMadeComponent implements OnInit {
         }
       }, 100);
     }
+  }
+
+  // Update <title> and <meta name="description"> based on current hash
+  private updateHashMetaTags(hash: string) {
+    const routes: Record<string, { title: string; description: string }> = {
+      '#category/wedding': {
+        title: 'Wedding Cakes | Mo Made Patisserie',
+        description: 'Bespoke luxury wedding cakes handcrafted in Bangalore by Monisha Prakash.'
+      },
+      '#category/celebration': {
+        title: 'Celebration Cakes | Mo Made Patisserie',
+        description: 'Custom celebration cakes for birthdays, anniversaries, and every milestone.'
+      },
+      '#category/confectionery': {
+        title: 'Confectionery | Mo Made Patisserie',
+        description: 'Artisan chocolates, macarons, and gourmet confectionery treats.'
+      },
+      '#category/summer': {
+        title: 'Summer Special | Mo Made Patisserie',
+        description: 'Seasonal summer desserts and cakes by Mo Made Patisserie.'
+      },
+      '#category/winter': {
+        title: 'Winter Special | Mo Made Patisserie',
+        description: 'Seasonal winter desserts and festive cakes by Mo Made Patisserie.'
+      },
+      '#boutique': {
+        title: 'Boutique Collections | Mo Made Patisserie',
+        description: 'Explore our full collection of bespoke signature cakes and gourmet treats.'
+      },
+      '#story': {
+        title: 'Our Story | Mo Made Patisserie',
+        description: 'Meet Monisha Prakash — the artist behind Mo Made Patisserie.'
+      },
+      '#concierge': {
+        title: 'Design Your Dream Cake | Mo Made Patisserie',
+        description: 'Commission a custom bespoke cake — consult with us on WhatsApp.'
+      }
+    };
+
+    const defaultTitle = 'Mo Made Patisserie | Bespoke Wedding & Luxury Custom Cakes Bangalore';
+    const defaultDescription = 'Where Sugar Becomes Art. Bespoke signature cakes & gourmet treats handcrafted in Bangalore by Monisha Prakash.';
+
+    const route = routes[hash] ?? { title: defaultTitle, description: defaultDescription };
+    document.title = route.title;
+
+    // Update <meta name="description">
+    const descMeta = document.querySelector('meta[name="description"]');
+    if (descMeta) {
+      descMeta.setAttribute('content', route.description);
+    }
+
+    // Update OG/Twitter tags
+    this.setMetaContent('og-title', route.title);
+    this.setMetaContent('og-description', route.description);
+    this.setMetaContent('og-url', `${this.SITE_BASE_URL}/${hash}`);
+    this.setMetaContent('twitter-title', route.title);
+    this.setMetaContent('twitter-description', route.description);
   }
 
   // Mark app as ready - hides splash screen and triggers fade-in animation
@@ -662,7 +725,9 @@ export class MoMadeComponent implements OnInit {
     this.selectedCategoryId.set(categoryId);
     this.currentView.set('category');
     if (isPlatformBrowser(this.platformId)) {
-      window.history.pushState({ view: 'category', categoryId }, '', '#category/' + categoryId);
+      const hash = '#category/' + categoryId;
+      window.history.pushState({ view: 'category', categoryId }, '', hash);
+      this.updateHashMetaTags(hash);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
@@ -671,8 +736,9 @@ export class MoMadeComponent implements OnInit {
     this.currentView.set('landing');
     this.categoryTypeFilterSignal.set('wedding');
     if (isPlatformBrowser(this.platformId)) {
-      // Clear hash from URL
+      // Clear hash from URL and reset title/meta to home defaults
       window.history.replaceState({}, '', window.location.pathname);
+      this.updateHashMetaTags('');
       setTimeout(() => {
         window.scrollTo({ top: this.scrollPositionBeforeCategory, behavior: 'smooth' });
         // Restore carousel horizontal scroll position

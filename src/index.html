@@ -348,21 +348,58 @@
   }
   </script>
   
-  <!-- Breadcrumb Schema -->
+  <!-- Breadcrumb Schema — drives Google Sitelinks shown under the search result -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://momadepatisserie.com/"},
-      {"@type": "ListItem", "position": 2, "name": "The Boutique", "item": "https://momadepatisserie.com/#boutique"},
-      {"@type": "ListItem", "position": 3, "name": "Wedding Cakes", "item": "https://momadepatisserie.com/#wedding"},
-      {"@type": "ListItem", "position": 4, "name": "Our Story", "item": "https://momadepatisserie.com/#story"},
-      {"@type": "ListItem", "position": 5, "name": "Commission a Cake", "item": "https://momadepatisserie.com/#concierge"}
+      {"@type": "ListItem", "position": 1, "name": "Home",              "item": "https://momadepatisserie.com/"},
+      {"@type": "ListItem", "position": 2, "name": "The Boutique",      "item": "https://momadepatisserie.com/#boutique"},
+      {"@type": "ListItem", "position": 3, "name": "Wedding Cakes",     "item": "https://momadepatisserie.com/#category/wedding"},
+      {"@type": "ListItem", "position": 4, "name": "Celebration Cakes", "item": "https://momadepatisserie.com/#category/celebration"},
+      {"@type": "ListItem", "position": 5, "name": "Confectionery",     "item": "https://momadepatisserie.com/#category/confectionery"},
+      {"@type": "ListItem", "position": 6, "name": "Summer Special",    "item": "https://momadepatisserie.com/#category/summer"},
+      {"@type": "ListItem", "position": 7, "name": "Winter Special",    "item": "https://momadepatisserie.com/#category/winter"},
+      {"@type": "ListItem", "position": 8, "name": "Our Story",         "item": "https://momadepatisserie.com/#story"},
+      {"@type": "ListItem", "position": 9, "name": "Commission a Cake", "item": "https://momadepatisserie.com/#concierge"}
     ]
   }
   </script>
   
+  <!-- Bakery Schema — focused offering catalog linking to hash category URLs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Mo Made Patisserie",
+    "description": "Bespoke signature cakes and gourmet treats handcrafted in Bangalore by Monisha Prakash.",
+    "url": "https://momadepatisserie.com",
+    "image": "https://momadepatisserie.com/assets/images/IMG_5087.webp",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bangalore",
+      "addressCountry": "IN"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Monisha Prakash"
+    },
+    "servesCuisine": "Bakery, Confectionery",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Custom Cakes & Confectionery",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Wedding Cakes", "url": "https://momadepatisserie.com/#category/wedding" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Celebration Cakes", "url": "https://momadepatisserie.com/#category/celebration" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Confectionery", "url": "https://momadepatisserie.com/#category/confectionery" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Summer Special", "url": "https://momadepatisserie.com/#category/summer" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Winter Special", "url": "https://momadepatisserie.com/#category/winter" } }
+      ]
+    }
+  }
+  </script>
+
   <!-- FAQPage Schema for Google Rich Snippets -->
   <script type="application/ld+json">
   {
@@ -567,7 +604,11 @@
       <p>Commission your edible masterpiece — custom designed wedding cakes, celebration cakes, macarons, cakesicles, cookies, brownies, cupcakes &amp; dessert tables.</p>
       <nav aria-label="Primary">
         <a href="#boutique">Collections</a>
-        <a href="#wedding">Wedding Cakes</a>
+        <a href="#category/wedding">Wedding Cakes</a>
+        <a href="#category/celebration">Celebration Cakes</a>
+        <a href="#category/confectionery">Confectionery</a>
+        <a href="#category/summer">Summer Special</a>
+        <a href="#category/winter">Winter Special</a>
         <a href="#story">Our Story</a>
         <a href="#concierge">Commission a Cake</a>
       </nav>
