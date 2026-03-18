@@ -50,18 +50,22 @@
   <!-- DNS Prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link rel="dns-prefetch" href="//google-analytics.com">
-  <link rel="dns-prefetch" href="//www.googletagmanager.com">
   
-  <!-- Preload LCP Image (Hero Cake) with fetchpriority - responsive -->
-  <link rel="preload" as="image" href="assets/images/IMG_5087_m.webp" type="image/webp" fetchpriority="high" media="(max-width: 639px)">
-  <link rel="preload" as="image" href="assets/images/IMG_5087.webp" type="image/webp" fetchpriority="high" media="(min-width: 640px)">
-  
-  <!-- Google Fonts - Non-render-blocking async loading -->
+  <!-- Preconnect to critical origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Use official Google Fonts stylesheet for Inter and Playfair Display -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Preload LCP Image (Hero Cake) with fetchpriority - responsive -->
+  <link rel="preload" as="image" href="assets/images/IMG_5087_m.webp" type="image/webp" fetchpriority="high" media="(max-width: 639px)" imagesrcset="assets/images/IMG_5087_m.webp 400w" imagesizes="100vw">
+  <link rel="preload" as="image" href="assets/images/IMG_5087.webp" type="image/webp" fetchpriority="high" media="(min-width: 640px)" imagesrcset="assets/images/IMG_5087.webp 600w" imagesizes="600px">
+  
+  <!-- Preload Logo for header -->
+  <link rel="preload" as="image" href="assets/images/MO_MADE_logo_transparent.webp" type="image/webp">
+  
+  <!-- Google Fonts - Non-render-blocking with media swap trick -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"></noscript>
   
   <!-- ============ CRITICAL CSS - ABOVE THE FOLD ============ -->
   <style>
