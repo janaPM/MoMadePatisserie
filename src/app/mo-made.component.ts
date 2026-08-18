@@ -320,9 +320,9 @@ export class MoMadeComponent implements OnInit {
       // Try to open WhatsApp app directly on mobile, fallback to web
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       if (isMobile) {
-        window.location.href = `whatsapp://send?phone=918525015160&text=${encodedMessage}`;
+        window.location.href = `whatsapp://send?phone=919538954851&text=${encodedMessage}`;
       } else {
-        window.open(`https://wa.me/918525015160?text=${encodedMessage}`, '_blank');
+        window.open(`https://wa.me/919538954851?text=${encodedMessage}`, '_blank');
       }
     }
   }
@@ -335,7 +335,7 @@ export class MoMadeComponent implements OnInit {
 
   callDirectly() {
     if (isPlatformBrowser(this.platformId)) {
-      window.location.href = 'tel:+918525015160';
+      window.location.href = 'tel:+919538954851';
     }
   }
 
